@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JProgressBar;
+import java.awt.Color;
 
 
 public class GUIDescricaoProblema_2 extends JFrame {
@@ -26,8 +27,6 @@ public class GUIDescricaoProblema_2 extends JFrame {
 	private JTextField TFEmail;
 	private JLabel LabelNaoObrigatorio;
 	private JScrollPane scrollPane;
-	private JButton BotaoSubmeter;
-	private JLabel LabelLogo;
 
 	public GUIDescricaoProblema_2(GUI_1 guiGeral){
 		this.guiGeral=guiGeral;
@@ -39,6 +38,7 @@ public class GUIDescricaoProblema_2 extends JFrame {
 				try {
 					GUIDescricaoProblema_2 frame = new GUIDescricaoProblema_2();
 					frame.setVisible(true);
+					frame.setResizable(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -63,18 +63,25 @@ public class GUIDescricaoProblema_2 extends JFrame {
 		scrollPane.setBounds(34, 96, 633, 173);
 		contentPane.add(scrollPane);
 		
+		JTextArea TADescricaoProblema = new JTextArea();
+		scrollPane.setViewportView(TADescricaoProblema);
+		TADescricaoProblema.setLineWrap(true);
+		
 		LabelDescricaoProblema = new JLabel("Descrição do problema:");
-		LabelDescricaoProblema.setFont(new Font("Avenir Next", Font.PLAIN, 14));
+		LabelDescricaoProblema.setForeground(Color.WHITE);
+		LabelDescricaoProblema.setFont(new Font("Avenir Next", Font.BOLD, 14));
 		LabelDescricaoProblema.setBounds(34, 79, 167, 16);
 		contentPane.add(LabelDescricaoProblema);
 		
-		JLabel LabelTituloProblema = new JLabel("Problema a resolver:");
-		LabelTituloProblema.setFont(new Font("Avenir Next", Font.PLAIN, 14));
+		JLabel LabelTituloProblema = new JLabel("Nome do problema a resolver:");
+		LabelTituloProblema.setForeground(Color.WHITE);
+		LabelTituloProblema.setFont(new Font("Avenir Next", Font.BOLD, 14));
 		LabelTituloProblema.setBounds(38, 16, 245, 16);
 		contentPane.add(LabelTituloProblema);
 		
 		LabelEmail = new JLabel("Endereço de Email (*):");
-		LabelEmail.setFont(new Font("Avenir Next", Font.PLAIN, 14));
+		LabelEmail.setForeground(Color.WHITE);
+		LabelEmail.setFont(new Font("Avenir Next", Font.BOLD, 14));
 		LabelEmail.setBounds(34, 295, 165, 16);
 		contentPane.add(LabelEmail);
 		
@@ -84,19 +91,10 @@ public class GUIDescricaoProblema_2 extends JFrame {
 		TFEmail.setColumns(10);
 		
 		LabelNaoObrigatorio = new JLabel("(*) Campo não obrigatório");
-		LabelNaoObrigatorio.setFont(new Font("Avenir Next", Font.ITALIC, 10));
+		LabelNaoObrigatorio.setForeground(Color.WHITE);
+		LabelNaoObrigatorio.setFont(new Font("Avenir Next", Font.BOLD, 10));
 		LabelNaoObrigatorio.setBounds(34, 351, 184, 16);
 		contentPane.add(LabelNaoObrigatorio);
-		
-		BotaoSubmeter = new JButton("Submeter");
-		BotaoSubmeter.setFont(new Font("Avenir Next", Font.PLAIN, 15));
-		BotaoSubmeter.setBounds(502, 318, 165, 35);
-		contentPane.add(BotaoSubmeter);		
-		
-		JTextArea TADescricaoProblema = new JTextArea();
-		TADescricaoProblema.setBounds(34, 96, 520, 142);
-		contentPane.add(TADescricaoProblema);
-		TADescricaoProblema.setLineWrap(true);
 		 
 		JButton BotaoBack = new JButton("◀");
 		BotaoBack.setFont(new Font("Avenir Next", Font.PLAIN, 14));
@@ -108,11 +106,18 @@ public class GUIDescricaoProblema_2 extends JFrame {
 		BotaoNext.setBounds(614, 401, 53, 35);
 		contentPane.add(BotaoNext);
 		
-		JProgressBar progressBar = guiGeral.getJProgressBar();
-		progressBar.setBounds(34, 448, 633, 20);
-		contentPane.add(progressBar);
+//		JProgressBar progressBar = guiGeral.getJProgressBar();
+//		progressBar.setBounds(34, 448, 633, 20);
+//		progressBar.setValue(5); 
+//		contentPane.add(progressBar);
+
 		
-		progressBar.setValue(5); 
+		JLabel LabelLogo = new JLabel();
+		ImageIcon imageIcon = new ImageIcon(new ImageIcon("ESNormalPage.png").getImage().getScaledInstance(700,500, Image.SCALE_DEFAULT));
+		LabelLogo.setIcon(imageIcon);
+		LabelLogo.setBounds(0, 0, 700, 478);
+		contentPane.add(LabelLogo);
+		
 		
 		
 	}

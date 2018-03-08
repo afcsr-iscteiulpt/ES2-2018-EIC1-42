@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
@@ -26,6 +27,7 @@ public class GUI_1 extends JFrame {
 				try {
 					GUI_1 frame = new GUI_1();
 					frame.setVisible(true);
+					frame.setResizable(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -43,21 +45,25 @@ public class GUI_1 extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		progressBar.setBounds(34, 448, 633, 20);
-		contentPane.add(progressBar);
-		
-		JLabel LabelLogo = new JLabel();
-		ImageIcon imageIcon = new ImageIcon(new ImageIcon("Logo.png").getImage().getScaledInstance(700,500, Image.SCALE_DEFAULT));
-		LabelLogo.setIcon(imageIcon);
-		LabelLogo.setBounds(26, 6, 649, 398);
-		contentPane.add(LabelLogo);
 
-		
+
 		JButton BotaoNext = new JButton("▶");
 		BotaoNext.setFont(new Font("Avenir Next", Font.PLAIN, 14));
 		BotaoNext.setBounds(614, 401, 53, 35);
 		contentPane.add(BotaoNext);
+		
+		
+		progressBar.setBounds(34, 448, 633, 20);
+		contentPane.add(progressBar);
+		
+		
+		JLabel LabelLogo = new JLabel();
+		ImageIcon imageIcon = new ImageIcon(new ImageIcon("ESFrontPage.png").getImage().getScaledInstance(700,500, Image.SCALE_DEFAULT));
+		LabelLogo.setIcon(imageIcon);
+		LabelLogo.setBounds(0, 0, 700, 478);
+		contentPane.add(LabelLogo);
+	
+		
 	}
 
 	public JProgressBar getJProgressBar(){

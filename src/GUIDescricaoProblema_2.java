@@ -16,29 +16,26 @@ import javax.swing.JProgressBar;
 import java.awt.Color;
 
 
-public class GUIDescricaoProblema_2 extends JFrame {
+public class GUIDescricaoProblema_2 extends JFrame{
 
 	private GUI_1 guiGeral = new GUI_1();
-	
-	private JPanel contentPane;
 	private JTextField TFNomeProblema;
 	private JLabel LabelDescricaoProblema;
 	private JLabel LabelEmail;
 	private JTextField TFEmail;
 	private JLabel LabelNaoObrigatorio;
+	private JFrame frame;
 	private JScrollPane scrollPane;
+	private JPanel contentPane = new JPanel();
 
-	public GUIDescricaoProblema_2(GUI_1 guiGeral){
-		this.guiGeral=guiGeral;
-	}
+
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					GUIDescricaoProblema_2 frame = new GUIDescricaoProblema_2();
-					frame.setVisible(true);
-					frame.setResizable(false);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -47,9 +44,10 @@ public class GUIDescricaoProblema_2 extends JFrame {
 	}
 
 	public GUIDescricaoProblema_2() {
+		setVisible(true);
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 500);
-		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -106,19 +104,21 @@ public class GUIDescricaoProblema_2 extends JFrame {
 		BotaoNext.setBounds(614, 401, 53, 35);
 		contentPane.add(BotaoNext);
 		
-//		JProgressBar progressBar = guiGeral.getJProgressBar();
-//		progressBar.setBounds(34, 448, 633, 20);
-//		progressBar.setValue(5); 
-//		contentPane.add(progressBar);
+		JProgressBar progressBar = new JProgressBar();
+		progressBar.setBounds(34, 448, 633, 20);
+		progressBar.setValue(5); 
+		contentPane.add(progressBar);
 
 		
 		JLabel LabelLogo = new JLabel();
-		ImageIcon imageIcon = new ImageIcon(new ImageIcon("ESNormalPage.png").getImage().getScaledInstance(700,500, Image.SCALE_DEFAULT));
+		ImageIcon imageIcon = new ImageIcon(new ImageIcon("GenericPage.png").getImage().getScaledInstance(700,500, Image.SCALE_DEFAULT));
 		LabelLogo.setIcon(imageIcon);
 		LabelLogo.setBounds(0, 0, 700, 478);
 		contentPane.add(LabelLogo);
-		
-		
-		
+	
+	}
+	
+	public JPanel getContentPane(){
+		return contentPane;
 	}
 }

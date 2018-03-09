@@ -11,10 +11,11 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
 
 public class GUI_1 extends JFrame {
-
-	private JProgressBar progressBar = new JProgressBar();
 
 	private JPanel contentPane;
 
@@ -45,28 +46,37 @@ public class GUI_1 extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
-
-		JButton BotaoNext = new JButton("▶");
-		BotaoNext.setFont(new Font("Avenir Next", Font.PLAIN, 14));
-		BotaoNext.setBounds(614, 401, 53, 35);
-		contentPane.add(BotaoNext);
-		
-		
-		progressBar.setBounds(34, 448, 633, 20);
-		contentPane.add(progressBar);
 		
 		
 		JLabel LabelLogo = new JLabel();
-		ImageIcon imageIcon = new ImageIcon(new ImageIcon("ESFrontPage.png").getImage().getScaledInstance(700,500, Image.SCALE_DEFAULT));
+		LabelLogo.setForeground(new Color(0, 204, 204));
+		ImageIcon imageIcon = new ImageIcon(new ImageIcon("Geral.png").getImage().getScaledInstance(700,500, Image.SCALE_DEFAULT));
+		
+		JButton ButtonFAQ = new JButton("FAQ");
+		ButtonFAQ.setForeground(new Color(0, 128, 128));
+		ButtonFAQ.setFont(new Font("Krungthep", Font.PLAIN, 12));
+		ButtonFAQ.setBounds(45, 397, 133, 48);
+		contentPane.add(ButtonFAQ);
+		
+		JButton ButtonStoredProblems = new JButton("Stored Problems");
+		ButtonStoredProblems.setForeground(new Color(0, 128, 128));
+		ButtonStoredProblems.setFont(new Font("Krungthep", Font.PLAIN, 12));
+		ButtonStoredProblems.setBounds(45, 325, 133, 48);
+		contentPane.add(ButtonStoredProblems);
+		
+		JButton ButtonNewProblem = new JButton("New Problem");
+		ButtonNewProblem.setForeground(new Color(0, 128, 128));
+		ButtonNewProblem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		ButtonNewProblem.setFont(new Font("Krungthep", Font.PLAIN, 12));
+		ButtonNewProblem.setBounds(45, 255, 133, 48);
+		contentPane.add(ButtonNewProblem);
 		LabelLogo.setIcon(imageIcon);
 		LabelLogo.setBounds(0, 0, 700, 478);
 		contentPane.add(LabelLogo);
 	
 		
-	}
-
-	public JProgressBar getJProgressBar(){
-		return progressBar;
 	}
 }

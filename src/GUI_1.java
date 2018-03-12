@@ -18,7 +18,7 @@ public class GUI_1 {
 	private JPanel contentPane;
 	private JFrame frame;
 	private SharedClass shared;
-
+	//.
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

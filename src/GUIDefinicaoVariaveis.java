@@ -91,7 +91,7 @@ public class GUIDefinicaoVariaveis extends JFrame {
 		comboBox.addItem(new String("Boolean"));
 
 
-		
+		//.
 		JLabel LabelVariablesList = new JLabel("Variables List:");
 		LabelVariablesList.setForeground(Color.WHITE);
 		LabelVariablesList.setFont(new Font("Avenir Next", Font.BOLD, 16));

@@ -7,7 +7,7 @@ public class SharedClass {
 
 	private JFrame frame;
 	private ArrayList<JPanel> ArrayOfPanels = new ArrayList<JPanel>();
-	
+	//.
 	
 	public SharedClass(){
 		frame = new JFrame();

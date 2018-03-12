@@ -91,7 +91,7 @@ public class GUIDescricaoProblema_2{
 		TFEmail.setBounds(34, 317, 334, 35);
 		contentPane.add(TFEmail);
 		TFEmail.setColumns(10);
-		
+		//.
 		LabelNaoObrigatorio = new JLabel("(*) Campo não obrigatório");
 		LabelNaoObrigatorio.setForeground(Color.WHITE);
 		LabelNaoObrigatorio.setFont(new Font("Avenir Next", Font.BOLD, 10));

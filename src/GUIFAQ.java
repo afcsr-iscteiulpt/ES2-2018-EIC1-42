@@ -27,7 +27,7 @@ public class GUIFAQ extends JFrame {
 		});
 	}
 
-	/**
+	/**.
 	 * Create the frame.
 	 */
 	public GUIFAQ() {

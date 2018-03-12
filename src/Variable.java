@@ -5,7 +5,7 @@ public class Variable {
 	private String type;
 	private int min;
 	private int max;
-	
+	//.
 	public Variable(String name, String type, int min, int max){
 		this.name=name;
 		this.type=type;

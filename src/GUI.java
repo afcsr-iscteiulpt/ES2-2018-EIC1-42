@@ -13,26 +13,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
-public class GUI_1 {
+public class GUI {
 
 	private JPanel contentPane;
 	private JFrame frame;
-	private SharedClass shared;
-	//.
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					new GUI_1();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public GUI_1() {
-		shared = new SharedClass();
+	private int positionInArray;
+	public GUI(SharedClass shared) {
+		
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -47,6 +34,14 @@ public class GUI_1 {
 		ButtonFAQ.setForeground(new Color(0, 128, 128));
 		ButtonFAQ.setFont(new Font("Krungthep", Font.PLAIN, 12));
 		ButtonFAQ.setBounds(45, 397, 133, 48);
+		ButtonFAQ.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				shared.createFAQArray();
+				shared.setExistingPanel(shared.getFAQArray(),0);	
+			}
+		});
 		contentPane.add(ButtonFAQ);
 		
 		JButton ButtonStoredProblems = new JButton("Stored Problems");
@@ -57,25 +52,32 @@ public class GUI_1 {
 		
 		JButton ButtonNewProblem = new JButton("New Problem");
 		ButtonNewProblem.setForeground(new Color(0, 128, 128));
-		ButtonNewProblem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				GUIDescricaoProblema_2 problem = new GUIDescricaoProblema_2(shared);
-			}
-		});
 		ButtonNewProblem.setFont(new Font("Krungthep", Font.PLAIN, 12));
 		ButtonNewProblem.setBounds(45, 255, 133, 48);
+		ButtonNewProblem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				shared.createNPArray();
+				shared.setExistingPanel(shared.getNPArray(), 0);
+			}
+		});
 		contentPane.add(ButtonNewProblem);
 		LabelLogo.setIcon(imageIcon);
 		LabelLogo.setBounds(0, 0, 700, 478);
 		contentPane.add(LabelLogo);
 		
-		shared.setPanelDisplayed(contentPane);
+//		shared.setPanelDisplayed(contentPane);
 
 	}
 
 	public JFrame getFrame(){
 		return frame;
 	}
-
+	public JPanel getContentPane(){
+		return contentPane;
+	}
+	public void setPosition(int i){
+		positionInArray = i;
+	}
 	
 }

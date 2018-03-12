@@ -1,24 +1,17 @@
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 public class Variable {
 
 	private String name;
 	private String type;
 	private int min;
 	private int max;
-	//.
-	public Variable(String name, String type, int min, int max){
-		this.name=name;
-		this.type=type;
-		this.min=min;
-		this.max=max;	
-	}
-	
-	public Variable(String name, String type){
-		this.name=name;
-		this.type=type;	
-	}
 
-	
+
+    
 	public String toStringVariable(){
 		String s="";
 		if(min == max){
@@ -28,35 +21,31 @@ public class Variable {
 		return s;
 	}
 	
-	
 	public String getName() {
 		return name;
 	}
-
+    @XmlAttribute
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public String getType() {
 		return type;
 	}
-
+    @XmlAttribute
 	public void setType(String type) {
 		this.type = type;
 	}
-
 	public int getMin() {
 		return min;
 	}
-
+    @XmlAttribute
 	public void setMin(int min) {
 		this.min = min;
 	}
-
 	public int getMax() {
 		return max;
 	}
-
+    @XmlAttribute
 	public void setMax(int max) {
 		this.max = max;
 	}

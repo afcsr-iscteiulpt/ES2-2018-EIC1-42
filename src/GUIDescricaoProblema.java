@@ -18,7 +18,7 @@ import javax.swing.JProgressBar;
 import java.awt.Color;
 
 
-public class GUIDescricaoProblema_2{
+public class GUIDescricaoProblema{
 
 	private JTextField TFNomeProblema;
 	private JLabel LabelDescricaoProblema;
@@ -28,6 +28,8 @@ public class GUIDescricaoProblema_2{
 	private JFrame frame;
 	private JScrollPane scrollPane;
 	private JPanel contentPane;
+	private JButton ButtonLoad;
+	private int positionInArray;
 
 //
 //	
@@ -44,7 +46,7 @@ public class GUIDescricaoProblema_2{
 //		});
 //	}
 
-	public GUIDescricaoProblema_2(SharedClass shared) {
+	public GUIDescricaoProblema(SharedClass shared) {
 		
 //		frame.setVisible(true);
 //		frame.setResizable(false);
@@ -57,6 +59,7 @@ public class GUIDescricaoProblema_2{
 		contentPane.setLayout(null);
 		
 		TFNomeProblema = new JTextField();
+		TFNomeProblema.setForeground(new Color(0, 128, 128));
 		TFNomeProblema.setBounds(34, 32, 334, 35);
 		contentPane.add(TFNomeProblema);
 		TFNomeProblema.setColumns(10);
@@ -66,55 +69,66 @@ public class GUIDescricaoProblema_2{
 		contentPane.add(scrollPane);
 		
 		JTextArea TADescricaoProblema = new JTextArea();
+		TADescricaoProblema.setForeground(new Color(0, 128, 128));
 		scrollPane.setViewportView(TADescricaoProblema);
 		TADescricaoProblema.setLineWrap(true);
 		
-		LabelDescricaoProblema = new JLabel("Descrição do problema:");
+		LabelDescricaoProblema = new JLabel("Problem Description:");
 		LabelDescricaoProblema.setForeground(Color.WHITE);
 		LabelDescricaoProblema.setFont(new Font("Avenir Next", Font.BOLD, 14));
 		LabelDescricaoProblema.setBounds(34, 79, 167, 16);
 		contentPane.add(LabelDescricaoProblema);
 		
-		JLabel LabelTituloProblema = new JLabel("Nome do problema a resolver:");
+		JLabel LabelTituloProblema = new JLabel("Name the problem:");
 		LabelTituloProblema.setForeground(Color.WHITE);
 		LabelTituloProblema.setFont(new Font("Avenir Next", Font.BOLD, 14));
 		LabelTituloProblema.setBounds(38, 16, 245, 16);
 		contentPane.add(LabelTituloProblema);
 		
-		LabelEmail = new JLabel("Endereço de Email (*):");
+		LabelEmail = new JLabel("Email Adress (*):");
 		LabelEmail.setForeground(Color.WHITE);
 		LabelEmail.setFont(new Font("Avenir Next", Font.BOLD, 14));
-		LabelEmail.setBounds(34, 295, 165, 16);
+		LabelEmail.setBounds(34, 295, 267, 16);
 		contentPane.add(LabelEmail);
 		
 		TFEmail = new JTextField();
+		TFEmail.setForeground(new Color(0, 128, 128));
 		TFEmail.setBounds(34, 317, 334, 35);
 		contentPane.add(TFEmail);
 		TFEmail.setColumns(10);
-		//.
-		LabelNaoObrigatorio = new JLabel("(*) Campo não obrigatório");
+		
+		LabelNaoObrigatorio = new JLabel("(*) Not mandatory, only if you want to receive informations");
 		LabelNaoObrigatorio.setForeground(Color.WHITE);
 		LabelNaoObrigatorio.setFont(new Font("Avenir Next", Font.BOLD, 10));
-		LabelNaoObrigatorio.setBounds(34, 351, 184, 16);
+		LabelNaoObrigatorio.setBounds(34, 351, 334, 16);
 		contentPane.add(LabelNaoObrigatorio);
 		 
 		JButton BotaoBack = new JButton("◀");
+		BotaoBack.setForeground(new Color(0, 128, 128));
 		BotaoBack.setFont(new Font("Avenir Next", Font.PLAIN, 14));
 		BotaoBack.setBounds(34, 401, 53, 35);
 		BotaoBack.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				shared.setExistingPanel(0);
-				System.out.println(shared.getArrayOfPanels().size());
+				shared.setExistingPanel(shared.getArrayOfPanels(),0);
 				
 			}
 		});
 		contentPane.add(BotaoBack);
 		
 		JButton BotaoNext = new JButton("▶");
+		BotaoNext.setForeground(new Color(0, 128, 128));
 		BotaoNext.setFont(new Font("Avenir Next", Font.PLAIN, 14));
 		BotaoNext.setBounds(614, 401, 53, 35);
+		BotaoNext.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				shared.setExistingPanel(shared.getNPArray(),1);
+				
+			}
+		});
 		contentPane.add(BotaoNext);
 		
 		JProgressBar progressBar = new JProgressBar();
@@ -125,17 +139,24 @@ public class GUIDescricaoProblema_2{
 		
 		JLabel LabelLogo = new JLabel();
 		ImageIcon imageIcon = new ImageIcon(new ImageIcon("GenericPage.png").getImage().getScaledInstance(700,500, Image.SCALE_DEFAULT));
+		
+		ButtonLoad = new JButton("Load Problem");
+		ButtonLoad.setForeground(new Color(0, 128, 128));
+		ButtonLoad.setFont(new Font("Avenir Next", Font.PLAIN, 13));
+		ButtonLoad.setBounds(412, 32, 117, 33);
+		contentPane.add(ButtonLoad);
 		LabelLogo.setIcon(imageIcon);
 		LabelLogo.setBounds(0, 0, 700, 478);
 		contentPane.add(LabelLogo);
 
-		shared.setPanelDisplayed(contentPane);
-
-		
+	
 		
 	}
 	
 	public JPanel getContentPane(){
 		return contentPane;
+	}
+	public void setPosition(int i){
+		positionInArray = i;
 	}
 }

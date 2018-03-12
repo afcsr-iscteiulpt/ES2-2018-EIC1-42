@@ -8,6 +8,8 @@ import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JScrollPane;
 import javax.swing.ImageIcon;
@@ -16,9 +18,8 @@ import javax.swing.JProgressBar;
 import java.awt.Color;
 
 
-public class GUIDescricaoProblema_2 extends JFrame{
+public class GUIDescricaoProblema_2{
 
-	private GUI_1 guiGeral = new GUI_1();
 	private JTextField TFNomeProblema;
 	private JLabel LabelDescricaoProblema;
 	private JLabel LabelEmail;
@@ -26,30 +27,33 @@ public class GUIDescricaoProblema_2 extends JFrame{
 	private JLabel LabelNaoObrigatorio;
 	private JFrame frame;
 	private JScrollPane scrollPane;
-	private JPanel contentPane = new JPanel();
+	private JPanel contentPane;
 
+//
+//	
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					GUIDescricaoProblema_2 frame = new GUIDescricaoProblema_2();
+//					
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GUIDescricaoProblema_2 frame = new GUIDescricaoProblema_2();
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public GUIDescricaoProblema_2() {
-		setVisible(true);
-		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 500);
+	public GUIDescricaoProblema_2(SharedClass shared) {
+		
+//		frame.setVisible(true);
+//		frame.setResizable(false);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setBounds(100, 100, 700, 500);
+//		shared.setFrame(frame);
+		
+		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		TFNomeProblema = new JTextField();
@@ -97,6 +101,15 @@ public class GUIDescricaoProblema_2 extends JFrame{
 		JButton BotaoBack = new JButton("◀");
 		BotaoBack.setFont(new Font("Avenir Next", Font.PLAIN, 14));
 		BotaoBack.setBounds(34, 401, 53, 35);
+		BotaoBack.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				shared.setExistingPanel(0);
+				System.out.println(shared.getArrayOfPanels().size());
+				
+			}
+		});
 		contentPane.add(BotaoBack);
 		
 		JButton BotaoNext = new JButton("▶");
@@ -115,7 +128,11 @@ public class GUIDescricaoProblema_2 extends JFrame{
 		LabelLogo.setIcon(imageIcon);
 		LabelLogo.setBounds(0, 0, 700, 478);
 		contentPane.add(LabelLogo);
-	
+
+		shared.setPanelDisplayed(contentPane);
+
+		
+		
 	}
 	
 	public JPanel getContentPane(){

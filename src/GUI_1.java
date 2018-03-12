@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -8,27 +7,23 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
 
-public class GUI_1 extends JFrame {
+public class GUI_1 {
 
 	private JPanel contentPane;
+	private JFrame frame;
+	private SharedClass shared;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI_1 frame = new GUI_1();
-					frame.setVisible(true);
-					frame.setResizable(false);
+					new GUI_1();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -36,15 +31,11 @@ public class GUI_1 extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public GUI_1() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 500);
+		shared = new SharedClass();
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		
@@ -68,6 +59,7 @@ public class GUI_1 extends JFrame {
 		ButtonNewProblem.setForeground(new Color(0, 128, 128));
 		ButtonNewProblem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				GUIDescricaoProblema_2 problem = new GUIDescricaoProblema_2(shared);
 			}
 		});
 		ButtonNewProblem.setFont(new Font("Krungthep", Font.PLAIN, 12));
@@ -76,7 +68,14 @@ public class GUI_1 extends JFrame {
 		LabelLogo.setIcon(imageIcon);
 		LabelLogo.setBounds(0, 0, 700, 478);
 		contentPane.add(LabelLogo);
-	
 		
+		shared.setPanelDisplayed(contentPane);
+
 	}
+
+	public JFrame getFrame(){
+		return frame;
+	}
+
+	
 }

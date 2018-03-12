@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -159,12 +160,21 @@ public class GUIDefinicaoVariaveis extends JFrame {
 				
 			}
 		});
+
+		
+		JLabel LabelInformation = new JLabel("<html>Note: <br/>Optimization means minimize the objectives given</html>", SwingConstants.CENTER);		
+		LabelInformation.setForeground(Color.WHITE);
+		LabelInformation.setFont(new Font("Avenir Next", Font.PLAIN, 12));
+		LabelInformation.setBounds(443, 29, 169, 76);
+		contentPane.add(LabelInformation);
+		
 		
 		JLabel LabelLogo = new JLabel();
 		ImageIcon imageIcon = new ImageIcon(new ImageIcon("GenericPage.png").getImage().getScaledInstance(700,500, Image.SCALE_DEFAULT));
 		LabelLogo.setIcon(imageIcon);
 		LabelLogo.setBounds(0, 0, 700, 478);
 		contentPane.add(LabelLogo);
+
 		
 
 		

@@ -186,22 +186,6 @@ public class GUIDefinicaoVariaveis extends JFrame {
 		LabelLogo.setBounds(0, 0, 700, 478);
 		contentPane.add(LabelLogo);
 	}
-//
-//	public void saveInXML(Variable v) {
-//		try {
-//			File file = new File("/Users/albertoramos/Desktop/file.xml");
-//			JAXBContext jaxbContext = JAXBContext.newInstance(Variable.class);
-//			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-//			// output pretty printed
-//			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-//
-//			jaxbMarshaller.marshal(v, file);
-//			jaxbMarshaller.marshal(v, System.out);
-//
-//		} catch (JAXBException e) {
-//			e.printStackTrace();
-//		}
-//	}
 
 	public JPanel getContentPane() {
 		return contentPane;
@@ -216,9 +200,9 @@ public class GUIDefinicaoVariaveis extends JFrame {
 	        DocumentBuilderFactory dFact = DocumentBuilderFactory.newInstance();
 	        DocumentBuilder build = dFact.newDocumentBuilder();
 	        Document doc = build.newDocument();
-	        Element root = doc.createElement("Studentinfo");
+	        Element root = doc.createElement("Variablesinfo");
 	        doc.appendChild(root);
-	        Element Details = doc.createElement("Details");
+	        Element Details = doc.createElement("VariablesDetails");
 	        root.appendChild(Details);
 	        for (Variable dtl : list) {
 	            Element name = doc.createElement("Name");

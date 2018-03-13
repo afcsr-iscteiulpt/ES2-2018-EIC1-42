@@ -54,7 +54,7 @@ public class EmailSender {
         try {
         	
         	InternetAddress From = new InternetAddress(ood1mail);
-        	InternetAddress[] CClist = InternetAddress.parse(adminmail);
+        	InternetAddress[] CClist = InternetAddress.parse(Adminmail);
 
             Message message = new MimeMessage(session);
             message.setFrom(From);
@@ -92,6 +92,10 @@ public class EmailSender {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
+	}
+	
+	public void EmailInitial() {
+		
 	}
 	
 	public void EmailChek(int percentage) {

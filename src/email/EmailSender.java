@@ -37,13 +37,11 @@ public class EmailSender {
 	    props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 	    props.put("mail.smtp.port", "587");
 	    
-
 	    UserMail=usermail;
 	    ProblemName=problemName;
 	    Adminmail=adminmail;
 	    XMLPath=XMLpath;
 		
-        
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                   protected PasswordAuthentication getPasswordAuthentication() {
@@ -63,12 +61,12 @@ public class EmailSender {
             for(int i= 0; i<CClist.length;i++)
             	message.addRecipient(Message.RecipientType.CC,CClist[i]);
             LocalDateTime now = LocalDateTime.now();
-            message.setSubject("Otimização em curso: " + problemName +" "+now.getYear()+"-"+now.getMonth()+"-"+now.getDayOfMonth()
+            message.setSubject("Otimizaï¿½ï¿½o em curso: " + problemName +" "+now.getYear()+"-"+now.getMonth()+"-"+now.getDayOfMonth()
             					+" "+ now.getHour()+":"+now.getMinute());
             
-            String Message= "Muito obrigado por usar esta plataforma de otimização. Será informado por email sobre o progresso de otimização,"
-            		+ " quando o processo de otimização tiver atingido 25%, 50%, 75% do total do tempo estimado, e também quando o processo tiver"
-            		+ " terminado, com sucesso ou devido à ocorrência de erros.";
+            String Message= "Muito obrigado por usar esta plataforma de otimizaï¿½ï¿½o. Serï¿½ informado por email sobre o progresso de otimizaï¿½ï¿½o,"
+            		+ " quando o processo de otimizaï¿½ï¿½o tiver atingido 25%, 50%, 75% do total do tempo estimado, e tambï¿½m quando o processo tiver"
+            		+ " terminado, com sucesso ou devido ï¿½ ocorrï¿½ncia de erros.";
             
             Multipart multipart = new MimeMultipart();
 			MimeBodyPart messageBodyPart = new MimeBodyPart();
@@ -94,11 +92,7 @@ public class EmailSender {
         }
 	}
 	
-	public void EmailInitial() {
-		
-	}
-	
-	public void EmailChek(int percentage) {
+	public void EmailCheck(int percentage) {
 		
 		Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
@@ -119,12 +113,12 @@ public class EmailSender {
             for(int i= 0; i<CClist.length;i++)
             	message.addRecipient(Message.RecipientType.CC,CClist[i]);
             LocalDateTime now = LocalDateTime.now();
-            message.setSubject("Actualização Estado Otimização " + percentage +"% : " + ProblemName +" "+now.getYear()+"-"+now.getMonth()+"-"+now.getDayOfMonth()
+            message.setSubject("Actualizaï¿½ï¿½o Estado Otimizaï¿½ï¿½o " + percentage +"% : " + ProblemName +" "+now.getYear()+"-"+now.getMonth()+"-"+now.getDayOfMonth()
             					+" "+ now.getHour()+":"+now.getMinute());
             
-            String Message= "Muito obrigado por usar esta plataforma de otimização. Informamos-lhe que o seu "
-            		+ "problema está ainda em fase de processamento. Neste momento completámos cerca de " + percentage +"% "
-            		+ "do processo de otimização. Será informado futuramente das próximas fases.";
+            String Message= "Muito obrigado por usar esta plataforma de otimizaï¿½ï¿½o. Informamos-lhe que o seu "
+            		+ "problema estï¿½ ainda em fase de processamento. Neste momento completï¿½mos cerca de " + percentage +"% "
+            		+ "do processo de otimizaï¿½ï¿½o. Serï¿½ informado futuramente das prï¿½ximas fases.";
             
             Multipart multipart = new MimeMultipart();
 			MimeBodyPart messageBodyPart = new MimeBodyPart();
@@ -163,13 +157,13 @@ public class EmailSender {
             for(int i= 0; i<CClist.length;i++)
             	message.addRecipient(Message.RecipientType.CC,CClist[i]);
             LocalDateTime now = LocalDateTime.now();
-            message.setSubject("Processo de Otimização finalizado: " + ProblemName +" "+now.getYear()+"-"+now.getMonth()+"-"+now.getDayOfMonth()
+            message.setSubject("Processo de Otimizaï¿½ï¿½o finalizado: " + ProblemName +" "+now.getYear()+"-"+now.getMonth()+"-"+now.getDayOfMonth()
             					+" "+ now.getHour()+":"+now.getMinute());
             
-            String Message= "Muito obrigado por usar esta plataforma de otimização. "
-            		+"Informamos que o processo de otimização acabou. Poderá ver uma detalhada análise "
-            		+"do processo de otimização do problema assim como a sua configuração inicial. "
-            		+"Agradecemos muito por depositar a sua confiança na nossa plataforma.";
+            String Message= "Muito obrigado por usar esta plataforma de otimizaï¿½ï¿½o. "
+            		+"Informamos que o processo de otimizaï¿½ï¿½o acabou. Poderï¿½ ver uma detalhada anï¿½lise "
+            		+"do processo de otimizaï¿½ï¿½o do problema assim como a sua configuraï¿½ï¿½o inicial. "
+            		+"Agradecemos muito por depositar a sua confianï¿½a na nossa plataforma.";
             
             Multipart multipart = new MimeMultipart();
 			MimeBodyPart messageBodyPart = new MimeBodyPart();
@@ -206,7 +200,7 @@ public class EmailSender {
 		System.out.println("1");
 		EmailSender A= new EmailSender("albertosilveiramos@gmail.com", "EmailTesting","bfcca@iscte-iul.pt" , "File.xml");
 		System.out.println("2");
-		A.EmailChek(50);
+		A.EmailCheck(50);
 		System.out.println("3");
 		A.EmailFinish("File.xml");
     }

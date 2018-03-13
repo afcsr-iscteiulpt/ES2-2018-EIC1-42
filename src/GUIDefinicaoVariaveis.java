@@ -24,6 +24,8 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -46,9 +48,14 @@ public class GUIDefinicaoVariaveis extends JFrame {
 	private JTextField TFMax;
 	private String textAreaString = "Name:		Type:		Interval:";
 	private int positionInArray;
+	private JTextArea textArea;
 	private ArrayList<Variable> variablesArray = new ArrayList<Variable>();
+	private JComboBox comboBox;
+	private SharedClass shared;
 
 	public GUIDefinicaoVariaveis(SharedClass shared) {
+		this.shared=shared;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 500);
 		contentPane = new JPanel();
@@ -80,10 +87,11 @@ public class GUIDefinicaoVariaveis extends JFrame {
 		LabelType.setBounds(44, 89, 61, 16);
 		contentPane.add(LabelType);
 
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
 		comboBox.setForeground(new Color(0, 128, 128));
 		comboBox.setBounds(40, 112, 169, 27);
 		contentPane.add(comboBox);
+		comboBox.addItem(new String(""));
 		comboBox.addItem(new String("Integer"));
 		comboBox.addItem(new String("Double"));
 		comboBox.addItem(new String("Boolean"));
@@ -98,7 +106,7 @@ public class GUIDefinicaoVariaveis extends JFrame {
 		scrollPane.setBounds(44, 211, 598, 173);
 		contentPane.add(scrollPane);
 
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		textArea.setForeground(new Color(0, 128, 128));
 		scrollPane.setViewportView(textArea);
 		textArea.setEditable(false);
@@ -113,7 +121,7 @@ public class GUIDefinicaoVariaveis extends JFrame {
 		TFMin = new JTextField();
 		TFMin.setForeground(new Color(0, 128, 128));
 		TFMin.setBounds(273, 51, 46, 26);
-		TFMin.setText("0");
+		TFMin.setText("");
 		contentPane.add(TFMin);
 		TFMin.setColumns(10);
 
@@ -121,7 +129,7 @@ public class GUIDefinicaoVariaveis extends JFrame {
 		TFMax.setForeground(new Color(0, 128, 128));
 		TFMax.setColumns(10);
 		TFMax.setBounds(331, 51, 46, 26);
-		TFMax.setText("0");
+		TFMax.setText("");
 		contentPane.add(TFMax);
 
 		JLabel LabelNotMandatory = new JLabel("(*) Not mandatory");
@@ -162,15 +170,7 @@ public class GUIDefinicaoVariaveis extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Variable v = new Variable();
-				v.setName(TFName.getText());
-				v.setType((String) comboBox.getSelectedItem());
-				v.setMin(Integer.parseInt(TFMin.getText()));
-				v.setMax(Integer.parseInt(TFMax.getText()));
-				textAreaString += "\n" + v.toStringVariable();
-				variablesArray.add(v);
-				writeXmlFile(variablesArray);
-				textArea.setText(textAreaString);
+				validateDetails();
 			}
 		});
 
@@ -187,6 +187,8 @@ public class GUIDefinicaoVariaveis extends JFrame {
 		contentPane.add(LabelLogo);
 	}
 
+	
+	
 	public JPanel getContentPane() {
 		return contentPane;
 	}
@@ -195,12 +197,30 @@ public class GUIDefinicaoVariaveis extends JFrame {
 		positionInArray = i;
 	}
 	
+	public void validateDetails(){
+		if(TFName.getText().equals("") || TFMin.getText().equals("") || TFMax.getText().equals("") || comboBox.getSelectedItem().equals("")){
+			JOptionPane.showMessageDialog(null, "You must fill all the mandatory variables.");
+		}
+		else{			
+			Variable v = new Variable();
+			v.setName(TFName.getText());
+			v.setType((String) comboBox.getSelectedItem());
+			v.setMin(Integer.parseInt(TFMin.getText()));
+			v.setMax(Integer.parseInt(TFMax.getText()));
+			textAreaString += "\n" + v.toStringVariable();
+			variablesArray.add(v);
+			writeXmlFile(variablesArray);
+			textArea.setText(textAreaString);		
+		}
+	}
+	
+	
 	public void writeXmlFile(ArrayList<Variable> list) {
 	    try {
 	        DocumentBuilderFactory dFact = DocumentBuilderFactory.newInstance();
 	        DocumentBuilder build = dFact.newDocumentBuilder();
 	        Document doc = build.newDocument();
-	        Element root = doc.createElement("Variablesinfo");
+	        Element root = doc.createElement("Problem");
 	        doc.appendChild(root);
 	        Element Details = doc.createElement("VariablesDetails");
 	        root.appendChild(Details);

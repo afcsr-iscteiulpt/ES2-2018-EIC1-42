@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<Problem>
+    <VariablesDetails>
+        <Name>Bola</Name>
+        <Type>Integer</Type>
+        <Min>-5</Min>
+        <Max>70</Max>
+        <Name>BolaS</Name>
+        <Type>Integer</Type>
+        <Min>-5</Min>
+        <Max>70</Max>
+        <Name>BolaSX</Name>
+        <Type>Integer</Type>
+        <Min>-5</Min>
+        <Max>70</Max>
+        <Name>BolaSXK</Name>
+        <Type>Integer</Type>
+        <Min>-5</Min>
+        <Max>70</Max>
+        <Name>K</Name>
+        <Type>Integer</Type>
+        <Min>-5</Min>
+        <Max>70</Max>
+        <Name>eee</Name>
+        <Type>Integer</Type>
+        <Min>-5</Min>
+        <Max>70</Max>
+    </VariablesDetails>
+</Problem>

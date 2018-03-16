@@ -13,6 +13,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.swing.JOptionPane;
 
 public class EmailFAQ {
 	
@@ -67,14 +68,12 @@ public class EmailFAQ {
 			messageBodyPart.setContent(MessageFAQ, "text/html");
 			multipart.addBodyPart(messageBodyPart);
 
-
 			message.setContent(multipart);
             
-            
-
             Transport.send(message);
 
-            System.out.println("Message Sent .");
+			JOptionPane.showMessageDialog(null, "Your question was successfully sent.");
+
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);

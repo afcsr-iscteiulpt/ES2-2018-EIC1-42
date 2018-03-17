@@ -1,3 +1,5 @@
+package Interface;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -6,6 +8,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import General.SharedClass;
+
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -13,7 +18,6 @@ import java.awt.event.ActionEvent;
 public class GUI {
 	private JPanel contentPane;
 	private JFrame frame;
-	private int positionInArray;
 
 	public GUI(SharedClass shared) {
 
@@ -23,7 +27,8 @@ public class GUI {
 
 		JLabel LabelLogo = new JLabel();
 		LabelLogo.setForeground(new Color(0, 204, 204));
-		ImageIcon imageIcon = new ImageIcon(new ImageIcon("Geral.png").getImage().getScaledInstance(700, 500, Image.SCALE_DEFAULT));
+		ImageIcon imageIcon = new ImageIcon(
+				new ImageIcon("Geral.png").getImage().getScaledInstance(700, 500, Image.SCALE_DEFAULT));
 
 		JButton ButtonFAQ = new JButton("FAQ");
 		ButtonFAQ.setForeground(new Color(0, 128, 128));
@@ -43,6 +48,13 @@ public class GUI {
 		ButtonStoredProblems.setForeground(new Color(0, 128, 128));
 		ButtonStoredProblems.setFont(new Font("Krungthep", Font.PLAIN, 12));
 		ButtonStoredProblems.setBounds(45, 325, 133, 48);
+		ButtonStoredProblems.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				shared.acessStoredProblems();
+			}
+		});
 		contentPane.add(ButtonStoredProblems);
 
 		JButton ButtonNewProblem = new JButton("New Problem");
@@ -69,8 +81,5 @@ public class GUI {
 		return contentPane;
 	}
 
-	public void setPosition(int i) {
-		positionInArray = i;
-	}
 
 }

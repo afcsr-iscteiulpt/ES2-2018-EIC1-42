@@ -1,17 +1,25 @@
+package Interface;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import org.xml.sax.SAXException;
+
+import General.SharedClass;
+import email.*;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Properties;
 
 import javax.swing.JSeparator;
@@ -25,7 +33,7 @@ public class GUIFAQ extends JFrame {
 	private JPanel contentPane;
 	private JTextField TFSubject;
 	private JTextField TFFrom;
-	private int positionInArray;
+	private JTextArea TAEmailText;
 
 	public GUIFAQ(SharedClass sharedClass) {
 
@@ -82,9 +90,9 @@ public class GUIFAQ extends JFrame {
 		scrollPane.setBounds(37, 243, 620, 154);
 		contentPane.add(scrollPane);
 
-		JTextArea TFEmailText = new JTextArea();
-		TFEmailText.setForeground(new Color(0, 128, 128));
-		scrollPane.setViewportView(TFEmailText);
+		TAEmailText = new JTextArea();
+		TAEmailText.setForeground(new Color(0, 128, 128));
+		scrollPane.setViewportView(TAEmailText);
 
 		JLabel LabelSubject = new JLabel("Subject:");
 		LabelSubject.setForeground(new Color(255, 255, 255));
@@ -117,11 +125,18 @@ public class GUIFAQ extends JFrame {
 		});
 		contentPane.add(BotaoBack);
 
-		JButton btnNewButton = new JButton("Send");
-		btnNewButton.setForeground(new Color(0, 128, 128));
-		btnNewButton.setFont(new Font("Avenir Next", Font.PLAIN, 13));
-		btnNewButton.setBounds(582, 417, 75, 36);
-		contentPane.add(btnNewButton);
+		JButton ButtonSend = new JButton("Send");
+		ButtonSend.setForeground(new Color(0, 128, 128));
+		ButtonSend.setFont(new Font("Avenir Next", Font.PLAIN, 13));
+		ButtonSend.setBounds(582, 417, 75, 36);
+		ButtonSend.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sendEmail();
+			}
+		});
+		contentPane.add(ButtonSend);
 
 		JLabel LabelLogo = new JLabel();
 		ImageIcon imageIcon = new ImageIcon(
@@ -129,15 +144,30 @@ public class GUIFAQ extends JFrame {
 		LabelLogo.setIcon(imageIcon);
 		LabelLogo.setBounds(0, 0, 700, 478);
 		contentPane.add(LabelLogo);
-
 	}
 
 	public JPanel getContentPane() {
 		return contentPane;
 	}
-
-	public void setPosition(int i) {
-		this.positionInArray = i;
+	
+	public void sendEmail() {
+			if(TFFrom.getText().equals("") && TFSubject.getText().equals("") && TAEmailText.getText().equals("")){
+				JOptionPane.showMessageDialog(null, "You must fill all the mandatory text fields.");
+			} 
+			else if(TFFrom.getText().equals("")){
+				JOptionPane.showMessageDialog(null, "You must write your email address.");
+			}
+			else if(TFSubject.getText().equals("")){
+				JOptionPane.showMessageDialog(null, "You must write a subject.");
+			}
+			else if(TAEmailText.getText().equals("")){
+				JOptionPane.showMessageDialog(null, "You must write something.");
+			}
+			else {
+				new EmailFAQ(TFFrom.getText(), TFSubject.getText(), TAEmailText.getText());
+			}
 	}
+
+
 
 }

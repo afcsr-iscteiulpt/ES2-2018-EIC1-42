@@ -1,11 +1,11 @@
+package Interface;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.TabableView;
+import General.SharedClass;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -13,11 +13,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JScrollPane;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 import java.awt.Color;
 
-public class GUIDescricaoProblema {
+public class GUIProblem {
 
 	private JTextField TFNomeProblema;
 	private JLabel LabelDescricaoProblema;
@@ -28,10 +27,9 @@ public class GUIDescricaoProblema {
 	private JPanel contentPane;
 	private JButton ButtonLoad;
 	private JTextArea TADescricaoProblema;
-	private int positionInArray;
 	private SharedClass shared;
 
-	public GUIDescricaoProblema(SharedClass shared) {
+	public GUIProblem(SharedClass shared) {
 		this.shared=shared;
 		
 		contentPane = new JPanel();
@@ -119,6 +117,13 @@ public class GUIDescricaoProblema {
 		ButtonLoad.setForeground(new Color(0, 128, 128));
 		ButtonLoad.setFont(new Font("Avenir Next", Font.PLAIN, 13));
 		ButtonLoad.setBounds(412, 32, 117, 33);
+		ButtonLoad.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				shared.readXMLFile();
+			}
+		});
 		contentPane.add(ButtonLoad);
 		
 		LabelLogo.setIcon(imageIcon);
@@ -141,11 +146,34 @@ public class GUIDescricaoProblema {
 		}
 	}
 	
+	public String getName(){
+		String s = TFNomeProblema.getText();
+		System.out.println(s);
+		return s;
+	}
+	public void setName(String s){
+		TFNomeProblema.setText(s);
+	}
+	
+	public String getDescription(){
+		String s = TADescricaoProblema.getText();
+		return s;
+	}
+	public void setDescription(String s){
+		TADescricaoProblema.setText(s);
+	}
+	
+	public String getEmail(){
+		String s = TFEmail.getText();
+		return s;
+	}
+	public void setEmail(String s){
+		TFEmail.setText(s);
+	}
+	
 	public JPanel getContentPane() {
 		return contentPane;
 	}
+	
 
-	public void setPosition(int i) {
-		positionInArray = i;
-	}
 }

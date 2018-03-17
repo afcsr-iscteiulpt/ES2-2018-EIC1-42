@@ -1,23 +1,12 @@
-import java.io.File;
-import java.io.FileWriter;
+package Interface;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
+import org.xml.sax.SAXException;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import General.SharedClass;
+import General.Variable;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -40,20 +29,23 @@ import javax.swing.JTextArea;
 import java.awt.Color;
 import javax.swing.JScrollPane;
 
-public class GUIDefinicaoVariaveis extends JFrame {
+public class GUIVariables extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField TFName;
 	private JTextField TFMin;
 	private JTextField TFMax;
 	private String textAreaString = "Name:		Type:		Interval:";
-	private int positionInArray;
 	private JTextArea textArea;
 	private ArrayList<Variable> variablesArray = new ArrayList<Variable>();
 	private JComboBox comboBox;
 	private SharedClass shared;
+	private String variableName;
+	private String variableType;
+	private String variableMin;
+	private String variableMax;
 
-	public GUIDefinicaoVariaveis(SharedClass shared) {
+	public GUIVariables(SharedClass shared) {
 		this.shared=shared;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -154,6 +146,14 @@ public class GUIDefinicaoVariaveis extends JFrame {
 		BotaoNext.setForeground(new Color(0, 128, 128));
 		BotaoNext.setFont(new Font("Avenir Next", Font.PLAIN, 14));
 		BotaoNext.setBounds(614, 401, 53, 35);
+		BotaoNext.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					shared.createProblem();
+						
+			}
+		});
 		contentPane.add(BotaoNext);
 		
 		JProgressBar progressBar = new JProgressBar();
@@ -170,7 +170,15 @@ public class GUIDefinicaoVariaveis extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				validateDetails();
+				try {
+					validateDetails();
+				} catch (SAXException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -185,19 +193,13 @@ public class GUIDefinicaoVariaveis extends JFrame {
 		LabelLogo.setIcon(imageIcon);
 		LabelLogo.setBounds(0, 0, 700, 478);
 		contentPane.add(LabelLogo);
-	}
-
-	
+	}	
 	
 	public JPanel getContentPane() {
 		return contentPane;
 	}
 
-	public void setPosition(int i) {
-		positionInArray = i;
-	}
-	
-	public void validateDetails(){
+	public void validateDetails() throws SAXException, IOException{
 		if(TFName.getText().equals("") || TFMin.getText().equals("") || TFMax.getText().equals("") || comboBox.getSelectedItem().equals("")){
 			JOptionPane.showMessageDialog(null, "You must fill all the mandatory variables.");
 		}
@@ -209,58 +211,43 @@ public class GUIDefinicaoVariaveis extends JFrame {
 			v.setMax(Integer.parseInt(TFMax.getText()));
 			textAreaString += "\n" + v.toStringVariable();
 			variablesArray.add(v);
-			writeXmlFile(variablesArray);
 			textArea.setText(textAreaString);		
 		}
 	}
-	
-	
-	public void writeXmlFile(ArrayList<Variable> list) {
-	    try {
-	        DocumentBuilderFactory dFact = DocumentBuilderFactory.newInstance();
-	        DocumentBuilder build = dFact.newDocumentBuilder();
-	        Document doc = build.newDocument();
-	        Element root = doc.createElement("Problem");
-	        doc.appendChild(root);
-	        Element Details = doc.createElement("VariablesDetails");
-	        root.appendChild(Details);
-	        for (Variable dtl : list) {
-	            Element name = doc.createElement("Name");
-	            name.appendChild(doc.createTextNode(String.valueOf(dtl.getName())));
-	            Details.appendChild(name);
-	            Element type = doc.createElement("Type");
-	            type.appendChild(doc.createTextNode(String.valueOf(dtl.getType())));
-	            Details.appendChild(type);
-	            Element min = doc.createElement("Min");
-	            min.appendChild(doc.createTextNode(String.valueOf(dtl.getMin())));
-	            Details.appendChild(min);
-	            Element max = doc.createElement("Max");
-	            max.appendChild(doc.createTextNode(String.valueOf(dtl.getMax())));
-	            Details.appendChild(max);
-	        }
-	        // Save the document to the disk file
-	        TransformerFactory tranFactory = TransformerFactory.newInstance();
-	        Transformer aTransformer = tranFactory.newTransformer();
-	        // format the XML nicely
-	        aTransformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
-	        aTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-	        aTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
-	        DOMSource source = new DOMSource(doc);
-	        try {
-	            // location and name of XML file you can change as per need
-	        	//WRITE DOWN WHERE YOU WANT TO SAVE YOUR XML FILE
-	            FileWriter fos = new FileWriter("/Users/albertoramos/Desktop/File.xml");
-	            StreamResult result = new StreamResult(fos);
-	            aTransformer.transform(source, result);
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	    } catch (TransformerException ex) {
-	        System.out.println("Error outputting document");
-	    } catch (ParserConfigurationException ex) {
-	        System.out.println("Error building document");
-	    }
+
+	public ArrayList<Variable> getVariablesArray() {
+		return variablesArray;
 	}
+	public void setVariablesArray(ArrayList<Variable> variablesArray) {
+		this.variablesArray = variablesArray;
+	}
+	public String getVariableName() {
+		return variableName;
+	}
+	public void setVariableName(String variableName) {
+		this.variableName = variableName;
+	}
+	public String getVariableType() {
+		return variableType;
+	}
+	public void setVariableType(String variableType) {
+		this.variableType = variableType;
+	}
+	public String getVariableMin() {
+		return variableMin;
+	}
+	public void setVariableMin(String variableMin) {
+		this.variableMin = variableMin;
+	}
+	public String getVariableMax() {
+		return variableMax;
+	}
+	public void setVariableMax(String variableMax) {
+		this.variableMax = variableMax;
+	}
+	
+	
+	
 	
 	
 }

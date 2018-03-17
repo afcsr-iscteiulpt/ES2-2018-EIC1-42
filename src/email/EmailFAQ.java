@@ -1,8 +1,6 @@
 package email;
-
 import java.time.LocalDateTime;
 import java.util.Properties;
-
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;

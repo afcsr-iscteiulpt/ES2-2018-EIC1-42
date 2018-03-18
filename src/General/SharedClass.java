@@ -75,6 +75,9 @@ public class SharedClass {
 		launch();
 	}
 
+	/*
+	 * Função que lança o primeiro GUI
+	 */
 	public void launch() {
 		gui = new GUI(this);
 		ArrayOfPanels.add(gui.getContentPane());
@@ -103,6 +106,10 @@ public class SharedClass {
 	}
 	
 	// -------------------NP RELATED---------------------
+	
+	/*
+	 * Função do butão "New Problem" que inicializa o array dos GUI's pertencentes à funcionalidade do "New Problem"
+	 */
 	public void createNPArray() {
 		// 0 in ArrayNewProblem
 		ArrayNewProblem.clear();
@@ -120,12 +127,18 @@ public class SharedClass {
 	}
 
 	// -------------------SP RELATED---------------------
+	/*
+	 * Função do butão "Stored Problem" que inicializa o array dos GUI's pertencentes à funcionalidade do "Stored Problem"
+	 */
 	public void acessStoredProblems() {
 		setExistingPanelX(storedProblem.getContentPane());
 	}
 
 
 	// -------------------FAQ RELATED---------------------
+	/*
+	 * Função do butão "FAQ" que inicializa o array dos GUI's pertencentes à funcionalidade do "FAQ"
+	 */
 	public void createFAQArray() {
 		// 0 in ArrayFAQ
 		ArrayFAQ.clear();

@@ -150,7 +150,9 @@ public class GUIVariables extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					shared.createProblem();
+//					shared.createProblem();
+					shared.setExistingPanel(shared.getNPArray(), 2);
+
 						
 			}
 		});
@@ -187,6 +189,7 @@ public class GUIVariables extends JFrame {
 		LabelInformation.setFont(new Font("Avenir Next", Font.PLAIN, 12));
 		LabelInformation.setBounds(443, 29, 169, 76);
 		contentPane.add(LabelInformation);
+		
 		JLabel LabelLogo = new JLabel();
 		ImageIcon imageIcon = new ImageIcon(
 				new ImageIcon("GenericPage.png").getImage().getScaledInstance(700, 500, Image.SCALE_DEFAULT));

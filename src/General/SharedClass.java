@@ -33,6 +33,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import Interface.GUI;
+import Interface.GUIAlgorithms;
 import Interface.GUIVariables;
 import Interface.GUIProblem;
 import Interface.GUIStoredProblems;
@@ -49,6 +50,7 @@ public class SharedClass {
 	private GUIProblem guidescricaoproblema;
 	private GUIVariables guiDefinicaoVariaveis;
 	private GUIFAQ guifaq;
+	private GUIAlgorithms guiAlgo;
 	
 	private Problem problem = new Problem("", "", "", null);
 
@@ -109,6 +111,9 @@ public class SharedClass {
 		// 1 in ArrayNewProblem
 		guiDefinicaoVariaveis = new GUIVariables(this);
 		ArrayNewProblem.add(guiDefinicaoVariaveis.getContentPane());
+		//2 in ArrayNewProblem
+		guiAlgo = new GUIAlgorithms(this);
+		ArrayNewProblem.add(guiAlgo.getContentPane());
 	}
 	public ArrayList<JPanel> getNPArray() {
 		return ArrayNewProblem;

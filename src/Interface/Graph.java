@@ -82,7 +82,7 @@ public class Graph extends JPanel {
 		}
 	}
 	
-	//TODO so para testes nao utilizar
+	//TODO so para testes
 		/**
 		 * so para testes
 		 */

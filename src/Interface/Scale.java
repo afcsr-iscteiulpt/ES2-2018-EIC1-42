@@ -18,7 +18,7 @@ public class Scale extends JPanel{
 	private Color bottom;
 
 	/**
-	 * testes
+	 * so para testes
 	 */
 	public Scale() {
 		objectivos = new ArrayList<String>();

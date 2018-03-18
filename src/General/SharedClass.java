@@ -156,6 +156,8 @@ public class SharedClass {
 	
 	/*
 	 * Função responsável pela criação/escrita do ficheiro XML
+	 * 
+	 * @param Problem p
 	 */
 	public void writeXmlFile(Problem p) {
 	    try {

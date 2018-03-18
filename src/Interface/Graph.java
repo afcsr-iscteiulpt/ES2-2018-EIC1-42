@@ -1,17 +1,15 @@
 package Interface;
 
 import java.awt.Color;
-import java.awt.Dimension;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLayeredPane;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Graph extends JPanel {
@@ -34,13 +32,25 @@ public class Graph extends JPanel {
 	 * @param barra2
 	 */
 	public Graph(ArrayList<Integer> values, Color barra1, Color barra2) {
+		this.setLayout(new GridLayout(1, 0));
 		this.barra1 = barra1;
 		this.barra2 = barra2;
 		if(values == null) {
 			graphWithoutValues();
+			addLabels();
 		}else {
 			this.values = values;
 			createMediator();
+			addLabels();
+		}
+	}
+
+	private void addLabels() {
+		for (int i = 0; i < values.size(); i++) {
+			JLabel label = new JLabel("" + values.get(i));
+			label.setHorizontalAlignment(JLabel.CENTER);
+			label.setVerticalAlignment(JLabel.BOTTOM);
+			this.add(label);
 		}
 	}
 
@@ -81,8 +91,15 @@ public class Graph extends JPanel {
 			mainGraphics.fill(new Rectangle(xPosition, yPosition, width, heigth));
 		}
 	}
-	
+		
 	//TODO so para testes
+		/**
+		 * so para testes
+		 */
+		private void graphWithoutValues() {
+			createValues();
+			createMediator();
+		}
 		/**
 		 * so para testes
 		 */
@@ -92,15 +109,6 @@ public class Graph extends JPanel {
 			for (int i = 0; i < max; i++) {
 				values.add(r.nextInt(12));//
 			}
-		}
-		
-	//TODO so para testes
-		/**
-		 * so para testes
-		 */
-		private void graphWithoutValues() {
-			createValues();
-			createMediator();
 		}
 
 }

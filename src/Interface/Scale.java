@@ -57,18 +57,20 @@ public class Scale extends JPanel{
 	private void contruct() {
 		this.setLayout(new GridLayout(1, 0));
 		for (int i = 0; i < objectivos.size(); i++) {
-			JPanel X = new JPanel();
-			X.setLayout(new BorderLayout());
-			this.add(X);
+			JPanel objective = new JPanel();
+			objective.setLayout(new BorderLayout());
+			this.add(objective);
 			
 			JPanel fillW = new JPanel();
-			X.add(fillW, BorderLayout.WEST);
+			objective.add(fillW, BorderLayout.WEST);
 			
 			Graph grafico = new Graph(values, barra1, barra2);
-			X.add(grafico, BorderLayout.CENTER);
+			objective.add(grafico, BorderLayout.CENTER);
 			
 			JPanel fillE = new JPanel();
-			X.add(fillE, BorderLayout.EAST);
+			objective.add(fillE, BorderLayout.EAST);
+			
+			
 			
 			JPanel southpanel = new JPanel();
 			southpanel.setLayout(new BorderLayout());
@@ -85,7 +87,7 @@ public class Scale extends JPanel{
 			}
 			southpanel.add(collumHolder, BorderLayout.NORTH);
 			
-			X.add(southpanel, BorderLayout.SOUTH);
+			objective.add(southpanel, BorderLayout.SOUTH);
 		}
 	}
 

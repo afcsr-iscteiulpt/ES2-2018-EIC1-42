@@ -36,6 +36,9 @@ public class EmailFAQ {
 	    FAQSubject = faqSubj;
 	    MessageFAQ = messagefaq;
     	
+		/*
+		 * Criação da sessão e respetiva autenticação
+		 */
 	    Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                   protected PasswordAuthentication getPasswordAuthentication() {
@@ -48,7 +51,9 @@ public class EmailFAQ {
         	InternetAddress From = new InternetAddress(ood1mail);
         	InternetAddress[] CClist = InternetAddress.parse(UserMail);
         	
-
+        	/*
+        	 * Criação da mensagem a ser enviada para a equipa de desenvolvimento do projeto
+        	 */
             Message message = new MimeMessage(session);
             message.setFrom(From);
             message.setRecipients(Message.RecipientType.TO,

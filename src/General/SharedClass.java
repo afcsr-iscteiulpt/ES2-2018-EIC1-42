@@ -138,6 +138,10 @@ public class SharedClass {
 	}
 	// --------------------------------------------------
 
+	
+	/*
+	 * Função responsável pela criação do problema com os dados fornecidos pelo utilizador
+	 */
 	public void createProblem(){
 		System.out.println(guidescricaoproblema.getName() +"   "+guidescricaoproblema.getDescription() +"   "+guidescricaoproblema.getEmail() );
 		problem.setName(guidescricaoproblema.getName());
@@ -150,6 +154,9 @@ public class SharedClass {
 		writeXmlFile(problem);
 	}
 	
+	/*
+	 * Função responsável pela criação/escrita do ficheiro XML
+	 */
 	public void writeXmlFile(Problem p) {
 	    try {
 	        DocumentBuilderFactory dFact = DocumentBuilderFactory.newInstance();
@@ -194,17 +201,17 @@ public class SharedClass {
                 			variable.appendChild(variableMax);	
     			
                 }
-		    // Save the document to the disk file
+
 	        TransformerFactory tranFactory = TransformerFactory.newInstance();
 	        Transformer aTransformer = tranFactory.newTransformer();
-	        // format the XML nicely
+	        /*
+	         * Formatação do ficheiro XML
+	         */
 	        aTransformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
 	        aTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 	        aTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
 	        DOMSource source = new DOMSource(doc);
 	        try {
-	            // location and name of XML file you can change as per need
-	        	//WRITE DOWN WHERE YOU WANT TO SAVE YOUR XML FILE
 	        	
 	        	String date = new SimpleDateFormat("dd-MM-yyyy  HH:mm:ss").format(new Date());
 	 
@@ -228,7 +235,9 @@ public class SharedClass {
 	
 	
 	
-	
+	/*
+	 * Função responsável pela leitura do ficheiro XML
+	 */
 	public void readXMLFile() {
 
 		try {
@@ -245,7 +254,9 @@ public class SharedClass {
 			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 			Document doc = docBuilder.parse(file);
 
-			// normalize text representation
+			/*
+			 * Normaliza a apresentação do texto
+			 */
 			doc.getDocumentElement().normalize();
 			System.out.println("Root element of the doc is " + doc.getDocumentElement().getNodeName());
 

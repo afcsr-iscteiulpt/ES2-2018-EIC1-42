@@ -42,6 +42,10 @@ public class EmailSender {
 	    Adminmail=adminmail;
 	    XMLPath=XMLpath;
 		
+	    
+	    /*
+	     * Criação da sessão e respetiva autenticação
+	     */
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                   protected PasswordAuthentication getPasswordAuthentication() {
@@ -54,6 +58,10 @@ public class EmailSender {
         	InternetAddress From = new InternetAddress(ood1mail);
         	InternetAddress[] CClist = InternetAddress.parse(Adminmail);
 
+        	
+        	/*
+        	 * Criação da mensagem a ser enviada para o utilizador sobre o inicio do processo de otimização
+        	 */
             Message message = new MimeMessage(session);
             message.setFrom(From);
             message.setRecipients(Message.RecipientType.TO,
@@ -73,6 +81,9 @@ public class EmailSender {
 			messageBodyPart.setContent(Message, "text/html");
 			multipart.addBodyPart(messageBodyPart);
 
+        	/*
+        	 * Associação do ficheiro XML (do progresso feito) ao email a ser enviado para o utilizador
+        	 */
 			messageBodyPart = new MimeBodyPart();
 			DataSource source = new FileDataSource(XMLpath);
 			messageBodyPart.setDataHandler(new DataHandler(source));
@@ -93,7 +104,10 @@ public class EmailSender {
 	}
 	
 	public void EmailCheck(int percentage) {
-		
+	   
+		/*
+		 * Criação da sessão e respetiva autenticação
+		 */
 		Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                   protected PasswordAuthentication getPasswordAuthentication() {
@@ -106,6 +120,9 @@ public class EmailSender {
         	InternetAddress From = new InternetAddress(ood1mail);
         	InternetAddress[] CClist = InternetAddress.parse(Adminmail);
 
+        	/*
+        	 * Criação da mensagem a ser enviada para o utilizador sobre a evolução do processo de otimização
+        	 */
             Message message = new MimeMessage(session);
             message.setFrom(From);
             message.setRecipients(Message.RecipientType.TO,
@@ -138,6 +155,9 @@ public class EmailSender {
 	
 	public void EmailFinish(String finishXML) {
 		
+		/*
+		 *  Criação da sessão e respetiva autenticação
+		 */
 		Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                   protected PasswordAuthentication getPasswordAuthentication() {
@@ -150,6 +170,9 @@ public class EmailSender {
         	InternetAddress From = new InternetAddress(ood1mail);
         	InternetAddress[] CClist = InternetAddress.parse(Adminmail);
 
+        	/*
+        	 * Criação da mensagem a ser enviada para o utilizador sobre o fim do processo de otimização
+        	 */
             Message message = new MimeMessage(session);
             message.setFrom(From);
             message.setRecipients(Message.RecipientType.TO,
@@ -169,13 +192,19 @@ public class EmailSender {
 			MimeBodyPart messageBodyPart = new MimeBodyPart();
 			messageBodyPart.setContent(Message, "text/html");
 			multipart.addBodyPart(messageBodyPart);
-
+			
+        	/*
+        	 * Associação do ficheiro XML (do progresso feito)  ao email a ser enviado para o utilizador
+        	 */
 			messageBodyPart = new MimeBodyPart();
 			DataSource configFile = new FileDataSource(XMLPath);
 			messageBodyPart.setDataHandler(new DataHandler(configFile));
 			messageBodyPart.setFileName(ProblemName + "-XML");
 			multipart.addBodyPart(messageBodyPart);
 			
+        	/*
+        	 * Associação do ficheiro FinishStats ao email a ser enviado para o utilizador
+        	 */
 			messageBodyPart = new MimeBodyPart();
 			DataSource finishFile = new FileDataSource(XMLPath);
 			messageBodyPart.setDataHandler(new DataHandler(finishFile));
@@ -196,7 +225,9 @@ public class EmailSender {
 	
 
 	public static void main(String[] args) throws AddressException, MessagingException {
-		//Testing function
+		/*
+		 * Testing function
+		 */
 		System.out.println("1");
 		EmailSender A= new EmailSender("albertosilveiramos@gmail.com", "EmailTesting","bfcca@iscte-iul.pt" , "File.xml");
 		System.out.println("2");

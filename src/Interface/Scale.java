@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Scale extends JPanel{
+public class Scale {
 	
 	private ArrayList<String> objectivos;
 	private ArrayList<Integer> values;
@@ -16,6 +16,8 @@ public class Scale extends JPanel{
 	private Color barra1;
 	private Color barra2;
 	private Color bottom;
+	
+	private JPanel panel = new JPanel();
 
 	/**
 	 * so para testes
@@ -31,7 +33,7 @@ public class Scale extends JPanel{
 	
 	/**
 	 * Objectivos e ArrayList<String> com o nome de cada objectivo.<br>
-	 * barra1 e barra2 sao as duas core para alternar na representaçao.<br>
+	 * barra1 e barra2 sao as duas core para alternar na representaï¿½ao.<br>
 	 * valores para objectivos ArrayList<Integer> values.<br>
 	 * bottom e a cor da base dos graficos.<p>
 	 * 
@@ -55,11 +57,11 @@ public class Scale extends JPanel{
 	}
 
 	private void contruct() {
-		this.setLayout(new GridLayout(1, 0));
+		panel.setLayout(new GridLayout(1, 0));
 		for (int i = 0; i < objectivos.size(); i++) {
 			JPanel objective = new JPanel();
 			objective.setLayout(new BorderLayout());
-			this.add(objective);
+			panel.add(objective);
 			
 			JPanel fillW = new JPanel();
 			objective.add(fillW, BorderLayout.WEST);
@@ -91,4 +93,8 @@ public class Scale extends JPanel{
 		}
 	}
 
+	
+	public JPanel getPanel(){
+		return panel;
+	}
 }

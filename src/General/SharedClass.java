@@ -38,6 +38,7 @@ import Interface.GUIVariables;
 import Interface.GUIProblem;
 import Interface.GUIStoredProblems;
 import Interface.GUIFAQ;
+import Interface.GUIGraphs;
 
 
 public class SharedClass {
@@ -51,6 +52,7 @@ public class SharedClass {
 	private GUIVariables guiDefinicaoVariaveis;
 	private GUIFAQ guifaq;
 	private GUIAlgorithms guiAlgo;
+	private GUIGraphs guiGraphs;
 	
 	private Problem problem = new Problem("", "", "", null);
 
@@ -76,7 +78,7 @@ public class SharedClass {
 	}
 
 	/*
-	 * Função que lança o primeiro GUI
+	 * Funï¿½ï¿½o que lanï¿½a o primeiro GUI
 	 */
 	public void launch() {
 		gui = new GUI(this);
@@ -108,7 +110,7 @@ public class SharedClass {
 	// -------------------NP RELATED---------------------
 	
 	/*
-	 * Função do butão "New Problem" que inicializa o array dos GUI's pertencentes à funcionalidade do "New Problem"
+	 * Funï¿½ï¿½o do butï¿½o "New Problem" que inicializa o array dos GUI's pertencentes ï¿½ funcionalidade do "New Problem"
 	 */
 	public void createNPArray() {
 		// 0 in ArrayNewProblem
@@ -121,6 +123,9 @@ public class SharedClass {
 		//2 in ArrayNewProblem
 		guiAlgo = new GUIAlgorithms(this);
 		ArrayNewProblem.add(guiAlgo.getContentPane());
+		//3 in ArrayNewProblem
+		guiGraphs = new GUIGraphs(this);
+		ArrayNewProblem.add(guiGraphs.getPanel());
 	}
 	public ArrayList<JPanel> getNPArray() {
 		return ArrayNewProblem;
@@ -128,7 +133,7 @@ public class SharedClass {
 
 	// -------------------SP RELATED---------------------
 	/*
-	 * Função do butão "Stored Problem" que inicializa o array dos GUI's pertencentes à funcionalidade do "Stored Problem"
+	 * Funï¿½ï¿½o do butï¿½o "Stored Problem" que inicializa o array dos GUI's pertencentes ï¿½ funcionalidade do "Stored Problem"
 	 */
 	public void acessStoredProblems() {
 		setExistingPanelX(storedProblem.getContentPane());
@@ -137,7 +142,7 @@ public class SharedClass {
 
 	// -------------------FAQ RELATED---------------------
 	/*
-	 * Função do butão "FAQ" que inicializa o array dos GUI's pertencentes à funcionalidade do "FAQ"
+	 * Funï¿½ï¿½o do butï¿½o "FAQ" que inicializa o array dos GUI's pertencentes ï¿½ funcionalidade do "FAQ"
 	 */
 	public void createFAQArray() {
 		// 0 in ArrayFAQ
@@ -153,7 +158,7 @@ public class SharedClass {
 
 	
 	/*
-	 * Função responsável pela criação do problema com os dados fornecidos pelo utilizador
+	 * Funï¿½ï¿½o responsï¿½vel pela criaï¿½ï¿½o do problema com os dados fornecidos pelo utilizador
 	 */
 	public void createProblem(){
 		System.out.println(guidescricaoproblema.getName() +"   "+guidescricaoproblema.getDescription() +"   "+guidescricaoproblema.getEmail() );
@@ -168,7 +173,7 @@ public class SharedClass {
 	}
 	
 	/*
-	 * Função responsável pela criação/escrita do ficheiro XML
+	 * Funï¿½ï¿½o responsï¿½vel pela criaï¿½ï¿½o/escrita do ficheiro XML
 	 * 
 	 * @param Problem p
 	 */
@@ -220,7 +225,7 @@ public class SharedClass {
 	        TransformerFactory tranFactory = TransformerFactory.newInstance();
 	        Transformer aTransformer = tranFactory.newTransformer();
 	        /*
-	         * Formatação do ficheiro XML
+	         * Formataï¿½ï¿½o do ficheiro XML
 	         */
 	        aTransformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
 	        aTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
@@ -251,7 +256,7 @@ public class SharedClass {
 	
 	
 	/*
-	 * Função responsável pela leitura do ficheiro XML
+	 * Funï¿½ï¿½o responsï¿½vel pela leitura do ficheiro XML
 	 */
 	public void readXMLFile() {
 
@@ -270,7 +275,7 @@ public class SharedClass {
 			Document doc = docBuilder.parse(file);
 
 			/*
-			 * Normaliza a apresentação do texto
+			 * Normaliza a apresentaï¿½ï¿½o do texto
 			 */
 			doc.getDocumentElement().normalize();
 			System.out.println("Root element of the doc is " + doc.getDocumentElement().getNodeName());

@@ -273,10 +273,8 @@ public class GUIAlgorithms extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//					shared.createProblem();
-//					shared.setExistingPanel(shared.getNPArray(), );
-
-						
+				shared.createProblem();
+				shared.setExistingPanel(shared.getNPArray(), 3);
 			}
 		});
 		contentPane.add(BotaoNext);

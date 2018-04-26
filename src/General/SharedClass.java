@@ -239,7 +239,7 @@ public class SharedClass {
 	        	
 	            String problemName = p.getName()+" - " +date ;
 	            
-	            FileWriter fos = new FileWriter("/Users/albertoramos/Desktop/"+problemName+".xml");
+	            FileWriter fos = new FileWriter("C:/Users/andre/Desktop/File.xml");
 	            StreamResult result = new StreamResult(fos);
 	            aTransformer.transform(source, result);
 	        } catch (IOException e) {

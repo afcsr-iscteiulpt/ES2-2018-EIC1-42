@@ -86,7 +86,7 @@ public class GUIVariables extends JFrame {
 		comboBox.addItem(new String(""));
 		comboBox.addItem(new String("Integer"));
 		comboBox.addItem(new String("Double"));
-		comboBox.addItem(new String("Boolean"));
+		comboBox.addItem(new String("Bitstring"));
 
 		JLabel LabelVariablesList = new JLabel("Variables List:");
 		LabelVariablesList.setForeground(Color.WHITE);
@@ -151,6 +151,7 @@ public class GUIVariables extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 //					shared.createProblem();
+//					validateVariable(TFMin, TFMax);
 					shared.setExistingPanel(shared.getNPArray(), 2);
 
 						
@@ -206,18 +207,64 @@ public class GUIVariables extends JFrame {
 		if(TFName.getText().equals("") || TFMin.getText().equals("") || TFMax.getText().equals("") || comboBox.getSelectedItem().equals("")){
 			JOptionPane.showMessageDialog(null, "You must fill all the mandatory variables.");
 		}
-		else{			
-			Variable v = new Variable();
-			v.setName(TFName.getText());
-			v.setType((String) comboBox.getSelectedItem());
-			v.setMin(Integer.parseInt(TFMin.getText()));
-			v.setMax(Integer.parseInt(TFMax.getText()));
-			textAreaString += "\n" + v.toStringVariable();
-			variablesArray.add(v);
-			textArea.setText(textAreaString);		
+		else{
+			validateVariable(TFMin, TFMax);			
 		}
 	}
 
+	public boolean validateVariable(JTextField tfmin, JTextField tfmax){
+		boolean b =false;
+		if (comboBox.getSelectedItem().equals("Integer")){
+			try{
+				// is an integer!
+				int num1 = Integer.parseInt(tfmin.getText());
+				int num2 = Integer.parseInt(tfmax.getText());
+				b=true;
+				Variable v = new Variable(TFName.getText(),(String)comboBox.getSelectedItem(), Integer.parseInt(TFMin.getText()),Integer.parseInt(TFMax.getText()));
+				textAreaString += "\n" + v.toStringVariable();
+				variablesArray.add(v);
+				textArea.setText(textAreaString);
+				} catch (NumberFormatException e) {
+					b=false;
+					JOptionPane.showMessageDialog(null, "The variable interval must be Integer.");
+					// not an integer!
+				}
+		}
+		if (comboBox.getSelectedItem().equals("Double")){
+			try{
+				double num1 = Double.parseDouble(tfmin.getText());
+				double num2 = Double.parseDouble(tfmax.getText());
+				b=true;
+				Variable v = new Variable(TFName.getText(),(String)comboBox.getSelectedItem(), Double.parseDouble(TFMin.getText()),Double.parseDouble(TFMax.getText()));
+				textAreaString += "\n" + v.toStringVariable();
+				variablesArray.add(v);
+				textArea.setText(textAreaString);
+				// is an double!
+				} catch (NumberFormatException e) {
+					b=false;
+					JOptionPane.showMessageDialog(null, "The variable interval must be Double.");
+					// not an double!
+			}
+		}
+		if(comboBox.getSelectedItem().equals("Bitstring")){
+			if(tfmin.getText().matches("[01]+") && tfmax.getText().matches("[01]+")){
+					b=true;
+					Variable v = new Variable(TFName.getText(),(String)comboBox.getSelectedItem(),(TFMin.getText()),(TFMax.getText()));
+					textAreaString += "\n" + v.toStringVariable();
+					variablesArray.add(v);
+					textArea.setText(textAreaString);
+					// is an bitstring!
+			}
+			else{
+					b=false;
+					JOptionPane.showMessageDialog(null, "The variable interval must be Bitstring.");
+					// not an bitstring!
+			}
+		}
+		return b;
+	}
+	
+	
 	public ArrayList<Variable> getVariablesArray() {
 		return variablesArray;
 	}

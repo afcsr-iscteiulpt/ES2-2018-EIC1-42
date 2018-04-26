@@ -12,6 +12,8 @@ import General.SharedClass;
 import javax.swing.JSpinner;
 import javax.swing.JSlider;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -94,23 +96,23 @@ public class GUIAlgorithms extends JFrame {
 	private JTextField textField;
 	private JLabel LabelAuto = new JLabel("Your algorithms will be choosen automatically");
 	private JComboBox CBMulti = new JComboBox();
-	private JComboBox CBSingle = new JComboBox();
 	private JTextArea TAManu = new JTextArea();
-	JButton ButtonAddSingle = new JButton("Add");
-	JButton ButtonAddMulti = new JButton("Add");
+	private JButton ButtonAddMulti = new JButton("Add");
 	private String TAText = "Algorithms chosen: "+"\n";
 	
 	private ArrayList<String> SELECTEDsingleAlgorithmsArray = new ArrayList<>();
 	private ArrayList<String> SELECTEDmultiAlgorithmsArray = new ArrayList<>();
 
 	private static ArrayList<String> multiAlgorithmsArray = new ArrayList<>();
-	private static ArrayList<String> singleAlgorithmsArray = new ArrayList<>();
+	
+	//nao utilizar:
+//	private static ArrayList<String> singleAlgorithmsArray = new ArrayList<>();
 
 
 	public GUIAlgorithms(SharedClass shared) {
 		
 		addMultiAlgorithmsToArray();
-		addSingleAlgorithmsToArray();
+//		addSingleAlgorithmsToArray();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 500);
@@ -146,23 +148,14 @@ public class GUIAlgorithms extends JFrame {
 		separator.setBounds(0, 84, 700, 12);
 		contentPane.add(separator);	
 		
-		CBMulti.setBounds(20, 188, 208, 27);
+		CBMulti.setBounds(20, 206, 208, 27);
 		contentPane.add(CBMulti);
-		
-		CBSingle.setBounds(20, 234, 208, 27);
-		contentPane.add(CBSingle);
 		
 		JLabel LabelMOA = new JLabel("Multi-objective algoritms");
 		LabelMOA.setForeground(new Color(47, 79, 79));
 		LabelMOA.setFont(new Font("Avenir Next", Font.PLAIN, 14));
-		LabelMOA.setBounds(30, 174, 206, 16);
+		LabelMOA.setBounds(30, 186, 206, 16);
 		contentPane.add(LabelMOA);
-		
-		JLabel LabelSOA = new JLabel("Single-objective algoritms");
-		LabelSOA.setForeground(new Color(47, 79, 79));
-		LabelSOA.setFont(new Font("Avenir Next", Font.PLAIN, 14));
-		LabelSOA.setBounds(30, 217, 206, 16);
-		contentPane.add(LabelSOA);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(20, 270, 306, 119);
@@ -173,35 +166,20 @@ public class GUIAlgorithms extends JFrame {
 		TAManu.setEnabled(false);
 		ButtonAddMulti.setForeground(new Color(47, 79, 79));
 		
-		ButtonAddMulti.setBounds(227, 187, 99, 29);
+		ButtonAddMulti.setBounds(227, 205, 99, 29);
 		ButtonAddMulti.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String toAdd = (String)CBMulti.getSelectedItem();
-				SELECTEDmultiAlgorithmsArray.add(toAdd);
-				TAManu.setText(TAText + toAdd +"\n");
-				TAText = TAText + toAdd +"\n";
-				
+				if(!toAdd.equals("") && checkIfThisStringExists(toAdd) == false ){
+					SELECTEDmultiAlgorithmsArray.add(toAdd);
+					TAManu.setText(TAText + toAdd +"\n");
+					TAText = TAText + toAdd +"\n";
+				}
 			}
 		});
 		contentPane.add(ButtonAddMulti);
-		ButtonAddSingle.setForeground(new Color(47, 79, 79));
-		
-		ButtonAddSingle.setBounds(227, 233, 99, 29);
-		ButtonAddSingle.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String toAdd = (String)CBSingle.getSelectedItem();
-				SELECTEDsingleAlgorithmsArray.add(toAdd);
-				TAManu.setText(TAText + toAdd +"\n");
-				TAText = TAText + toAdd +"\n";
-
-				
-			}
-		});
-		contentPane.add(ButtonAddSingle);
 		
 		JButton ButtonManu = new JButton("Manually");
 		ButtonManu.setForeground(new Color(47, 79, 79));
@@ -311,18 +289,17 @@ public class GUIAlgorithms extends JFrame {
 		}
 	
 	}
-	public void addSingleAlgorithmsToArray(){
-		singleAlgorithmsArray.add("Coral Reefs Optimization");
-		singleAlgorithmsArray.add("Differential Evolution");
-		singleAlgorithmsArray.add("Elitist Evolution Strategy");
-		singleAlgorithmsArray.add("Non Elitist Evolution Strategy");
-		singleAlgorithmsArray.add("Generational Genetic Algorithm");
-		singleAlgorithmsArray.add("Steady StateGenetic Algorithm");
-		CBSingle.addItem(new String(""));
-		for(int i = 0 ; i<singleAlgorithmsArray.size(); i++){
-			CBSingle.addItem(singleAlgorithmsArray.get(i));
-		}
-	}
+//	public void addSingleAlgorithmsToArray(){
+//		singleAlgorithmsArray.add("Coral Reefs Optimization");
+//		singleAlgorithmsArray.add("Differential Evolution");
+//		singleAlgorithmsArray.add("Elitist Evolution Strategy");
+//		singleAlgorithmsArray.add("Non Elitist Evolution Strategy");
+//		singleAlgorithmsArray.add("Generational Genetic Algorithm");
+//		singleAlgorithmsArray.add("Steady StateGenetic Algorithm");
+//		for(int i = 0 ; i<singleAlgorithmsArray.size(); i++){
+//			CBSingle.addItem(singleAlgorithmsArray.get(i));
+//		}
+//	}
 	
 	public void automaticallySelected(){
 		LabelAuto.setForeground(new Color(58,153,58));
@@ -335,15 +312,20 @@ public class GUIAlgorithms extends JFrame {
 	
 	public void disableManually(){
 		CBMulti.setEnabled(false);
-		CBSingle.setEnabled(false);
 		ButtonAddMulti.setEnabled(false);
-		ButtonAddSingle.setEnabled(false);	
 	}
 	public void enableManually(){
 		CBMulti.setEnabled(true);
-		CBSingle.setEnabled(true);
 		ButtonAddMulti.setEnabled(true);
-		ButtonAddSingle.setEnabled(true);	
+	}
+	
+	public boolean checkIfThisStringExists(String s){
+		boolean b = false;
+		if(TAText.toLowerCase().contains(s.toLowerCase())){
+			b = true;
+			JOptionPane.showMessageDialog(null, "Algorithm already added.");
+		}
+		return b;
 	}
 	
 	

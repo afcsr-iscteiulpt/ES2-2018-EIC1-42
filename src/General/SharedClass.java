@@ -182,8 +182,10 @@ public class SharedClass {
 	        DocumentBuilderFactory dFact = DocumentBuilderFactory.newInstance();
 	        DocumentBuilder build = dFact.newDocumentBuilder();
 	        Document doc = build.newDocument();
+	        
 	        Element root = doc.createElement("Problem");
 	        doc.appendChild(root);
+	       
 	        Element name = doc.createElement("Name");
 	        root.appendChild(name);
 	        	name.appendChild(doc.createTextNode(p.getName()));	    
@@ -213,11 +215,11 @@ public class SharedClass {
                 			variable.appendChild(variableType);
                 			
                 			Element variableMin = doc.createElement("Min");
-            	            variableMin.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getMin())));
+            	            variableMin.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getMIN())));
                 			variable.appendChild(variableMin);
                 			
                 			Element variableMax = doc.createElement("Max");
-            	            variableMax.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getMax())));
+            	            variableMax.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getMIN())));
                 			variable.appendChild(variableMax);	
     			
                 }

@@ -11,6 +11,8 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JScrollPane;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JProgressBar;
@@ -141,10 +143,25 @@ public class GUIProblem {
 		else if(!TFNomeProblema.getText().equals("") && TADescricaoProblema.getText().equals("")){
 			JOptionPane.showMessageDialog(null, "You must fill the Problems Description.");
 		}
+		else if(!TFEmail.getText().equals("") && !isValidEmailAddress(TFEmail.getText())){
+			JOptionPane.showMessageDialog(null, "You must type a valid email.");
+		}
 		else{			
 			shared.setExistingPanel(shared.getNPArray(), 1);
 		}
 	}
+	
+	public static boolean isValidEmailAddress(String email) {
+		   boolean result = true;
+		   try {
+		      InternetAddress emailAddr = new InternetAddress(email);
+		      emailAddr.validate();
+		   } catch (AddressException ex) {
+		      result = false;
+		   }
+		   return result;
+		}
+	
 	
 	public String getName(){
 		String s = TFNomeProblema.getText();

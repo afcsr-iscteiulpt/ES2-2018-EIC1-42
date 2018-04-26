@@ -7,18 +7,24 @@ import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 
 public class DoubleProblem extends AbstractDoubleProblem{
+	private Problem problema;
+	
+	public DoubleProblem(Problem prob) {
+		this(prob.getVariablesArray().size());
+		problema = prob;
+	}
 	
 	public DoubleProblem(int num_Var) {
 		setNumberOfVariables(num_Var);
 		setNumberOfObjectives(2);//ver objetivos (perguntar ao utilizador) !!conferir com a função evaluate!! default:2
-		setName("getProblemName");//apartir da GUI
+		setName(problema.getName());
 		
 		List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables());
 		List<Double> upperLimit = new ArrayList<>(getNumberOfVariables());
 		
 		for(int i = 0; i< getNumberOfVariables(); i++) {
-			lowerLimit.add(/*get(i).lowerlimit*/-1.0);//ir buscar todos os limites inferiores postos na GUI
-			upperLimit.add(/*get(i).lowerlimit*/1.0);//ir buscar todos os limites superiores postos na GUI
+			lowerLimit.add(problema.getVariablesArray().get(i).getMinD());
+			upperLimit.add(problema.getVariablesArray().get(i).getMaxD());
 		}
 		
 		setLowerLimit(lowerLimit);

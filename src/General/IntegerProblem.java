@@ -7,18 +7,25 @@ import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
 
 public class IntegerProblem extends AbstractIntegerProblem{
+	private Problem problema;
+	
+
+	public IntegerProblem(Problem prob) {
+		this(prob.getVariablesArray().size());
+		problema = prob;
+	}
 	
 	public IntegerProblem(int num_Var) {
 		setNumberOfVariables(num_Var);
-		setNumberOfObjectives(2);//ver objetivos (perguntar ao utilizador)default:2
-		setName("getProblemName");//apartir da GUI
+		setNumberOfObjectives(/*problema.getOjetivos()*/2);//ver objetivos (perguntar ao utilizador)default:2
+		setName(problema.getName());
 		
 		List<Integer> lowerLimit = new ArrayList<>(getNumberOfVariables());
 		List<Integer> upperLimit = new ArrayList<>(getNumberOfVariables());
 		
 		for(int i = 0; i< getNumberOfVariables(); i++) {
-			lowerLimit.add(/*get(i).lowerlimit*/-1);//ir buscar todos os limites inferiores postos na GUI
-			upperLimit.add(/*get(i).lowerlimit*/1);//ir buscar todos os limites superiores postos na GUI
+			lowerLimit.add(problema.getVariablesArray().get(i).getMinI());
+			upperLimit.add(problema.getVariablesArray().get(i).getMaxI());
 		}
 		
 		setLowerLimit(lowerLimit);

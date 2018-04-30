@@ -147,6 +147,9 @@ public class GUIProblem {
 			JOptionPane.showMessageDialog(null, "You must type a valid email.");
 		}
 		else{			
+			shared.getProblem().setName(TFNomeProblema.getText());
+			shared.getProblem().setDescription(TADescricaoProblema.getText());
+			shared.getProblem().setEmail(TFEmail.getText());
 			shared.setExistingPanel(shared.getNPArray(), 1);
 		}
 	}

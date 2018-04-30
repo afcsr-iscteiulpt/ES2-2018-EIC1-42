@@ -151,6 +151,7 @@ public class GUIVariables extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+					shared.getProblem().setVariablesArray(variablesArray);
 					shared.setExistingPanel(shared.getNPArray(), 2);
 			}
 		});

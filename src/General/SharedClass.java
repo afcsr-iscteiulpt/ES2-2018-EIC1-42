@@ -355,6 +355,10 @@ public class SharedClass {
 		return ArrayOfPanels;
 	}
 	
+	public Problem getProblem(){
+		return problem;
+	}
+
 		
 	
 }

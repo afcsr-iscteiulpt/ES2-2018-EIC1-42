@@ -9,20 +9,21 @@ import org.uma.jmetal.solution.DoubleSolution;
 public class DoubleProblem extends AbstractDoubleProblem{
 	private Problem problema;
 	
-	public DoubleProblem(Problem prob) {
-		this(prob.getVariablesArray().size());
-		problema = prob;
+	public DoubleProblem(Problem problema) {
+		this(problema.getVariablesArray().size());
+		this.problema = problema;
 	}
 	
 	public DoubleProblem(int num_Var) {
-		setNumberOfVariables(num_Var);
-		setNumberOfObjectives(2);//ver objetivos (perguntar ao utilizador) !!conferir com a função evaluate!! default:2
-		setName(problema.getName());
+		this.setNumberOfVariables(num_Var);
+		this.setNumberOfObjectives(2);//ver objetivos (perguntar ao utilizador) !!conferir com a funï¿½ï¿½o evaluate!! default:2
+		this.setName(problema.getName());
 		
 		List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables());
 		List<Double> upperLimit = new ArrayList<>(getNumberOfVariables());
 		
 		for(int i = 0; i< getNumberOfVariables(); i++) {
+			System.out.println(problema.getVariablesArray().get(i).getName() + "    " + problema.getVariablesArray().get(i).getMinD());
 			lowerLimit.add(problema.getVariablesArray().get(i).getMinD());
 			upperLimit.add(problema.getVariablesArray().get(i).getMaxD());
 		}
@@ -35,7 +36,7 @@ public class DoubleProblem extends AbstractDoubleProblem{
 	@Override
 	public void evaluate(DoubleSolution sol) {
 		// TODO Auto-generated method stub
-		// Ir buscar e correr o jar com uma função de evaluate aqui ...
+		// Ir buscar e correr o jar com uma funï¿½ï¿½o de evaluate aqui ...
 		//sol.setObjective(arg0, arg1);
 	    double[] fx = new double[getNumberOfObjectives()];
 	    double[] x = new double[getNumberOfVariables()];

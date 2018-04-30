@@ -50,11 +50,11 @@ public class Configuration {
     return algorithms;
   }
   
-  public static void RunADoule(Problem ToRun) throws IOException {
+  public void RunADoule() throws IOException {
 	    String experimentBaseDirectory = "experimentBaseDirectory";
 
 	    List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-	    problemList.add(new ExperimentProblem<>(new DoubleProblem(ToRun)));
+	    problemList.add(new ExperimentProblem<>(new DoubleProblem(problemToRun)));
 
 	    List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
 	            configureAlgorithmList(problemList);

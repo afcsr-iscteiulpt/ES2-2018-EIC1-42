@@ -255,7 +255,7 @@ public class GUIAlgorithms extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 //				DoubleProblem dp = new DoubleProblem(shared.getProblem());
 //				shared.createProblem();
-				System.out.println(shared.getProblem().getName() + "    "+ shared.getProblem().getEmail() + "   "+ shared.getProblem().getVariablesArray().size());
+				//System.out.println(shared.getProblem().getName() + "    "+ shared.getProblem().getEmail() + "   "+ shared.getProblem().getVariablesArray().size());
 				Configuration conf = new Configuration(shared.getProblem(), "NSGAII");
 				try {
 					conf.RunADoule();

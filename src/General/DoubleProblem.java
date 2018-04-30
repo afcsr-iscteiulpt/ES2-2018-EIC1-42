@@ -11,11 +11,15 @@ public class DoubleProblem extends AbstractDoubleProblem{
 	
 	public DoubleProblem(Problem problema) {
 		this(problema.getVariablesArray().size());
-		this.problema = problema;
+		createDoubleProblem(problema);
 	}
 	
 	public DoubleProblem(int num_Var) {
 		this.setNumberOfVariables(num_Var);
+	}
+	
+	public void createDoubleProblem(Problem problema) {
+		this.problema = problema;
 		this.setNumberOfObjectives(2);//ver objetivos (perguntar ao utilizador) !!conferir com a fun��o evaluate!! default:2
 		this.setName(problema.getName());
 		
@@ -23,14 +27,12 @@ public class DoubleProblem extends AbstractDoubleProblem{
 		List<Double> upperLimit = new ArrayList<>(getNumberOfVariables());
 		
 		for(int i = 0; i< getNumberOfVariables(); i++) {
-			System.out.println(problema.getVariablesArray().get(i).getName() + "    " + problema.getVariablesArray().get(i).getMinD());
 			lowerLimit.add(problema.getVariablesArray().get(i).getMinD());
 			upperLimit.add(problema.getVariablesArray().get(i).getMaxD());
 		}
 		
 		setLowerLimit(lowerLimit);
 		setUpperLimit(upperLimit);
-		
 	}
 
 	@Override

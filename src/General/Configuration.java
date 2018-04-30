@@ -52,8 +52,9 @@ public class Configuration {
   }
   
   public void RunADoule() throws IOException {
-	    String experimentBaseDirectory = "experimentBaseDirectory";
-
+	    String experimentBaseDirectory = "/experimentBaseDirectory";
+	    
+	    System.out.println(problemToRun.getName());
 	    List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
 	    problemList.add(new ExperimentProblem<>(new DoubleProblem(problemToRun)));
 

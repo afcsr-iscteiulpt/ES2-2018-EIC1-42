@@ -30,7 +30,7 @@ import java.awt.Color;
 import javax.swing.JScrollPane;
 
 public class GUIVariables extends JFrame {
-//test
+//test-
 	private JPanel contentPane;
 	private JTextField TFName;
 	private JTextField TFMin;

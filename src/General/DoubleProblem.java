@@ -37,5 +37,23 @@ public class DoubleProblem extends AbstractDoubleProblem{
 		// TODO Auto-generated method stub
 		// Ir buscar e correr o jar com uma função de evaluate aqui ...
 		//sol.setObjective(arg0, arg1);
+	    double[] fx = new double[getNumberOfObjectives()];
+	    double[] x = new double[getNumberOfVariables()];
+	    for (int i = 0; i < sol.getNumberOfVariables(); i++) {
+	      x[i] = sol.getVariableValue(i) ;
+	    }
+
+	    fx[0] = 0.0;
+	    for (int var = 0; var < sol.getNumberOfVariables() - 1; var++) {
+		  fx[0] += Math.abs(x[0]); // Example for testing
+	    }
+	    
+	    fx[1] = 0.0;
+	    for (int var = 0; var < sol.getNumberOfVariables(); var++) {
+	    	fx[1] += Math.abs(x[1]); // Example for testing
+	    }
+
+	    sol.setObjective(0, fx[0]);
+	    sol.setObjective(1, fx[1]);
 	}
 }

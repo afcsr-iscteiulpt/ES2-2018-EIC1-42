@@ -44,6 +44,7 @@ public class GUIVariables extends JFrame {
 	private String variableType;
 	private String variableMin;
 	private String variableMax;
+	private JButton ButtonAddVariable;
 
 	public GUIVariables(SharedClass shared) {
 		this.shared=shared;
@@ -150,11 +151,7 @@ public class GUIVariables extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//					shared.createProblem();
-//					validateVariable(TFMin, TFMax);
 					shared.setExistingPanel(shared.getNPArray(), 2);
-
-						
 			}
 		});
 		contentPane.add(BotaoNext);
@@ -164,7 +161,7 @@ public class GUIVariables extends JFrame {
 		progressBar.setValue(10);
 		contentPane.add(progressBar);
 		
-		JButton ButtonAddVariable = new JButton("Add Variable");
+		ButtonAddVariable = new JButton("Add Variable");
 		ButtonAddVariable.setForeground(new Color(0, 128, 128));
 		ButtonAddVariable.setFont(new Font("Avenir Next", Font.PLAIN, 13));
 		ButtonAddVariable.setBounds(273, 112, 104, 29);
@@ -191,12 +188,29 @@ public class GUIVariables extends JFrame {
 		LabelInformation.setBounds(443, 29, 169, 76);
 		contentPane.add(LabelInformation);
 		
+		JButton ButtonClearAll = new JButton("Clear All");
+		ButtonClearAll.setForeground(new Color(0, 128, 128));
+		ButtonClearAll.setFont(new Font("Avenir", Font.PLAIN, 12));
+		ButtonClearAll.setBounds(566, 177, 76, 29);
+		contentPane.add(ButtonClearAll);
+		ButtonClearAll.addActionListener( new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				variablesArray.clear();
+				textAreaString = "Name:		Type:		Interval:";
+				textArea.setText(textAreaString);
+				comboBox.setEnabled(true);		
+			}
+		});
+		
 		JLabel LabelLogo = new JLabel();
 		ImageIcon imageIcon = new ImageIcon(
 				new ImageIcon("GenericPage.png").getImage().getScaledInstance(700, 500, Image.SCALE_DEFAULT));
 		LabelLogo.setIcon(imageIcon);
 		LabelLogo.setBounds(0, 0, 700, 478);
 		contentPane.add(LabelLogo);
+		
 	}	
 	
 	public JPanel getContentPane() {
@@ -212,38 +226,47 @@ public class GUIVariables extends JFrame {
 		}
 	}
 
-	public boolean validateVariable(JTextField tfmin, JTextField tfmax){
+	public void validateVariable(JTextField tfmin, JTextField tfmax){
 		boolean b =false;
 		if (comboBox.getSelectedItem().equals("Integer")){
 			try{
 				// is an integer!
 				int num1 = Integer.parseInt(tfmin.getText());
 				int num2 = Integer.parseInt(tfmax.getText());
-				b=true;
-				Variable v = new Variable(TFName.getText(),(String)comboBox.getSelectedItem(), Integer.parseInt(TFMin.getText()),Integer.parseInt(TFMax.getText()));
-				textAreaString += "\n" + v.toStringVariable();
-				variablesArray.add(v);
-				textArea.setText(textAreaString);
-				} catch (NumberFormatException e) {
-					b=false;
-					JOptionPane.showMessageDialog(null, "The variable interval must be Integer.");
-					// not an integer!
+				if(num1 < num2){
+					b=true;
+					Variable v = new Variable(TFName.getText(),(String)comboBox.getSelectedItem(), Integer.parseInt(TFMin.getText()),Integer.parseInt(TFMax.getText()));
+					textAreaString += "\n" + v.toStringVariable();
+					variablesArray.add(v);
+					textArea.setText(textAreaString);
+				}else if(num1 > num2){
+					JOptionPane.showMessageDialog(null, "The Minimum value must be lower than the Maximum value.");
 				}
+			} catch (NumberFormatException e) {
+				b=false;
+				JOptionPane.showMessageDialog(null, "The variable interval must be Integer.");
+				// not an integer!
+			}
 		}
 		if (comboBox.getSelectedItem().equals("Double")){
 			try{
 				double num1 = Double.parseDouble(tfmin.getText());
 				double num2 = Double.parseDouble(tfmax.getText());
-				b=true;
-				Variable v = new Variable(TFName.getText(),(String)comboBox.getSelectedItem(), Double.parseDouble(TFMin.getText()),Double.parseDouble(TFMax.getText()));
-				textAreaString += "\n" + v.toStringVariable();
-				variablesArray.add(v);
-				textArea.setText(textAreaString);
+				if(num1 < num2){
+					b=true;
+					Variable v = new Variable(TFName.getText(),(String)comboBox.getSelectedItem(), Double.parseDouble(TFMin.getText()),Double.parseDouble(TFMax.getText()));
+					textAreaString += "\n" + v.toStringVariable();
+					variablesArray.add(v);
+					textArea.setText(textAreaString);
+				}else if(num1 > num2){
+					JOptionPane.showMessageDialog(null, "The Minimum value must be lower than the Maximum value.");
+				}
+		
 				// is an double!
-				} catch (NumberFormatException e) {
-					b=false;
-					JOptionPane.showMessageDialog(null, "The variable interval must be Double.");
-					// not an double!
+			} catch (NumberFormatException e) {
+				b=false;
+				JOptionPane.showMessageDialog(null, "The variable interval must be Double.");
+				// not an double!
 			}
 		}
 		if(comboBox.getSelectedItem().equals("Bitstring")){
@@ -261,7 +284,9 @@ public class GUIVariables extends JFrame {
 					// not an bitstring!
 			}
 		}
-		return b;
+		if(b == true){
+			comboBox.setEnabled(false);
+		}
 	}
 	
 	
@@ -295,9 +320,4 @@ public class GUIVariables extends JFrame {
 	public void setVariableMax(String variableMax) {
 		this.variableMax = variableMax;
 	}
-	
-	
-	
-	
-	
 }

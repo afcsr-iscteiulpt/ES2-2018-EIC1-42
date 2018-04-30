@@ -110,7 +110,7 @@ public class SharedClass {
 	// -------------------NP RELATED---------------------
 	
 	/*
-	 * Fun��o do but�o "New Problem" que inicializa o array dos GUI's pertencentes � funcionalidade do "New Problem"
+	 * Fun��o do but�o "New Problem" que inicializa o array dos GUI's pertencentes � funcionalidade do "New Problem">
 	 */
 	public void createNPArray() {
 		// 0 in ArrayNewProblem
@@ -223,7 +223,7 @@ public class SharedClass {
                 			variable.appendChild(variableMax);	
     			
                 }
-
+            
 	        TransformerFactory tranFactory = TransformerFactory.newInstance();
 	        Transformer aTransformer = tranFactory.newTransformer();
 	        /*
@@ -241,7 +241,7 @@ public class SharedClass {
 	        	
 	            String problemName = p.getName()+" - " +date ;
 	            
-	            FileWriter fos = new FileWriter("/Users/albertoramos/Desktop/"+problemName+".xml");
+	            FileWriter fos = new FileWriter("C:/Users/andre/Desktop/File.xml");
 	            StreamResult result = new StreamResult(fos);
 	            aTransformer.transform(source, result);
 	        } catch (IOException e) {
@@ -342,14 +342,10 @@ public class SharedClass {
 	
 	
 	public void LoadProblem(String name, String description, String email){
-		
 		guidescricaoproblema.setName(name);
 		guidescricaoproblema.setDescription(description);
 		guidescricaoproblema.setEmail(email);
 	}
-	
-	
-	
 	
 	public void setGUI(GUI gui) {
 		this.gui = gui;
@@ -358,4 +354,7 @@ public class SharedClass {
 	public ArrayList<JPanel> getArrayOfPanels() {
 		return ArrayOfPanels;
 	}
+	
+		
+	
 }

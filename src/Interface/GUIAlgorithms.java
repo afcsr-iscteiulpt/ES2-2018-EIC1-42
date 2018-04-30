@@ -86,8 +86,7 @@ import java.awt.Checkbox;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 
-
-
+//teste
 
 public class GUIAlgorithms extends JFrame {
 

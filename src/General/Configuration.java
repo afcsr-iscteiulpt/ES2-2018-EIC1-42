@@ -30,6 +30,7 @@ public class Configuration {
 		alg=Algorithm;
 	}
 	
+	
 	//automatic configuration of algorithms for the problem..(Only NSGAII for now)  review "Double"Solution and AlgorithmBuilder chosen
   static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
           List<ExperimentProblem<DoubleSolution>> problemList) {

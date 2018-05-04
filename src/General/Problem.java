@@ -11,6 +11,9 @@ public class Problem {
 	private String name;
 	private String description;
 	private String email;
+	private ArrayList<Variable> variablesArray;
+	private ArrayList<String> algorithms;
+	private int numberOfDays;
 
 	public String getEmail() {
 		return email;
@@ -20,19 +23,35 @@ public class Problem {
 		this.email = email;
 	}
 
-	private ArrayList<Variable> variablesArray;
-
 	public Problem() {
 
 	}
 
-	public Problem(String name, String description, String email, ArrayList<Variable> variablesArray) {
+	public Problem(String name, String description, String email, ArrayList<Variable> variablesArray, ArrayList<String> algorithms, int numberOfDays) {
 		this.name = name;
 		this.description = description;
 		this.email = email;
 		this.variablesArray = variablesArray;
+		this.algorithms = algorithms;
+		this.numberOfDays = numberOfDays;
 	}
 
+
+	public ArrayList<String> getAlgorithms() {
+		return algorithms;
+	}
+
+	public void setAlgorithms(ArrayList<String> algorithms) {
+		this.algorithms = algorithms;
+	}
+
+	public int getNumberOfDays() {
+		return numberOfDays;
+	}
+
+	public void setNumberOfDays(int numberOfDays) {
+		this.numberOfDays = numberOfDays;
+	}
 
 	@XmlElement
 	public String getName() {

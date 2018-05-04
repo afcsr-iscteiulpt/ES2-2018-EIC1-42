@@ -87,7 +87,7 @@ public class GUIVariables extends JFrame {
 		comboBox.addItem(new String(""));
 		comboBox.addItem(new String("Integer"));
 		comboBox.addItem(new String("Double"));
-		comboBox.addItem(new String("Bitstring"));
+		comboBox.addItem(new String("Binary"));
 
 		JLabel LabelVariablesList = new JLabel("Variables List:");
 		LabelVariablesList.setForeground(Color.WHITE);
@@ -234,7 +234,7 @@ public class GUIVariables extends JFrame {
 				// is an integer!
 				int num1 = Integer.parseInt(tfmin.getText());
 				int num2 = Integer.parseInt(tfmax.getText());
-				if(num1 < num2){
+				if(num1 < num2 && validateName(TFName.getText())){
 					b=true;
 					Variable v = new Variable(TFName.getText(),(String)comboBox.getSelectedItem(), Integer.parseInt(TFMin.getText()),Integer.parseInt(TFMax.getText()));
 					textAreaString += "\n" + v.toStringVariable();
@@ -253,7 +253,7 @@ public class GUIVariables extends JFrame {
 			try{
 				double num1 = Double.parseDouble(tfmin.getText());
 				double num2 = Double.parseDouble(tfmax.getText());
-				if(num1 < num2){
+				if(num1 < num2 && validateName(TFName.getText())){
 					b=true;
 					Variable v = new Variable(TFName.getText(),(String)comboBox.getSelectedItem(), Double.parseDouble(TFMin.getText()),Double.parseDouble(TFMax.getText()));
 					textAreaString += "\n" + v.toStringVariable();
@@ -270,8 +270,8 @@ public class GUIVariables extends JFrame {
 				// not an double!
 			}
 		}
-		if(comboBox.getSelectedItem().equals("Bitstring")){
-			if(tfmin.getText().matches("[01]+") && tfmax.getText().matches("[01]+")){
+		if(comboBox.getSelectedItem().equals("Binary")){
+			if(tfmin.getText().matches("[01]+") && tfmax.getText().matches("[01]+") && validateName(TFName.getText())){
 					b=true;
 					Variable v = new Variable(TFName.getText(),(String)comboBox.getSelectedItem(),(TFMin.getText()),(TFMax.getText()));
 					textAreaString += "\n" + v.toStringVariable();
@@ -281,7 +281,7 @@ public class GUIVariables extends JFrame {
 			}
 			else{
 					b=false;
-					JOptionPane.showMessageDialog(null, "The variable interval must be Bitstring.");
+					JOptionPane.showMessageDialog(null, "The variable interval must be Binary.");
 					// not an bitstring!
 			}
 		}
@@ -290,6 +290,17 @@ public class GUIVariables extends JFrame {
 		}
 	}
 	
+	public boolean validateName(String name){
+		Boolean b = true;
+		for(int i = 0; i<variablesArray.size(); i++){
+			if(variablesArray.get(i).getName().equals(name)){
+				b = false;
+				JOptionPane.showMessageDialog(null, "There is already a variable with that name.");
+			}
+		}
+		return b;
+	}
+		
 	
 	public ArrayList<Variable> getVariablesArray() {
 		return variablesArray;

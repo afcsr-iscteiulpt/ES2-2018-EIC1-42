@@ -54,7 +54,7 @@ public class SharedClass {
 	private GUIAlgorithms guiAlgo;
 	private GUIGraphs guiGraphs;
 	
-	private Problem problem = new Problem("", "", "", null,null,0);
+	private Problem problem = new Problem("", "", "", null, null, 0); // name ; description ; varArray ; AlgorithmArray ; DaysToWait
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -78,7 +78,7 @@ public class SharedClass {
 	}
 
 	/*
-	 * Fun��o que lan�a o primeiro GUI
+	 * Função que lança o primeiro GUI
 	 */
 	public void launch() {
 		gui = new GUI(this);
@@ -110,7 +110,7 @@ public class SharedClass {
 	// -------------------NP RELATED---------------------
 	
 	/*
-	 * Fun��o do but�o "New Problem" que inicializa o array dos GUI's pertencentes � funcionalidade do "New Problem">
+	 * Função do but�o "New Problem" que inicializa o array dos GUI's pertencentes às funcionalidade do "New Problem">
 	 */
 	public void createNPArray() {
 		// 0 in ArrayNewProblem
@@ -199,7 +199,7 @@ public class SharedClass {
     		root.appendChild(variables);
     			variables.appendChild(doc.createTextNode(""));
     			
-    			ArrayList<Variable> variablesArray = guiDefinicaoVariaveis.getVariablesArray();
+    			ArrayList<Variable> variablesArray = p.getVariablesArray();
 
                 for (int i = 0; i < variablesArray.size(); i++) {
                 	String varName = "Var"+i;
@@ -220,9 +220,21 @@ public class SharedClass {
                 			
                 			Element variableMax = doc.createElement("Max");
             	            variableMax.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getMIN())));
-                			variable.appendChild(variableMax);	
-    			
+                			variable.appendChild(variableMax);	 			
                 }
+   
+           		Element algorithms = doc.createElement("Algorithms");
+        		root.appendChild(algorithms);
+        		algorithms.appendChild(doc.createTextNode(""));	
+        			ArrayList<String> algorithmsArray = p.getAlgorithms();
+                    for (int i = 0; i < algorithmsArray.size(); i++) {
+                    	String algorithmName = algorithmsArray.get(i);
+                    	Element algorithm = doc.createElement(algorithmName);
+                    	algorithms.appendChild(algorithm);	
+                    }
+        	    Element daysToWait = doc.createElement("Days");
+        	    root.appendChild(daysToWait);
+        	    daysToWait.appendChild(doc.createTextNode(String.valueOf(p.getNumberOfDays())));	    
             
 	        TransformerFactory tranFactory = TransformerFactory.newInstance();
 	        Transformer aTransformer = tranFactory.newTransformer();
@@ -241,7 +253,7 @@ public class SharedClass {
 	        	
 	            String problemName = p.getName()+" - " +date ;
 	            
-	            FileWriter fos = new FileWriter("C:/Users/andre/Desktop/File.xml");
+	            FileWriter fos = new FileWriter("/Users/albertoramos/Desktop/"+problemName);
 	            StreamResult result = new StreamResult(fos);
 	            aTransformer.transform(source, result);
 	        } catch (IOException e) {

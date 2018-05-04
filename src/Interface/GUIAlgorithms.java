@@ -9,6 +9,7 @@ import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
 
 import General.Configuration;
+import General.ConfigurationDoubleP;
 import General.DoubleProblem;
 import General.SharedClass;
 import javax.swing.JSpinner;
@@ -89,33 +90,25 @@ import java.awt.Checkbox;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 
-//test-
 
 public class GUIAlgorithms extends JFrame {
 
 	private JPanel contentPane;
 	private SharedClass shared;
-	private JTextField textField;
 	private JLabel LabelAuto = new JLabel("Your algorithms will be choosen automatically");
 	private JComboBox CBMulti = new JComboBox();
 	private JTextArea TAManu = new JTextArea();
 	private JButton ButtonAddMulti = new JButton("Add");
 	private String TAText = "Algorithms chosen: "+"\n";
+	private int numberOfDays;
 	
-	private ArrayList<String> SELECTEDsingleAlgorithmsArray = new ArrayList<>();
-	private ArrayList<String> SELECTEDmultiAlgorithmsArray = new ArrayList<>();
-
+	private ArrayList<String> SELECTEDAlgorithmsArray = new ArrayList<>();
 	private static ArrayList<String> multiAlgorithmsArray = new ArrayList<>();
 	
-	//nao utilizar:
-//	private static ArrayList<String> singleAlgorithmsArray = new ArrayList<>();
-
 
 	public GUIAlgorithms(SharedClass shared) {
 		
 		addMultiAlgorithmsToArray();
-//		addSingleAlgorithmsToArray();
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 500);
 		contentPane = new JPanel();
@@ -135,15 +128,29 @@ public class GUIAlgorithms extends JFrame {
 		LabelTime2.setBounds(20, 34, 630, 16);
 		contentPane.add(LabelTime2);
 		
-		textField = new JTextField();
-		textField.setBounds(20, 51, 77, 26);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		JTextField Time = new JTextField();
+		Time.setBounds(20, 51, 77, 26);
+		contentPane.add(Time);
+		Time.setColumns(10);
 		
 		JLabel LabelTime3 = new JLabel("Days");
 		LabelTime3.setForeground(new Color(47, 79, 79));
 		LabelTime3.setBounds(99, 56, 61, 16);
 		contentPane.add(LabelTime3);
+	
+		JButton ButtonTime = new JButton("Set");
+		ButtonTime.setForeground(new Color(47, 79, 79));
+		ButtonTime.setBounds(133, 51, 61, 29);
+		contentPane.add(ButtonTime);
+		ButtonTime.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				numberOfDays = Integer.parseInt(Time.getText());
+				shared.getProblem().setNumberOfDays(numberOfDays);
+				
+			}
+		});
 		
 		JSeparator separator = new JSeparator();
 		separator.setForeground(new Color(0, 139, 139));
@@ -175,7 +182,7 @@ public class GUIAlgorithms extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String toAdd = (String)CBMulti.getSelectedItem();
 				if(!toAdd.equals("") && checkIfThisStringExists(toAdd) == false ){
-					SELECTEDmultiAlgorithmsArray.add(toAdd);
+					SELECTEDAlgorithmsArray.add(toAdd);
 					TAManu.setText(TAText + toAdd +"\n");
 					TAText = TAText + toAdd +"\n";
 				}
@@ -223,10 +230,6 @@ public class GUIAlgorithms extends JFrame {
 		LabelInfo.setBounds(196, 97, 423, 16);
 		contentPane.add(LabelInfo);
 		
-		JButton ButtonTime = new JButton("Set");
-		ButtonTime.setForeground(new Color(47, 79, 79));
-		ButtonTime.setBounds(133, 51, 61, 29);
-		contentPane.add(ButtonTime);
 		
 		JLabel LabelInfo2 = new JLabel("Press one of the buttons to choose");
 		LabelInfo2.setForeground(new Color(47, 79, 79));
@@ -253,12 +256,26 @@ public class GUIAlgorithms extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				DoubleProblem dp = new DoubleProblem(shared.getProblem());
-//				shared.createProblem();
-				//System.out.println(shared.getProblem().getName() + "    "+ shared.getProblem().getEmail() + "   "+ shared.getProblem().getVariablesArray().size());
-				Configuration conf = new Configuration(shared.getProblem(), "NSGAII");
+				shared.getProblem().setNumberOfDays(numberOfDays);
+				shared.getProblem().setAlgorithms(SELECTEDAlgorithmsArray);
+				shared.writeXmlFile(shared.getProblem());
+				
+				Configuration conf = null;
+				switch(shared.getProblem().getType()) {
+					case "Double" :
+						conf = new ConfigurationDoubleP(shared.getProblem(),new String[]{"NSGAII"});
+						break;
+					case "Integer" :
+						break;
+					case "Binary" :
+						break;
+					default:
+						conf = new Configuration(shared.getProblem(),new String[]{"NSGAII"});
+						System.out.println("GUIAlgorithm:: ProblemType Not found");
+						break;
+				}
 				try {
-					conf.RunADoule();
+					conf.Run();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -300,18 +317,7 @@ public class GUIAlgorithms extends JFrame {
 		}
 	
 	}
-//	public void addSingleAlgorithmsToArray(){
-//		singleAlgorithmsArray.add("Coral Reefs Optimization");
-//		singleAlgorithmsArray.add("Differential Evolution");
-//		singleAlgorithmsArray.add("Elitist Evolution Strategy");
-//		singleAlgorithmsArray.add("Non Elitist Evolution Strategy");
-//		singleAlgorithmsArray.add("Generational Genetic Algorithm");
-//		singleAlgorithmsArray.add("Steady StateGenetic Algorithm");
-//		for(int i = 0 ; i<singleAlgorithmsArray.size(); i++){
-//			CBSingle.addItem(singleAlgorithmsArray.get(i));
-//		}
-//	}
-	
+
 	public void automaticallySelected(){
 		LabelAuto.setForeground(new Color(58,153,58));
 		disableManually();
@@ -337,6 +343,10 @@ public class GUIAlgorithms extends JFrame {
 			JOptionPane.showMessageDialog(null, "Algorithm already added.");
 		}
 		return b;
+	}
+	
+	public ArrayList<String> getAlgorithmsSelected(){
+		return SELECTEDAlgorithmsArray;
 	}
 	
 	

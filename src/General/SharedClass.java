@@ -54,7 +54,7 @@ public class SharedClass {
 	private GUIAlgorithms guiAlgo;
 	private GUIGraphs guiGraphs;
 	
-	private Problem problem = new Problem("", "", "", null);
+	private Problem problem = new Problem("", "", "", null,null,0);
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

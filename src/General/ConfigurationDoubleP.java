@@ -7,7 +7,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3Builder;
+import org.uma.jmetal.algorithm.multiobjective.ibea.IBEABuilder;
+import org.uma.jmetal.algorithm.multiobjective.mocell.MOCellBuilder;
+import org.uma.jmetal.algorithm.multiobjective.moead.MOEADBuilder;
+import org.uma.jmetal.algorithm.multiobjective.moead.MOEADBuilder.Variant;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
+import org.uma.jmetal.algorithm.multiobjective.paes.PAESBuilder;
+import org.uma.jmetal.algorithm.multiobjective.randomsearch.RandomSearchBuilder;
+import org.uma.jmetal.algorithm.multiobjective.smsemoa.SMSEMOABuilder;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
@@ -27,13 +35,13 @@ import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 public class ConfigurationDoubleP extends Configuration{
 	private static Problem problemToRun;
 	private static String problemType;
-	private static String alg;
+	private static ArrayList<String> alg;
 
-	public ConfigurationDoubleP(Problem ToRun,String[] Algorithm) {
-		super(ToRun,Algorithm);
+	public ConfigurationDoubleP(Problem ToRun) {
+		super(ToRun);
 		problemToRun=ToRun;
 		problemType=ToRun.getType();
-		alg=Algorithm[0];
+		alg=ToRun.getAlgorithms();
 	}
 
 
@@ -44,14 +52,86 @@ public class ConfigurationDoubleP extends Configuration{
 		List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
 
 		for (int i = 0; i < problemList.size(); i++) {
-			Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
-					problemList.get(i).getProblem(),
-					new SBXCrossover(1.0, 5),
-					new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 10.0))
-					.setMaxEvaluations(500)
-					.setPopulationSize(100)
-					.build();
-			algorithms.add(new ExperimentAlgorithm<>(algorithm, alg , problemList.get(i).getTag()));
+			switch(alg.get(i)) {
+				case "NSGAII":
+					Algorithm<List<DoubleSolution>> algorithmnsgaii = new NSGAIIBuilder<>(
+							problemList.get(i).getProblem(),
+							new SBXCrossover(1.0, 5),
+							new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 10.0))
+							.setMaxEvaluations(500)
+							.setPopulationSize(100)
+							.build();
+					algorithms.add(new ExperimentAlgorithm<>(algorithmnsgaii, "NSGAII" , problemList.get(i).getTag()));
+					break;
+					
+				case "SMSEMOA":
+					Algorithm<List<DoubleSolution>> algorithmsmsemoa = new SMSEMOABuilder<>(
+							problemList.get(i).getProblem(),
+							new SBXCrossover(1.0, 5),
+							new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 10.0))
+							.setMaxEvaluations(500)
+							.build();
+					algorithms.add(new ExperimentAlgorithm<>(algorithmsmsemoa, "SMSEMOA" , problemList.get(i).getTag()));
+					break;
+					
+				case "GDE3":
+					Algorithm<List<DoubleSolution>> algorithmgde3 = new GDE3Builder( 
+							(org.uma.jmetal.problem.DoubleProblem) problemList.get(i).getProblem())
+							.setMaxEvaluations(500)
+							.build();
+					algorithms.add(new ExperimentAlgorithm<>(algorithmgde3, "GDE3" , problemList.get(i).getTag()));
+					break;
+					
+				case "IBEA":
+					Algorithm<List<DoubleSolution>> algorithmibea = new IBEABuilder(
+							problemList.get(i).getProblem())
+							.setMaxEvaluations(500)
+							.build();
+					algorithms.add(new ExperimentAlgorithm<>(algorithmibea, "IBEA" , problemList.get(i).getTag()));
+					break;
+					
+				case "MOCell":
+					Algorithm<List<DoubleSolution>> algorithmmocell = new MOCellBuilder<>(
+							problemList.get(i).getProblem(),
+							new SBXCrossover(1.0, 5),
+							new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 10.0))
+							.setMaxEvaluations(500)
+							.build();
+					algorithms.add(new ExperimentAlgorithm<>(algorithmmocell, "MOCell" , problemList.get(i).getTag()));
+					break;
+					
+				case "MOEAD":
+					Algorithm<List<DoubleSolution>> algorithmmoead = new MOEADBuilder(
+							problemList.get(i).getProblem(), Variant.MOEAD) 
+							.setMaxEvaluations(500)
+							.build();
+					algorithms.add(new ExperimentAlgorithm<>(algorithmmoead, "MOEAD" , problemList.get(i).getTag()));
+					break; 
+					
+					// cuidar dos warnings embaixo
+				case "PAES":
+					Algorithm<List<DoubleSolution>> algorithmpaes = new PAESBuilder(
+							problemList.get(i).getProblem())
+							.setMaxEvaluations(500)
+							.setArchiveSize(100)
+							.setBiSections(2)
+							.setMutationOperator(new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 10.0))
+							.build();
+					algorithms.add(new ExperimentAlgorithm<>(algorithmpaes, "PAES" , problemList.get(i).getTag()));
+					break;
+					
+				case "RandomSearch":
+					Algorithm<List<DoubleSolution>> algorithmrandomsearch = new RandomSearchBuilder(
+							problemList.get(i).getProblem())
+							.setMaxEvaluations(500)
+							.build();
+					algorithms.add(new ExperimentAlgorithm<>(algorithmrandomsearch, "RandomSearch" , problemList.get(i).getTag()));
+					break;
+					
+				default:
+					System.out.println("Algorithm not found/adjusted to problem type");
+					break;
+			}
 		}
 
 		return algorithms;

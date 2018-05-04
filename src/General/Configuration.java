@@ -26,8 +26,8 @@ public class Configuration {
 	private static Problem problemToRun;
 	private static String problemType;
 	private static String alg;
-
-	public Configuration(Problem ToRun,String[] Algorithm) {
+ 
+	public Configuration(Problem ToRun) {
 		problemToRun=ToRun;
 		problemType=ToRun.getType();
 	}

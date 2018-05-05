@@ -93,6 +93,8 @@ import javax.swing.JScrollPane;
 
 public class GUIAlgorithms extends JFrame {
 
+	//teste
+
 	private JPanel contentPane;
 	private SharedClass shared;
 	private JLabel LabelAuto = new JLabel("Your algorithms will be choosen automatically");
@@ -247,7 +249,6 @@ public class GUIAlgorithms extends JFrame {
 			}
 		});
 		contentPane.add(BotaoBack); 
-		
 		JButton BotaoNext = new JButton("▶");
 		BotaoNext.setForeground(new Color(0, 128, 128));
 		BotaoNext.setFont(new Font("Avenir Next", Font.PLAIN, 14));

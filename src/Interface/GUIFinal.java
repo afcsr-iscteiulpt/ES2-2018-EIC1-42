@@ -33,7 +33,8 @@ public class GUIFinal extends JFrame{
 	
 	public GUIFinal(SharedClass shared) {
 		this.shared=shared;
-		
+		//teste
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 500);
 		contentPane = new JPanel();

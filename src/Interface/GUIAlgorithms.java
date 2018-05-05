@@ -257,7 +257,9 @@ public class GUIAlgorithms extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				shared.getProblem().setNumberOfDays(numberOfDays);
 				shared.getProblem().setAlgorithms(SELECTEDAlgorithmsArray);
-				shared.writeXmlFile(shared.getProblem());
+				
+				shared.setReviewProblem();
+				shared.setExistingPanel(shared.getNPArray(), 3);
 				
 				Configuration conf = new Configuration(shared.getProblem(), "NSGAII");
 				try {
@@ -266,14 +268,13 @@ public class GUIAlgorithms extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				shared.setExistingPanel(shared.getNPArray(), 3);
 			}
 		});
 		contentPane.add(BotaoNext);
 		
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setBounds(34, 448, 633, 20);
-		progressBar.setValue(15);
+		progressBar.setValue(75);
 		contentPane.add(progressBar);
 		
 		JLabel LabelLogo = new JLabel();

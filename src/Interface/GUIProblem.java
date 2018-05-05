@@ -109,7 +109,7 @@ public class GUIProblem {
 
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setBounds(34, 448, 633, 20);
-		progressBar.setValue(5);
+		progressBar.setValue(25);
 		contentPane.add(progressBar);
 
 		JLabel LabelLogo = new JLabel();

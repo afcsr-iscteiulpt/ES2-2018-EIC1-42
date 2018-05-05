@@ -159,7 +159,7 @@ public class GUIVariables extends JFrame {
 		
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setBounds(34, 448, 633, 20);
-		progressBar.setValue(10);
+		progressBar.setValue(50);
 		contentPane.add(progressBar);
 		
 		ButtonAddVariable = new JButton("Add Variable");

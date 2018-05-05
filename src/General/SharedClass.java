@@ -38,6 +38,7 @@ import Interface.GUIVariables;
 import Interface.GUIProblem;
 import Interface.GUIStoredProblems;
 import Interface.GUIFAQ;
+import Interface.GUIFinal;
 import Interface.GUIGraphs;
 
 
@@ -52,6 +53,7 @@ public class SharedClass {
 	private GUIVariables guiDefinicaoVariaveis;
 	private GUIFAQ guifaq;
 	private GUIAlgorithms guiAlgo;
+	private GUIFinal guiFinal;
 	private GUIGraphs guiGraphs;
 	
 	private Problem problem = new Problem("", "", "", null, null, 0); // name ; description ; varArray ; AlgorithmArray ; DaysToWait
@@ -124,8 +126,11 @@ public class SharedClass {
 		guiAlgo = new GUIAlgorithms(this);
 		ArrayNewProblem.add(guiAlgo.getContentPane());
 		//3 in ArrayNewProblem
-		guiGraphs = new GUIGraphs(this);
-		ArrayNewProblem.add(guiGraphs.getPanel());
+		guiFinal = new GUIFinal(this);
+		ArrayNewProblem.add(guiFinal.getContentPane());
+		//3 in ArrayNewProblem
+//		guiGraphs = new GUIGraphs(this);
+//		ArrayNewProblem.add(guiGraphs.getPanel());
 	}
 	public ArrayList<JPanel> getNPArray() {
 		return ArrayNewProblem;
@@ -357,6 +362,22 @@ public class SharedClass {
 		guidescricaoproblema.setName(name);
 		guidescricaoproblema.setDescription(description);
 		guidescricaoproblema.setEmail(email);
+	}
+	
+	public void setReviewProblem(){
+		String s1="";
+		String s2="";
+		guiFinal.getTFName().setText(problem.getName());
+		guiFinal.getTADescription().setText(problem.getDescription());
+		for(int i=0; i<problem.getVariablesArray().size(); i++){
+			s1 += problem.getVariablesArray().get(i).getName() + "\n"  ;
+			guiFinal.getTAVariables().setText(s1);
+		}
+		for(int i=0; i<problem.getAlgorithms().size(); i++){
+			s2 += problem.getAlgorithms().get(i) + "\n" ;
+			guiFinal.getTAAlgorit().setText(s2);
+		}
+		guiFinal.getTFDays().setText(problem.getNumberOfDays()+"");
 	}
 	
 	public void setGUI(GUI gui) {

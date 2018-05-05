@@ -14,6 +14,8 @@ public class Problem {
 	private ArrayList<Variable> variablesArray;
 	private ArrayList<String> algorithms;
 	private int numberOfDays;
+	private String type;
+
 
 	public String getEmail() {
 		return email;
@@ -34,6 +36,8 @@ public class Problem {
 		this.variablesArray = variablesArray;
 		this.algorithms = algorithms;
 		this.numberOfDays = numberOfDays;
+
+		this.type = variablesArray.get(0).getType() ;
 	}
 
 
@@ -56,6 +60,11 @@ public class Problem {
 	@XmlElement
 	public String getName() {
 		return name;
+	}
+	
+	@XmlElement
+	public String getType() {
+		return type;
 	}
 
 	@XmlElement

@@ -9,6 +9,7 @@ import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
 
 import General.Configuration;
+import General.ConfigurationDoubleP;
 import General.DoubleProblem;
 import General.SharedClass;
 import javax.swing.JSpinner;
@@ -245,7 +246,7 @@ public class GUIAlgorithms extends JFrame {
 				shared.setExistingPanel(shared.getNPArray(), 1);
 			}
 		});
-		contentPane.add(BotaoBack);
+		contentPane.add(BotaoBack); 
 		
 		JButton BotaoNext = new JButton("▶");
 		BotaoNext.setForeground(new Color(0, 128, 128));
@@ -261,9 +262,22 @@ public class GUIAlgorithms extends JFrame {
 				shared.setReviewProblem();
 				shared.setExistingPanel(shared.getNPArray(), 3);
 				
-				Configuration conf = new Configuration(shared.getProblem(), "NSGAII");
+				Configuration conf = null;
+				switch(shared.getProblem().getType()) {
+					case "Double" :
+						conf = new ConfigurationDoubleP(shared.getProblem());
+						break;
+					case "Integer" :
+						break;
+					case "Binary" :
+						break;
+					default:
+						conf = new Configuration(shared.getProblem());
+						System.out.println("GUIAlgorithm:: ProblemType Not found");
+						break;
+				}
 				try {
-					conf.RunADoule();
+					conf.Run();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

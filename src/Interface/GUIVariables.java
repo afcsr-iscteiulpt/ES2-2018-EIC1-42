@@ -239,6 +239,7 @@ public class GUIVariables extends JFrame {
 					Variable v = new Variable(TFName.getText(),(String)comboBox.getSelectedItem(), Integer.parseInt(TFMin.getText()),Integer.parseInt(TFMax.getText()));
 					textAreaString += "\n" + v.toStringVariable();
 					variablesArray.add(v);
+					shared.getProblem().setType((String)comboBox.getSelectedItem());
 					textArea.setText(textAreaString);
 				}else if(num1 > num2){
 					JOptionPane.showMessageDialog(null, "The Minimum value must be lower than the Maximum value.");
@@ -258,6 +259,7 @@ public class GUIVariables extends JFrame {
 					Variable v = new Variable(TFName.getText(),(String)comboBox.getSelectedItem(), Double.parseDouble(TFMin.getText()),Double.parseDouble(TFMax.getText()));
 					textAreaString += "\n" + v.toStringVariable();
 					variablesArray.add(v);
+					shared.getProblem().setType((String)comboBox.getSelectedItem());
 					textArea.setText(textAreaString);
 				}else if(num1 > num2){
 					JOptionPane.showMessageDialog(null, "The Minimum value must be lower than the Maximum value.");
@@ -276,6 +278,7 @@ public class GUIVariables extends JFrame {
 					Variable v = new Variable(TFName.getText(),(String)comboBox.getSelectedItem(),(TFMin.getText()),(TFMax.getText()));
 					textAreaString += "\n" + v.toStringVariable();
 					variablesArray.add(v);
+					shared.getProblem().setType((String)comboBox.getSelectedItem());
 					textArea.setText(textAreaString);
 					// is an bitstring!
 			}
@@ -331,5 +334,11 @@ public class GUIVariables extends JFrame {
 	}
 	public void setVariableMax(String variableMax) {
 		this.variableMax = variableMax;
+	}
+	public JTextArea getTextArea(){
+		return textArea;
+	}
+	public void setTextAreaText(String s){
+		textArea.setText(s);
 	}
 }

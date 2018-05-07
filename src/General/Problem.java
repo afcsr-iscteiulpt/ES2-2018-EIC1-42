@@ -36,9 +36,8 @@ public class Problem {
 		this.variablesArray = variablesArray;
 		this.algorithms = algorithms;
 		this.numberOfDays = numberOfDays;
-		
-		
-		this.type = variablesArray.get(0).getType() ;
+
+//		this.type = variablesArray.get(0).getType() ;
 	}
 
 
@@ -66,6 +65,10 @@ public class Problem {
 	@XmlElement
 	public String getType() {
 		return type;
+	}
+	@XmlElement
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	@XmlElement

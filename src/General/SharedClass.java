@@ -55,6 +55,7 @@ public class SharedClass {
 	private GUIAlgorithms guiAlgo;
 	private GUIFinal guiFinal;
 	private GUIGraphs guiGraphs;
+	private Boolean verifyLoad=false; 
 	
 	private Problem problem = new Problem("", "", "", null, null, 0); // name ; description ; varArray ; AlgorithmArray ; DaysToWait
 
@@ -224,7 +225,7 @@ public class SharedClass {
                 			variable.appendChild(variableMin);
                 			
                 			Element variableMax = doc.createElement("Max");
-            	            variableMax.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getMIN())));
+            	            variableMax.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getMAX())));
                 			variable.appendChild(variableMax);	 			
                 }
    
@@ -284,6 +285,9 @@ public class SharedClass {
 			JFileChooser fileChooser = new JFileChooser();
 			StringBuilder sb = new StringBuilder();
 			File file = new File("");;
+			ArrayList<Variable> variablesFromXML = new ArrayList<Variable>();
+			ArrayList<String> algorithmsFromXML = new ArrayList<String>();
+
 			
 			if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
 				 file = fileChooser.getSelectedFile();
@@ -301,7 +305,7 @@ public class SharedClass {
 
 			NodeList listOfProblems = doc.getElementsByTagName("Problem");
 			int totalPersons = listOfProblems.getLength();
-			System.out.println("Total no of people : " + totalPersons);
+			System.out.println("Total number of problems : " + totalPersons);
 
 			for (int s = 0; s < listOfProblems.getLength(); s++) {
 
@@ -334,7 +338,61 @@ public class SharedClass {
 					else
 						System.out.println("Email : " + ((Node) EmailList.item(0)).getNodeValue().trim());
 
-					LoadProblem(((Node) textFNList.item(0)).getNodeValue().trim() , ((Node) textLNList.item(0)).getNodeValue().trim(), ((Node) EmailList.item(0)).getNodeValue().trim());
+				
+					NodeList variables = firstPersonElement.getElementsByTagName("Variables");
+					Element VarElement = (Element) variables.item(0);
+					NodeList varList = VarElement.getChildNodes();
+					if(varList!=null){
+						int varLength = varList.getLength();
+						for(int i = 1; i<varLength; i=i+2){
+							if(varList.item(i).getNodeType() == Node.ELEMENT_NODE){
+								Element varElement = (Element) varList.item(i);
+								if(varElement.getNodeName().contains("Var")){
+									String varName = varElement.getElementsByTagName("Name").item(0).getTextContent();
+									String varType = varElement.getElementsByTagName("Type").item(0).getTextContent();
+									String varMin = varElement.getElementsByTagName("Min").item(0).getTextContent();
+									String varMax = varElement.getElementsByTagName("Max").item(0).getTextContent();
+									if(varType.equals("Integer")){
+										Variable v = new Variable(varName, varType, Integer.parseInt(varMin), Integer.parseInt(varMax));
+										variablesFromXML.add(v);
+										guiDefinicaoVariaveis.getVariablesArray().add(v);
+									}else if(varType.equals("Double")){
+										Variable v = new Variable(varName, varType, Double.parseDouble(varMin),Double.parseDouble(varMax));
+										variablesFromXML.add(v);
+										guiDefinicaoVariaveis.getVariablesArray().add(v);
+									}else if(varType.equals("Binary")){
+										Variable v = new Variable(varName, varType, varMin, varMax);
+										variablesFromXML.add(v);
+										guiDefinicaoVariaveis.getVariablesArray().add(v);
+									}
+								}
+							}
+						}	
+					}
+					
+					
+					NodeList algorithms = firstPersonElement.getElementsByTagName("Algorithms");
+					Element AlgoriElement = (Element) algorithms.item(0);
+					NodeList algoriList = AlgoriElement.getChildNodes();
+					
+					if(algoriList!=null){
+						int algoriLength = algoriList.getLength();
+						for(int i = 1; i<algoriLength; i=i+2){
+							if(algoriList.item(i).getNodeType() == Node.ELEMENT_NODE){
+								Element SingleAlgoriElement = (Element) algoriList.item(i);
+								algorithmsFromXML.add(SingleAlgoriElement.getNodeName());
+							}	
+						}
+					}
+
+					NodeList days = firstPersonElement.getElementsByTagName("Days");
+					Element daysElement = (Element) days.item(0);
+					
+					NodeList daysContent = daysElement.getChildNodes();
+					System.out.println("Days : " + ((Node) daysContent.item(0)).getNodeValue().trim());
+
+					 
+					LoadProblem(((Node) textFNList.item(0)).getNodeValue().trim() , ((Node) textLNList.item(0)).getNodeValue().trim(), ((Node) EmailList.item(0)).getNodeValue().trim(), variablesFromXML, algorithmsFromXML, Integer.parseInt(((Node) daysContent.item(0)).getNodeValue().trim()));
 
 					// ------
 
@@ -359,10 +417,33 @@ public class SharedClass {
 	//teste
 
 	
-	public void LoadProblem(String name, String description, String email){
+	public void LoadProblem(String name, String description, String email, ArrayList<Variable> variables, ArrayList<String> algorithms, int days){
+		setVerifyLoadTrue();
 		guidescricaoproblema.setName(name);
 		guidescricaoproblema.setDescription(description);
 		guidescricaoproblema.setEmail(email);
+		String s1= guiDefinicaoVariaveis.getTextArea().getText();
+		String s2= guiDefinicaoVariaveis.getTextArea().getText();
+		for(int i = 0 ; i< variables.size() ; i++){
+			s1 += "\n" + variables.get(i).toStringVariable();			
+			guiDefinicaoVariaveis.getTextArea().setText(s1);
+		}
+		for(int i = 0 ; i< algorithms.size() ; i++){
+			s2 += "\n" + algorithms.get(i);		
+			guiAlgo.getTAManu().setText(s2);
+		}
+		guiAlgo.getTFTime().setText(""+days);
+		
+	
+		problem.setName(name);
+		problem.setDescription(description);
+		problem.setEmail(email);
+		problem.setVariablesArray(variables);
+		problem.setType(variables.get(0).getType());
+		problem.setAlgorithms(algorithms);
+		problem.setNumberOfDays(days);
+		
+		setReviewProblem();
 	}
 	
 	public void setReviewProblem(){
@@ -378,7 +459,7 @@ public class SharedClass {
 			s2 += problem.getAlgorithms().get(i) + "\n" ;
 			guiFinal.getTAAlgorit().setText(s2);
 		}
-		guiFinal.getTFDays().setText(problem.getNumberOfDays()+"");
+		guiFinal.getTFDays().setText(""+problem.getNumberOfDays());
 	}
 	
 	public void setGUI(GUI gui) {
@@ -393,6 +474,11 @@ public class SharedClass {
 		return problem;
 	}
 
+	public Boolean getVerifyLoad(){
+		return verifyLoad;
+	}
 		
-	
+	public void setVerifyLoadTrue(){
+		verifyLoad=true;
+	}
 }

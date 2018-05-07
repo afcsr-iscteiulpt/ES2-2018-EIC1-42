@@ -102,6 +102,7 @@ public class GUIAlgorithms extends JFrame {
 	private JTextArea TAManu = new JTextArea();
 	private JButton ButtonAddMulti = new JButton("Add");
 	private String TAText = "Algorithms chosen: "+"\n";
+	private JTextField Time;
 	private int numberOfDays;
 	
 	private ArrayList<String> SELECTEDAlgorithmsArray = new ArrayList<>();
@@ -130,7 +131,7 @@ public class GUIAlgorithms extends JFrame {
 		LabelTime2.setBounds(20, 34, 630, 16);
 		contentPane.add(LabelTime2);
 		
-		JTextField Time = new JTextField();
+		Time = new JTextField();
 		Time.setBounds(20, 51, 77, 26);
 		contentPane.add(Time);
 		Time.setColumns(10);
@@ -257,15 +258,19 @@ public class GUIAlgorithms extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				shared.getProblem().setNumberOfDays(numberOfDays);
-				shared.getProblem().setAlgorithms(SELECTEDAlgorithmsArray);
-				
+				if(shared.getVerifyLoad() == false){
+					shared.getProblem().setNumberOfDays(numberOfDays);
+					shared.getProblem().setAlgorithms(SELECTEDAlgorithmsArray);
+				}
+
 				shared.setReviewProblem();
+				
 				shared.setExistingPanel(shared.getNPArray(), 3);
 				
 				Configuration conf = null;
-				switch(shared.getProblem().getType()) {
+				switch(shared.getProblem().getVariablesArray().get(0).getType()) {
 					case "Double" :
+						System.out.println("HI");
 						conf = new ConfigurationDoubleP(shared.getProblem());
 						break;
 					case "Integer" :
@@ -351,5 +356,16 @@ public class GUIAlgorithms extends JFrame {
 		return SELECTEDAlgorithmsArray;
 	}
 	
+	public JTextArea getTAManu(){
+		return TAManu;
+	}
+	
+	public JTextField getTFTime(){
+		return Time;
+	}
+	
+	public void setDays(int days){
+		this.numberOfDays = days;
+	}
 	
 }

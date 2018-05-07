@@ -30,6 +30,7 @@ public class Configuration {
 	public Configuration(Problem ToRun) {
 		problemToRun=ToRun;
 		problemType=ToRun.getType();
+		alg = ToRun.getAlgorithms().toString();
 	}
 
 	public void Run() throws IOException {

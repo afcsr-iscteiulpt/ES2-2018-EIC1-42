@@ -183,6 +183,7 @@ public class GUIAlgorithms extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				shared.setVerifyLoad(false);
 				String toAdd = (String)CBMulti.getSelectedItem();
 				if(!toAdd.equals("") && checkIfThisStringExists(toAdd) == false ){
 					SELECTEDAlgorithmsArray.add(toAdd);
@@ -270,7 +271,6 @@ public class GUIAlgorithms extends JFrame {
 				Configuration conf = null;
 				switch(shared.getProblem().getVariablesArray().get(0).getType()) {
 					case "Double" :
-						System.out.println("HI");
 						conf = new ConfigurationDoubleP(shared.getProblem());
 						break;
 					case "Integer" :
@@ -337,6 +337,8 @@ public class GUIAlgorithms extends JFrame {
 	public void disableManually(){
 		CBMulti.setEnabled(false);
 		ButtonAddMulti.setEnabled(false);
+		TAManu.setText("");
+		shared.getProblem().getAlgorithms().clear();
 	}
 	public void enableManually(){
 		CBMulti.setEnabled(true);

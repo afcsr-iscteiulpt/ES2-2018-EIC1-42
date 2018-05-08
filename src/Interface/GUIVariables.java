@@ -198,6 +198,8 @@ public class GUIVariables extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				shared.setVerifyLoad(false);
+				shared.getProblem().getVariablesArray().clear();
 				variablesArray.clear();
 				textAreaString = "Name:		Type:		Interval:";
 				textArea.setText(textAreaString);
@@ -341,4 +343,12 @@ public class GUIVariables extends JFrame {
 	public void setTextAreaText(String s){
 		textArea.setText(s);
 	}
+	public JComboBox getComboBox(){
+		return comboBox;
+	}
+	public void setComboBoxValue(String valueCombo){
+		comboBox.setSelectedItem(valueCombo);
+	}
+	
+	
 }

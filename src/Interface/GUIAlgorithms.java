@@ -9,7 +9,9 @@ import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
 
 import General.Configuration;
+import General.ConfigurationBinaryP;
 import General.ConfigurationDoubleP;
+import General.ConfigurationIntegerP;
 import General.DoubleProblem;
 import General.SharedClass;
 import General.Variable;
@@ -282,8 +284,10 @@ public class GUIAlgorithms extends JFrame {
 					conf = new ConfigurationDoubleP(shared.getProblem());
 					break;
 				case "Integer":
+					conf = new ConfigurationIntegerP(shared.getProblem());
 					break;
 				case "Binary":
+					conf = new ConfigurationBinaryP(shared.getProblem());
 					break;
 				default:
 					conf = new Configuration(shared.getProblem());

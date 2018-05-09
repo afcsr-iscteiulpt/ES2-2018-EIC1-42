@@ -153,7 +153,6 @@ public class GUIVariables extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				shared.getProblem().setVariablesArray(variablesArray);
 				shared.setExistingPanel(shared.getNPArray(), 2);
-				System.out.println("LOLOLOLO    " + shared.getProblem().getAlgorithms().size());
 
 			}
 		});

@@ -494,7 +494,6 @@ public class SharedClass {
 			}
 		}else{
 			guiFinal.getTAAlgorit().setText(s2);
-
 		}
 		
 		guiFinal.getTFDays().setText(""+problem.getNumberOfDays());

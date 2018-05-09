@@ -94,8 +94,6 @@ import javax.swing.JScrollPane;
 
 public class GUIAlgorithms extends JFrame {
 
-	// teste
-
 	private JPanel contentPane;
 	private SharedClass shared;
 	private JLabel LabelAuto = new JLabel("Your algorithms will be choosen automatically");

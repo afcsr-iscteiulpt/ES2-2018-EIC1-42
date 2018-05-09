@@ -30,12 +30,12 @@ import java.awt.Color;
 import javax.swing.JScrollPane;
 
 public class GUIVariables extends JFrame {
-//test-
+	// test-
 	private JPanel contentPane;
 	private JTextField TFName;
 	private JTextField TFMin;
 	private JTextField TFMax;
-	private String textAreaString = "Name:		Type:		Interval:";
+	private String textAreaString = "Name:		Type:		Interval:" ;
 	private JTextArea textArea;
 	private ArrayList<Variable> variablesArray = new ArrayList<Variable>();
 	private JComboBox comboBox;
@@ -47,8 +47,8 @@ public class GUIVariables extends JFrame {
 	private JButton ButtonAddVariable;
 
 	public GUIVariables(SharedClass shared) {
-		this.shared=shared;
-		
+		this.shared = shared;
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 500);
 		contentPane = new JPanel();
@@ -142,26 +142,28 @@ public class GUIVariables extends JFrame {
 			}
 		});
 		contentPane.add(BotaoBack);
-		
+
 		JButton BotaoNext = new JButton("▶");
 		BotaoNext.setForeground(new Color(0, 128, 128));
 		BotaoNext.setFont(new Font("Avenir Next", Font.PLAIN, 14));
 		BotaoNext.setBounds(614, 401, 53, 35);
 		BotaoNext.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					shared.getProblem().setVariablesArray(variablesArray);
-					shared.setExistingPanel(shared.getNPArray(), 2);
+				shared.getProblem().setVariablesArray(variablesArray);
+				shared.setExistingPanel(shared.getNPArray(), 2);
+				System.out.println("LOLOLOLO    " + shared.getProblem().getAlgorithms().size());
+
 			}
 		});
 		contentPane.add(BotaoNext);
-		
+
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setBounds(34, 448, 633, 20);
 		progressBar.setValue(50);
 		contentPane.add(progressBar);
-		
+
 		ButtonAddVariable = new JButton("Add Variable");
 		ButtonAddVariable.setForeground(new Color(0, 128, 128));
 		ButtonAddVariable.setFont(new Font("Avenir Next", Font.PLAIN, 13));
@@ -183,19 +185,20 @@ public class GUIVariables extends JFrame {
 			}
 		});
 
-		JLabel LabelInformation = new JLabel("<html>Note: <br/>Optimization means minimize the objectives given</html>", SwingConstants.CENTER);
+		JLabel LabelInformation = new JLabel("<html>Note: <br/>Optimization means minimize the objectives given</html>",
+				SwingConstants.CENTER);
 		LabelInformation.setForeground(Color.WHITE);
 		LabelInformation.setFont(new Font("Avenir Next", Font.PLAIN, 12));
 		LabelInformation.setBounds(443, 29, 169, 76);
 		contentPane.add(LabelInformation);
-		
+
 		JButton ButtonClearAll = new JButton("Clear All");
 		ButtonClearAll.setForeground(new Color(0, 128, 128));
 		ButtonClearAll.setFont(new Font("Avenir", Font.PLAIN, 12));
 		ButtonClearAll.setBounds(566, 177, 76, 29);
 		contentPane.add(ButtonClearAll);
-		ButtonClearAll.addActionListener( new ActionListener() {
-			
+		ButtonClearAll.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				shared.setVerifyLoad(false);
@@ -203,152 +206,176 @@ public class GUIVariables extends JFrame {
 				variablesArray.clear();
 				textAreaString = "Name:		Type:		Interval:";
 				textArea.setText(textAreaString);
-				comboBox.setEnabled(true);		
+				comboBox.setEnabled(true);
 			}
 		});
-		
+
 		JLabel LabelLogo = new JLabel();
 		ImageIcon imageIcon = new ImageIcon(
 				new ImageIcon("GenericPage.png").getImage().getScaledInstance(700, 500, Image.SCALE_DEFAULT));
 		LabelLogo.setIcon(imageIcon);
 		LabelLogo.setBounds(0, 0, 700, 478);
 		contentPane.add(LabelLogo);
-		
-	}	
-	
+
+	}
+
 	public JPanel getContentPane() {
 		return contentPane;
 	}
 
-	public void validateDetails() throws SAXException, IOException{
-		if(TFName.getText().equals("") || TFMin.getText().equals("") || TFMax.getText().equals("") || comboBox.getSelectedItem().equals("")){
+	public void validateDetails() throws SAXException, IOException {
+		if (TFName.getText().equals("") || TFMin.getText().equals("") || TFMax.getText().equals("")
+				|| comboBox.getSelectedItem().equals("")) {
 			JOptionPane.showMessageDialog(null, "You must fill all the mandatory variables.");
-		}
-		else{
-			validateVariable(TFMin, TFMax);			
+		} else {
+			validateVariable(TFMin, TFMax);
 		}
 	}
 
-	public void validateVariable(JTextField tfmin, JTextField tfmax){
-		boolean b =false;
-		if (comboBox.getSelectedItem().equals("Integer")){
-			try{
+	public void validateVariable(JTextField tfmin, JTextField tfmax) {
+		boolean b = false;
+		if (comboBox.getSelectedItem().equals("Integer")) {
+			try {
 				// is an integer!
 				int num1 = Integer.parseInt(tfmin.getText());
 				int num2 = Integer.parseInt(tfmax.getText());
-				if(num1 < num2 && validateName(TFName.getText())){
-					b=true;
-					Variable v = new Variable(TFName.getText(),(String)comboBox.getSelectedItem(), Integer.parseInt(TFMin.getText()),Integer.parseInt(TFMax.getText()));
-					textAreaString += "\n" + v.toStringVariable();
+				if (num1 < num2 && validateName(TFName.getText())) {
+					b = true;
+					Variable v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(),
+							Integer.parseInt(TFMin.getText()), Integer.parseInt(TFMax.getText()));
+					shared.getProblem().getVariablesArray().add(v);
+					shared.getProblem().setType((String) comboBox.getSelectedItem());
 					variablesArray.add(v);
-					shared.getProblem().setType((String)comboBox.getSelectedItem());
+					textAreaString += v.toStringVariable() + "\n" ;
 					textArea.setText(textAreaString);
-				}else if(num1 > num2){
+
+				} else if (num1 > num2) {
 					JOptionPane.showMessageDialog(null, "The Minimum value must be lower than the Maximum value.");
 				}
 			} catch (NumberFormatException e) {
-				b=false;
+				b = false;
 				JOptionPane.showMessageDialog(null, "The variable interval must be Integer.");
 				// not an integer!
 			}
 		}
-		if (comboBox.getSelectedItem().equals("Double")){
-			try{
+		if (comboBox.getSelectedItem().equals("Double")) {
+			try {
 				double num1 = Double.parseDouble(tfmin.getText());
 				double num2 = Double.parseDouble(tfmax.getText());
-				if(num1 < num2 && validateName(TFName.getText())){
-					b=true;
-					Variable v = new Variable(TFName.getText(),(String)comboBox.getSelectedItem(), Double.parseDouble(TFMin.getText()),Double.parseDouble(TFMax.getText()));
+				if (num1 < num2 && validateName(TFName.getText())) {
+					b = true;
+					Variable v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(),
+							Double.parseDouble(TFMin.getText()), Double.parseDouble(TFMax.getText()));
 					textAreaString += "\n" + v.toStringVariable();
 					variablesArray.add(v);
-					shared.getProblem().setType((String)comboBox.getSelectedItem());
+					shared.getProblem().setType((String) comboBox.getSelectedItem());
 					textArea.setText(textAreaString);
-				}else if(num1 > num2){
+				} else if (num1 > num2) {
 					JOptionPane.showMessageDialog(null, "The Minimum value must be lower than the Maximum value.");
 				}
-		
+
 				// is an double!
 			} catch (NumberFormatException e) {
-				b=false;
+				b = false;
 				JOptionPane.showMessageDialog(null, "The variable interval must be Double.");
 				// not an double!
 			}
 		}
-		if(comboBox.getSelectedItem().equals("Binary")){
-			if(tfmin.getText().matches("[01]+") && tfmax.getText().matches("[01]+") && validateName(TFName.getText())){
-					b=true;
-					Variable v = new Variable(TFName.getText(),(String)comboBox.getSelectedItem(),(TFMin.getText()),(TFMax.getText()));
-					textAreaString += "\n" + v.toStringVariable();
-					variablesArray.add(v);
-					shared.getProblem().setType((String)comboBox.getSelectedItem());
-					textArea.setText(textAreaString);
-					// is an bitstring!
-			}
-			else{
-					b=false;
-					JOptionPane.showMessageDialog(null, "The variable interval must be Binary.");
-					// not an bitstring!
+		if (comboBox.getSelectedItem().equals("Binary")) {
+			if (tfmin.getText().matches("[01]+") && tfmax.getText().matches("[01]+")
+					&& validateName(TFName.getText())) {
+				b = true;
+				Variable v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(), (TFMin.getText()),
+						(TFMax.getText()));
+				textAreaString += "\n" + v.toStringVariable();
+				variablesArray.add(v);
+				shared.getProblem().setType((String) comboBox.getSelectedItem());
+				textArea.setText(textAreaString);
+				// is an bitstring!
+			} else {
+				b = false;
+				JOptionPane.showMessageDialog(null, "The variable interval must be Binary.");
+				// not an bitstring!
 			}
 		}
-		if(b == true){
+		if (b == true) {
 			comboBox.setEnabled(false);
 		}
 	}
-	
-	public boolean validateName(String name){
+
+	public boolean validateName(String name) {
 		Boolean b = true;
-		for(int i = 0; i<variablesArray.size(); i++){
-			if(variablesArray.get(i).getName().equals(name)){
+		for (int i = 0; i < variablesArray.size(); i++) {
+			if (variablesArray.get(i).getName().equals(name)) {
 				b = false;
 				JOptionPane.showMessageDialog(null, "There is already a variable with that name.");
 			}
 		}
 		return b;
 	}
-		
-	
+
 	public ArrayList<Variable> getVariablesArray() {
 		return variablesArray;
 	}
+
 	public void setVariablesArray(ArrayList<Variable> variablesArray) {
 		this.variablesArray = variablesArray;
 	}
+
 	public String getVariableName() {
 		return variableName;
 	}
+
 	public void setVariableName(String variableName) {
 		this.variableName = variableName;
 	}
+
 	public String getVariableType() {
 		return variableType;
 	}
+
 	public void setVariableType(String variableType) {
 		this.variableType = variableType;
 	}
+
 	public String getVariableMin() {
 		return variableMin;
 	}
+
 	public void setVariableMin(String variableMin) {
 		this.variableMin = variableMin;
 	}
+
 	public String getVariableMax() {
 		return variableMax;
 	}
+
 	public void setVariableMax(String variableMax) {
 		this.variableMax = variableMax;
 	}
-	public JTextArea getTextArea(){
+
+	public JTextArea getTextArea() {
 		return textArea;
 	}
-	public void setTextAreaText(String s){
+
+	public void setTextAreaText(String s) {
 		textArea.setText(s);
 	}
-	public JComboBox getComboBox(){
+
+	public JComboBox getComboBox() {
 		return comboBox;
 	}
-	public void setComboBoxValue(String valueCombo){
+
+	public void setComboBoxValue(String valueCombo) {
 		comboBox.setSelectedItem(valueCombo);
 	}
+
+	public String getTextAreaString(){
+		return textAreaString;
+	}
 	
-	
+	public void setTextAreaString(String toadd) {
+		textAreaString = toadd;
+	}
+
 }

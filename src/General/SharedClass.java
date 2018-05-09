@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -77,7 +78,9 @@ public class SharedClass {
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBounds(100, 100, 700, 500);
+		problem = new Problem("", "", "", new ArrayList<Variable>(), new ArrayList<String>(), 0);
 		launch();
+		
 	}
 
 	/*
@@ -418,22 +421,41 @@ public class SharedClass {
 
 	
 	public void LoadProblem(String name, String description, String email, ArrayList<Variable> variables, ArrayList<String> algorithms, int days){
-		setVerifyLoadTrue();
+		setVerifyLoad(true);
+		
 		guidescricaoproblema.setName(name);
 		guidescricaoproblema.setDescription(description);
 		guidescricaoproblema.setEmail(email);
-		String s1= guiDefinicaoVariaveis.getTextArea().getText();
-		String s2= guiDefinicaoVariaveis.getTextArea().getText();
-		for(int i = 0 ; i< variables.size() ; i++){
-			s1 += "\n" + variables.get(i).toStringVariable();			
-			guiDefinicaoVariaveis.getTextArea().setText(s1);
+		
+		guiAlgo.setAlgorithms(algorithms);
+		guiAlgo.getTFTime().setText(""+days);
+		guiAlgo.setDays(days);
+		
+		for(int i=0; i<algorithms.size(); i++){
+			guiAlgo.addAlgorithm(algorithms.get(i));			
 		}
+		
+		
+		String s1 = guiDefinicaoVariaveis.getTextAreaString();
+		for(int i = 0 ; i< variables.size() ; i++){
+			s1 += "\n" + variables.get(i).toStringVariable();	
+			guiDefinicaoVariaveis.setTextAreaString(s1);
+			guiDefinicaoVariaveis.getTextArea().setText(s1);				
+		}
+		guiDefinicaoVariaveis.setTextAreaString(s1);
+
+		String s2 = "Algorithms chosen: "+"\n";		
 		for(int i = 0 ; i< algorithms.size() ; i++){
-			s2 += "\n" + algorithms.get(i);		
+			s2 += algorithms.get(i) + "\n" ;		
 			guiAlgo.getTAManu().setText(s2);
 		}
-		guiAlgo.getTFTime().setText(""+days);
 		
+		if(!problem.getVariablesArray().isEmpty()){
+			problem.getVariablesArray().clear();
+		}
+		if(!problem.getAlgorithms().isEmpty()){
+			problem.getAlgorithms().clear();
+		}		
 	
 		problem.setName(name);
 		problem.setDescription(description);
@@ -443,6 +465,10 @@ public class SharedClass {
 		problem.setAlgorithms(algorithms);
 		problem.setNumberOfDays(days);
 		
+		guiDefinicaoVariaveis.setComboBoxValue(problem.getType());
+		guiDefinicaoVariaveis.getComboBox().setEnabled(false);
+
+		
 		setReviewProblem();
 	}
 	
@@ -451,14 +477,26 @@ public class SharedClass {
 		String s2="";
 		guiFinal.getTFName().setText(problem.getName());
 		guiFinal.getTADescription().setText(problem.getDescription());
-		for(int i=0; i<problem.getVariablesArray().size(); i++){
-			s1 += problem.getVariablesArray().get(i).getName() + "\n"  ;
+		
+		if(!problem.getVariablesArray().isEmpty()){
+			for(int i=0; i<problem.getVariablesArray().size(); i++){
+				s1 += problem.getVariablesArray().get(i).getName() + "\n"  ;
+				guiFinal.getTAVariables().setText(s1);
+			}
+		}else {
 			guiFinal.getTAVariables().setText(s1);
 		}
-		for(int i=0; i<problem.getAlgorithms().size(); i++){
-			s2 += problem.getAlgorithms().get(i) + "\n" ;
+		
+		if(!problem.getAlgorithms().isEmpty()){
+			for(int i=0; i<problem.getAlgorithms().size(); i++){
+				s2 += problem.getAlgorithms().get(i) + "\n" ;
+				guiFinal.getTAAlgorit().setText(s2);
+			}
+		}else{
 			guiFinal.getTAAlgorit().setText(s2);
+
 		}
+		
 		guiFinal.getTFDays().setText(""+problem.getNumberOfDays());
 	}
 	
@@ -478,7 +516,7 @@ public class SharedClass {
 		return verifyLoad;
 	}
 		
-	public void setVerifyLoadTrue(){
-		verifyLoad=true;
+	public void setVerifyLoad(boolean b){
+		verifyLoad=b;
 	}
 }

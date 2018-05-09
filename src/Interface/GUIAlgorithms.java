@@ -151,9 +151,10 @@ public class GUIAlgorithms extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					int numberOfDays = Integer.parseInt(Time.getText());
-					// is an integer!
+					int numberOfDaysTEMP = Integer.parseInt(Time.getText());
+					numberOfDays=numberOfDaysTEMP;
 					shared.getProblem().setNumberOfDays(numberOfDays);
+					// is an integer!
 
 				} catch (NumberFormatException ex) {
 					JOptionPane.showMessageDialog(null, "The number of days must be Integer.");

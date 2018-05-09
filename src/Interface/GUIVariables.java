@@ -245,7 +245,7 @@ public class GUIVariables extends JFrame {
 					shared.getProblem().getVariablesArray().add(v);
 					shared.getProblem().setType((String) comboBox.getSelectedItem());
 					variablesArray.add(v);
-					textAreaString += v.toStringVariable() + "\n" ;
+					textAreaString += "\n" + v.toStringVariable();
 					textArea.setText(textAreaString);
 
 				} else if (num1 > num2) {

@@ -298,7 +298,7 @@ public class GUIVariables extends JFrame {
 			} catch (NumberFormatException e) {
 				b = false;
 				JOptionPane.showMessageDialog(null, "The variable interval must be Integer.");
-				// not an integer!
+				// not an integer!!
 			}
 		}
 		if (comboBox.getSelectedItem().equals("Double")) {

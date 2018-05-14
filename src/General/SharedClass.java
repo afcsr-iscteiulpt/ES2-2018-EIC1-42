@@ -62,7 +62,8 @@ public class SharedClass {
 	private Problem problem = new Problem("", "", "", null, null, 0); // name ;
 																		// description
 																		// varArray
-																																				// AlgorithmArray																		// DaysToWait
+																		// AlgorithmArray
+																		// DaysToWait
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -424,7 +425,7 @@ public class SharedClass {
 							((Node) EmailList.item(0)).getNodeValue().trim(), variablesFromXML, algorithmsFromXML,
 							Integer.parseInt(((Node) daysContent.item(0)).getNodeValue().trim()));
 
-					// ------
+					// -----
 
 				} // end of if clause
 

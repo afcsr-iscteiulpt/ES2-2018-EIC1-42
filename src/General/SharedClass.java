@@ -425,7 +425,7 @@ public class SharedClass {
 							((Node) EmailList.item(0)).getNodeValue().trim(), variablesFromXML, algorithmsFromXML,
 							Integer.parseInt(((Node) daysContent.item(0)).getNodeValue().trim()));
 
-					// -----
+					// -------
 
 				} // end of if clause
 

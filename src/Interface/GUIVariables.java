@@ -352,7 +352,7 @@ public class GUIVariables extends JFrame {
 					JOptionPane.showMessageDialog(null, "The value length must be: " + shared.getBinaryVariableSize());
 				}
 
-				// is an bitstring!
+				// is a bitstring!
 			} else {
 				b = false;
 				JOptionPane.showMessageDialog(null, "The variable interval must be Binary.");

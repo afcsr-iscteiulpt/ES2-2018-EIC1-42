@@ -139,7 +139,7 @@ public class ConfigurationDoubleP extends Configuration{
 
 	@Override 
 	public void Run() throws IOException {
-		String experimentBaseDirectory = "/experimentBaseDirectory";
+		String experimentBaseDirectory = "/Users/albertoramos/Desktop";
 
 		System.out.println(problemToRun.getName());
 		List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();

@@ -11,8 +11,7 @@ public class Variable {
 	private int maxInt;
 	private double minDoub;
 	private double maxDoub;
-	private String minBit;
-	private String maxBit;
+	private String value;
 	private Object MIN;
 	private Object MAX;
 	
@@ -32,18 +31,20 @@ public class Variable {
 		this.MIN = min;
 		this.MAX = max;
 	}
-	public Variable(String name, String type, String min, String max){
+	public Variable(String name, String type, String value){
 		this.name=name;
 		this.type=type;
-		this.minBit=min;
-		this.maxBit=max;
-		this.MIN = min;
-		this.MAX = max;
+		this.value=value;
 	}
 	
 	public String toStringVariable(){
 		String s="";
-		s = name +"		"+type+"		"+MIN+" : "+MAX;
+		if(type.equals("Integer") || type.equals("Double")){
+			s = name +"		"+type+"		"+MIN+" : "+MAX;
+		}
+		else if(type.equals("Binary")){
+			s = name +"		"+type+"		"+value;
+		}
 		return s;
 	}
 	
@@ -87,12 +88,9 @@ public class Variable {
   
   
     @XmlAttribute
-    public void setMinB( String min) {
-		this.minBit = min;
-	}
-	public void setMaxB(String max) {
-   		this.maxBit = max;
-   	}
+    public void setBinValue(String newvalue){
+    	value=newvalue;
+    }
     //---------------------
     
     // GETTERS ------------
@@ -115,11 +113,8 @@ public class Variable {
 	public double getMaxD() {
 		return maxDoub;
 	}
-	public String getMinB(){
-		return minBit;
-	}
-	public String getMaxB(){
-		return maxBit;
+	public String getValue(){
+		return value;
 	}
     //---------------------
 

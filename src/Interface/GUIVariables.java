@@ -12,13 +12,18 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.LabelView;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Label;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -35,7 +40,8 @@ public class GUIVariables extends JFrame {
 	private JTextField TFName;
 	private JTextField TFMin;
 	private JTextField TFMax;
-	private String textAreaString = "Name:		Type:		Interval:" ;
+	private String textAreaStringIntDouble = "Name:		Type:		Interval:";
+	private String textAreaStringBinary = "Name:		Type:  		Value:";
 	private JTextArea textArea;
 	private ArrayList<Variable> variablesArray = new ArrayList<Variable>();
 	private JComboBox comboBox;
@@ -45,6 +51,9 @@ public class GUIVariables extends JFrame {
 	private String variableMin;
 	private String variableMax;
 	private JButton ButtonAddVariable;
+	private JTextField TFValue;
+	private JLabel LabelValue;
+	private JLabel LabelInterval;
 
 	public GUIVariables(SharedClass shared) {
 		this.shared = shared;
@@ -84,15 +93,22 @@ public class GUIVariables extends JFrame {
 		comboBox.setForeground(new Color(0, 128, 128));
 		comboBox.setBounds(40, 112, 169, 27);
 		contentPane.add(comboBox);
-		comboBox.addItem(new String(""));
+		comboBox.addItem(new String(" "));
 		comboBox.addItem(new String("Integer"));
 		comboBox.addItem(new String("Double"));
 		comboBox.addItem(new String("Binary"));
+		comboBox.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				checkSelectedComboBox();
+			}
+		});
 
 		JLabel LabelVariablesList = new JLabel("Variables List:");
 		LabelVariablesList.setForeground(Color.WHITE);
 		LabelVariablesList.setFont(new Font("Avenir Next", Font.BOLD, 16));
-		LabelVariablesList.setBounds(20, 177, 161, 16);
+		LabelVariablesList.setBounds(44, 183, 161, 16);
 		contentPane.add(LabelVariablesList);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -103,33 +119,30 @@ public class GUIVariables extends JFrame {
 		textArea.setForeground(new Color(0, 128, 128));
 		scrollPane.setViewportView(textArea);
 		textArea.setEditable(false);
-		textArea.setText(textAreaString);
+		setDefaultTAText();
 
-		JLabel LabelIntervalo = new JLabel("Interval (*):");
-		LabelIntervalo.setForeground(Color.WHITE);
-		LabelIntervalo.setFont(new Font("Avenir Next", Font.BOLD, 13));
-		LabelIntervalo.setBounds(273, 33, 76, 16);
-		contentPane.add(LabelIntervalo);
+		LabelInterval = new JLabel("Interval (Integer & Double) :");
+		LabelInterval.setForeground(Color.WHITE);
+		LabelInterval.setFont(new Font("Avenir Next", Font.BOLD, 13));
+		LabelInterval.setBounds(273, 33, 176, 16);
+		LabelInterval.setVisible(false);
+		contentPane.add(LabelInterval);
 
 		TFMin = new JTextField();
 		TFMin.setForeground(new Color(0, 128, 128));
 		TFMin.setBounds(273, 51, 46, 26);
 		TFMin.setText("");
-		contentPane.add(TFMin);
 		TFMin.setColumns(10);
+		TFMin.setVisible(false);
+		contentPane.add(TFMin);
 
 		TFMax = new JTextField();
 		TFMax.setForeground(new Color(0, 128, 128));
 		TFMax.setColumns(10);
 		TFMax.setBounds(331, 51, 46, 26);
 		TFMax.setText("");
+		TFMax.setVisible(false);
 		contentPane.add(TFMax);
-
-		JLabel LabelNotMandatory = new JLabel("(*) Not mandatory");
-		LabelNotMandatory.setForeground(Color.WHITE);
-		LabelNotMandatory.setFont(new Font("Avenir Next", Font.ITALIC, 10));
-		LabelNotMandatory.setBounds(273, 77, 120, 16);
-		contentPane.add(LabelNotMandatory);
 
 		JButton BotaoBack = new JButton("◀");
 		BotaoBack.setForeground(new Color(0, 128, 128));
@@ -166,7 +179,7 @@ public class GUIVariables extends JFrame {
 		ButtonAddVariable = new JButton("Add Variable");
 		ButtonAddVariable.setForeground(new Color(0, 128, 128));
 		ButtonAddVariable.setFont(new Font("Avenir Next", Font.PLAIN, 13));
-		ButtonAddVariable.setBounds(273, 112, 104, 29);
+		ButtonAddVariable.setBounds(273, 154, 104, 29);
 		contentPane.add(ButtonAddVariable);
 		ButtonAddVariable.addActionListener(new ActionListener() {
 
@@ -188,7 +201,7 @@ public class GUIVariables extends JFrame {
 				SwingConstants.CENTER);
 		LabelInformation.setForeground(Color.WHITE);
 		LabelInformation.setFont(new Font("Avenir Next", Font.PLAIN, 12));
-		LabelInformation.setBounds(443, 29, 169, 76);
+		LabelInformation.setBounds(531, 1, 169, 76);
 		contentPane.add(LabelInformation);
 
 		JButton ButtonClearAll = new JButton("Clear All");
@@ -203,15 +216,37 @@ public class GUIVariables extends JFrame {
 				shared.setVerifyLoad(false);
 				shared.getProblem().getVariablesArray().clear();
 				variablesArray.clear();
-				textAreaString = "Name:		Type:		Interval:";
-				textArea.setText(textAreaString);
+				textAreaStringIntDouble = "Name:		Type:		Interval:";
+				textAreaStringBinary = "Name:		Type:  		Value:";
+				if (comboBox.getSelectedItem().equals("Integer") || comboBox.getSelectedItem().equals("Double")) {
+					textArea.setText(textAreaStringIntDouble);
+				}
+				if (comboBox.getSelectedItem().equals("Binary")) {
+					textArea.setText(textAreaStringBinary);
+					shared.setBinaryVariableSize(0);
+				}
 				comboBox.setEnabled(true);
 			}
 		});
-
-		JLabel LabelLogo = new JLabel();
 		ImageIcon imageIcon = new ImageIcon(
 				new ImageIcon("GenericPage.png").getImage().getScaledInstance(700, 500, Image.SCALE_DEFAULT));
+
+		LabelValue = new JLabel("Value (Binary) :");
+		LabelValue.setForeground(Color.WHITE);
+		LabelValue.setFont(new Font("Avenir Next", Font.BOLD, 13));
+		LabelValue.setBounds(273, 33, 176, 16);
+		LabelValue.setVisible(false);
+		contentPane.add(LabelValue);
+
+		TFValue = new JTextField();
+		TFValue.setText("");
+		TFValue.setForeground(new Color(0, 128, 128));
+		TFValue.setColumns(10);
+		TFValue.setBounds(273, 51, 76, 26);
+		TFValue.setVisible(false);
+		contentPane.add(TFValue);
+
+		JLabel LabelLogo = new JLabel();
 		LabelLogo.setIcon(imageIcon);
 		LabelLogo.setBounds(0, 0, 700, 478);
 		contentPane.add(LabelLogo);
@@ -223,15 +258,24 @@ public class GUIVariables extends JFrame {
 	}
 
 	public void validateDetails() throws SAXException, IOException {
-		if (TFName.getText().equals("") || TFMin.getText().equals("") || TFMax.getText().equals("")
-				|| comboBox.getSelectedItem().equals("")) {
+		if (comboBox.getSelectedItem().equals("")) {
 			JOptionPane.showMessageDialog(null, "You must fill all the mandatory variables.");
-		} else {
-			validateVariable(TFMin, TFMax);
+		} else if ((comboBox.getSelectedItem().equals("Integer") || comboBox.getSelectedItem().equals("Double"))
+				&& (TFName.getText().equals("") || TFMin.getText().equals("") || TFMax.getText().equals(""))) {
+			JOptionPane.showMessageDialog(null, "You must fill all the mandatory variables.");
+		} else if (comboBox.getSelectedItem().equals("Binary")
+				&& (TFName.getText().equals("") || TFValue.getText().equals(""))) {
+			JOptionPane.showMessageDialog(null, "You must fill all the mandatory variables.");
+		} else if ((comboBox.getSelectedItem().equals("Integer") || comboBox.getSelectedItem().equals("Double"))
+				&& (!TFName.getText().equals("") && !TFMin.getText().equals("") && !TFMax.getText().equals(""))) {
+			validateVariableIntDouble(TFMin, TFMax);
+		} else if ((comboBox.getSelectedItem().equals("Binary"))
+				&& (!TFName.getText().equals("") && !TFValue.equals(""))) {
+			validateVariableBinary(TFValue);
 		}
 	}
 
-	public void validateVariable(JTextField tfmin, JTextField tfmax) {
+	public void validateVariableIntDouble(JTextField tfmin, JTextField tfmax) {
 		boolean b = false;
 		if (comboBox.getSelectedItem().equals("Integer")) {
 			try {
@@ -245,8 +289,8 @@ public class GUIVariables extends JFrame {
 					shared.getProblem().getVariablesArray().add(v);
 					shared.getProblem().setType((String) comboBox.getSelectedItem());
 					variablesArray.add(v);
-					textAreaString += "\n" + v.toStringVariable();
-					textArea.setText(textAreaString);
+					textAreaStringIntDouble += "\n" + v.toStringVariable();
+					textArea.setText(textAreaStringIntDouble);
 
 				} else if (num1 > num2) {
 					JOptionPane.showMessageDialog(null, "The Minimum value must be lower than the Maximum value.");
@@ -265,10 +309,10 @@ public class GUIVariables extends JFrame {
 					b = true;
 					Variable v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(),
 							Double.parseDouble(TFMin.getText()), Double.parseDouble(TFMax.getText()));
-					textAreaString += "\n" + v.toStringVariable();
+					textAreaStringIntDouble += "\n" + v.toStringVariable();
 					variablesArray.add(v);
 					shared.getProblem().setType((String) comboBox.getSelectedItem());
-					textArea.setText(textAreaString);
+					textArea.setText(textAreaStringIntDouble);
 				} else if (num1 > num2) {
 					JOptionPane.showMessageDialog(null, "The Minimum value must be lower than the Maximum value.");
 				}
@@ -280,16 +324,34 @@ public class GUIVariables extends JFrame {
 				// not an double!
 			}
 		}
+		if (b == true) {
+			comboBox.setEnabled(false);
+		}
+	}
+
+	public void validateVariableBinary(JTextField tf) {
+		boolean b = false;
 		if (comboBox.getSelectedItem().equals("Binary")) {
-			if (tfmin.getText().matches("[01]+") && tfmax.getText().matches("[01]+")
-					&& validateName(TFName.getText())) {
-				b = true;
-				Variable v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(), (TFMin.getText()),
-						(TFMax.getText()));
-				textAreaString += "\n" + v.toStringVariable();
-				variablesArray.add(v);
-				shared.getProblem().setType((String) comboBox.getSelectedItem());
-				textArea.setText(textAreaString);
+			if (TFValue.getText().matches("[01]+") && validateName(TFName.getText())) {
+				if (variablesArray.size() == 0) {
+					shared.setBinaryVariableSize((TFValue.getText().length()));
+					b = true;
+					Variable v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(), TFValue.getText());
+					textAreaStringBinary += "\n" + v.toStringVariable();
+					variablesArray.add(v);
+					shared.getProblem().setType((String) comboBox.getSelectedItem());
+					textArea.setText(textAreaStringBinary);
+				} else if (variablesArray.size() > 0 && TFValue.getText().length() == shared.getBinaryVariableSize()) {
+					b = true;
+					Variable v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(), TFValue.getText());
+					textAreaStringBinary += "\n" + v.toStringVariable();
+					variablesArray.add(v);
+					shared.getProblem().setType((String) comboBox.getSelectedItem());
+					textArea.setText(textAreaStringBinary);
+				} else if (variablesArray.size() > 0 && TFValue.getText().length() != shared.getBinaryVariableSize()) {
+					JOptionPane.showMessageDialog(null, "The value length must be: " + shared.getBinaryVariableSize());
+				}
+
 				// is an bitstring!
 			} else {
 				b = false;
@@ -311,6 +373,45 @@ public class GUIVariables extends JFrame {
 			}
 		}
 		return b;
+	}
+
+	public void checkSelectedComboBox() {
+		if (comboBox.getSelectedItem().equals("Integer") || comboBox.getSelectedItem().equals("Double")) {
+			TFMax.setVisible(true);
+			TFMin.setVisible(true);
+			LabelValue.setVisible(false);
+			TFValue.setVisible(false);
+			TFValue.setText("");
+			LabelInterval.setVisible(true);
+			textArea.setText(textAreaStringIntDouble);
+		} else if (comboBox.getSelectedItem().equals("Binary")) {
+			TFMax.setVisible(false);
+			TFMin.setVisible(false);
+			LabelInterval.setVisible(false);
+			TFValue.setVisible(true);
+			LabelValue.setVisible(true);
+			textArea.setText(textAreaStringBinary);
+
+		} else if (comboBox.getSelectedItem().equals(" ")) {
+			TFMax.setVisible(false);
+			TFMin.setVisible(false);
+			TFMin.setText("");
+			TFMax.setText("");
+			LabelInterval.setVisible(false);
+			TFValue.setVisible(false);
+			LabelValue.setVisible(false);
+			textArea.setText("");
+		}
+	}
+
+	public void setDefaultTAText() {
+		if (comboBox.getSelectedItem().equals("")) {
+			textArea.setText("");
+		} else if (comboBox.getSelectedItem().equals("Integer") || comboBox.getSelectedItem().equals("Double")) {
+			textArea.setText(textAreaStringIntDouble);
+		} else if (comboBox.getSelectedItem().equals("Binary")) {
+			textArea.setText(textAreaStringBinary);
+		}
 	}
 
 	public ArrayList<Variable> getVariablesArray() {
@@ -369,12 +470,11 @@ public class GUIVariables extends JFrame {
 		comboBox.setSelectedItem(valueCombo);
 	}
 
-	public String getTextAreaString(){
-		return textAreaString;
-	}
-	
-	public void setTextAreaString(String toadd) {
-		textAreaString = toadd;
+	public String getTextAreaStringIntDouble() {
+		return textAreaStringIntDouble;
 	}
 
+	public void setTextAreaStringIntDouble(String toadd) {
+		textAreaStringIntDouble = toadd;
+	}
 }

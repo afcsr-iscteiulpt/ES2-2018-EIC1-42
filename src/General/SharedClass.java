@@ -1,4 +1,5 @@
 package General;
+
 import java.awt.EventQueue;
 import java.awt.FileDialog;
 import java.io.File;
@@ -42,7 +43,6 @@ import Interface.GUIFAQ;
 import Interface.GUIFinal;
 import Interface.GUIGraphs;
 
-
 public class SharedClass {
 	private JFrame frame = new JFrame("Optimization on Demand 1.0");
 	private ArrayList<JPanel> ArrayOfPanels = new ArrayList<JPanel>();
@@ -56,9 +56,13 @@ public class SharedClass {
 	private GUIAlgorithms guiAlgo;
 	private GUIFinal guiFinal;
 	private GUIGraphs guiGraphs;
-	private Boolean verifyLoad=false; 
-	
-	private Problem problem = new Problem("", "", "", null, null, 0); // name ; description ; varArray ; AlgorithmArray ; DaysToWait
+	private Boolean verifyLoad = false;
+	private int binaryVariableSize = 0;
+
+	private Problem problem = new Problem("", "", "", null, null, 0); // name ;
+																		// description
+																		// varArray
+																																				// AlgorithmArray																		// DaysToWait
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -80,7 +84,7 @@ public class SharedClass {
 		frame.setBounds(100, 100, 700, 500);
 		problem = new Problem("", "", "", new ArrayList<Variable>(), new ArrayList<String>(), 0);
 		launch();
-		
+
 	}
 
 	/*
@@ -106,17 +110,19 @@ public class SharedClass {
 		frame.revalidate();
 		frame.repaint();
 	}
-	public void setExistingPanelX(JPanel panel){
+
+	public void setExistingPanelX(JPanel panel) {
 		frame.getContentPane().removeAll();
 		frame.getContentPane().add(panel);
 		frame.revalidate();
 		frame.repaint();
 	}
-	
+
 	// -------------------NP RELATED---------------------
-	
+
 	/*
-	 * Função do but�o "New Problem" que inicializa o array dos GUI's pertencentes às funcionalidade do "New Problem">
+	 * Função do but�o "New Problem" que inicializa o array dos GUI's
+	 * pertencentes às funcionalidade do "New Problem">
 	 */
 	public void createNPArray() {
 		// 0 in ArrayNewProblem
@@ -126,32 +132,34 @@ public class SharedClass {
 		// 1 in ArrayNewProblem
 		guiDefinicaoVariaveis = new GUIVariables(this);
 		ArrayNewProblem.add(guiDefinicaoVariaveis.getContentPane());
-		//2 in ArrayNewProblem
+		// 2 in ArrayNewProblem
 		guiAlgo = new GUIAlgorithms(this);
 		ArrayNewProblem.add(guiAlgo.getContentPane());
-		//3 in ArrayNewProblem
+		// 3 in ArrayNewProblem
 		guiFinal = new GUIFinal(this);
 		ArrayNewProblem.add(guiFinal.getContentPane());
-		//3 in ArrayNewProblem
-//		guiGraphs = new GUIGraphs(this);
-//		ArrayNewProblem.add(guiGraphs.getPanel());
+		// 3 in ArrayNewProblem
+		// guiGraphs = new GUIGraphs(this);
+		// ArrayNewProblem.add(guiGraphs.getPanel());
 	}
+
 	public ArrayList<JPanel> getNPArray() {
 		return ArrayNewProblem;
 	}
 
 	// -------------------SP RELATED---------------------
 	/*
-	 * Fun��o do but�o "Stored Problem" que inicializa o array dos GUI's pertencentes � funcionalidade do "Stored Problem"
+	 * Fun��o do but�o "Stored Problem" que inicializa o array dos GUI's
+	 * pertencentes � funcionalidade do "Stored Problem"
 	 */
 	public void acessStoredProblems() {
 		setExistingPanelX(storedProblem.getContentPane());
 	}
 
-
 	// -------------------FAQ RELATED---------------------
 	/*
-	 * Fun��o do but�o "FAQ" que inicializa o array dos GUI's pertencentes � funcionalidade do "FAQ"
+	 * Fun��o do but�o "FAQ" que inicializa o array dos GUI's pertencentes �
+	 * funcionalidade do "FAQ"
 	 */
 	public void createFAQArray() {
 		// 0 in ArrayFAQ
@@ -165,137 +173,150 @@ public class SharedClass {
 	}
 	// --------------------------------------------------
 
-	
 	/*
-	 * Fun��o respons�vel pela cria��o do problema com os dados fornecidos pelo utilizador
+	 * Fun��o respons�vel pela cria��o do problema com os dados fornecidos pelo
+	 * utilizador
 	 */
-	public void createProblem(){
-		System.out.println(guidescricaoproblema.getName() +"   "+guidescricaoproblema.getDescription() +"   "+guidescricaoproblema.getEmail() );
+	public void createProblem() {
+		System.out.println(guidescricaoproblema.getName() + "   " + guidescricaoproblema.getDescription() + "   "
+				+ guidescricaoproblema.getEmail());
 		problem.setName(guidescricaoproblema.getName());
 		problem.setDescription(guidescricaoproblema.getDescription());
 		problem.setEmail(guidescricaoproblema.getEmail());
 		problem.setVariablesArray(guiDefinicaoVariaveis.getVariablesArray());
-		
+
 		storedProblem.addProblem(problem);
-		
+
 		writeXmlFile(problem);
 	}
-	
+
 	/*
 	 * Fun��o respons�vel pela cria��o/escrita do ficheiro XML
 	 * 
 	 * @param Problem p
 	 */
 	public void writeXmlFile(Problem p) {
-	    try {
-	        DocumentBuilderFactory dFact = DocumentBuilderFactory.newInstance();
-	        DocumentBuilder build = dFact.newDocumentBuilder();
-	        Document doc = build.newDocument();
-	        
-	        Element root = doc.createElement("Problem");
-	        doc.appendChild(root);
-	       
-	        Element name = doc.createElement("Name");
-	        root.appendChild(name);
-	        	name.appendChild(doc.createTextNode(p.getName()));	    
-	        Element description = doc.createElement("Description");
-	        root.appendChild(description);
-        		description.appendChild(doc.createTextNode(p.getDescription()));	    
-	        Element usermail = doc.createElement("Email");
-	        root.appendChild(usermail);
-    			usermail.appendChild(doc.createTextNode(p.getEmail()));	    
-    		Element variables = doc.createElement("Variables");
-    		root.appendChild(variables);
-    			variables.appendChild(doc.createTextNode(""));
-    			
-    			ArrayList<Variable> variablesArray = p.getVariablesArray();
+		try {
+			DocumentBuilderFactory dFact = DocumentBuilderFactory.newInstance();
+			DocumentBuilder build = dFact.newDocumentBuilder();
+			Document doc = build.newDocument();
 
-                for (int i = 0; i < variablesArray.size(); i++) {
-                	String varName = "Var"+i;
-                	Element variable = doc.createElement(varName);
-                		variables.appendChild(variable);
-                			
-                			Element variableName = doc.createElement("Name");
-            	            variableName.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getName())));
-                			variable.appendChild(variableName);
-                			
-                			Element variableType = doc.createElement("Type");
-            	            variableType.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getType())));
-                			variable.appendChild(variableType);
-                			
-                			Element variableMin = doc.createElement("Min");
-            	            variableMin.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getMIN())));
-                			variable.appendChild(variableMin);
-                			
-                			Element variableMax = doc.createElement("Max");
-            	            variableMax.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getMAX())));
-                			variable.appendChild(variableMax);	 			
-                }
-   
-           		Element algorithms = doc.createElement("Algorithms");
-        		root.appendChild(algorithms);
-        		algorithms.appendChild(doc.createTextNode(""));	
-        			ArrayList<String> algorithmsArray = p.getAlgorithms();
-                    for (int i = 0; i < algorithmsArray.size(); i++) {
-                    	String algorithmName = algorithmsArray.get(i);
-                    	Element algorithm = doc.createElement(algorithmName);
-                    	algorithms.appendChild(algorithm);	
-                    }
-        	    Element daysToWait = doc.createElement("Days");
-        	    root.appendChild(daysToWait);
-        	    daysToWait.appendChild(doc.createTextNode(String.valueOf(p.getNumberOfDays())));	    
-            
-	        TransformerFactory tranFactory = TransformerFactory.newInstance();
-	        Transformer aTransformer = tranFactory.newTransformer();
-	        /*
-	         * Formata��o do ficheiro XML
-	         */
-	        aTransformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
-	        aTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-	        aTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
-	        DOMSource source = new DOMSource(doc);
-	        try {
-	        	
-	        	String date = new SimpleDateFormat("dd-MM-yyyy  HH:mm:ss").format(new Date());
-	 
-	        	System.out.println(date);
-	        	
-	            String problemName = p.getName()+" - " +date ;
-	            
-	            FileWriter fos = new FileWriter("/Users/albertoramos/Desktop/"+problemName);
-	            StreamResult result = new StreamResult(fos);
-	            aTransformer.transform(source, result);
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	    } catch (TransformerException ex) {
-	        System.out.println("Error outputting document");
-	    } catch (ParserConfigurationException ex) {
-	        System.out.println("Error building document");
-	    }
+			Element root = doc.createElement("Problem");
+			doc.appendChild(root);
+
+			Element name = doc.createElement("Name");
+			root.appendChild(name);
+			name.appendChild(doc.createTextNode(p.getName()));
+			Element description = doc.createElement("Description");
+			root.appendChild(description);
+			description.appendChild(doc.createTextNode(p.getDescription()));
+			Element usermail = doc.createElement("Email");
+			root.appendChild(usermail);
+			usermail.appendChild(doc.createTextNode(p.getEmail()));
+			Element variables = doc.createElement("Variables");
+			root.appendChild(variables);
+			variables.appendChild(doc.createTextNode(""));
+
+			ArrayList<Variable> variablesArray = p.getVariablesArray();
+			String type = variablesArray.get(0).getType();
+
+			for (int i = 0; i < variablesArray.size(); i++) {
+				String varName = "Var" + i;
+				Element variable = doc.createElement(varName);
+				variables.appendChild(variable);
+
+				if (type.equals("Integer") || type.equals("Double")) {
+					Element variableName = doc.createElement("Name");
+					variableName.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getName())));
+					variable.appendChild(variableName);
+
+					Element variableType = doc.createElement("Type");
+					variableType.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getType())));
+					variable.appendChild(variableType);
+
+					Element variableMin = doc.createElement("Min");
+					variableMin.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getMIN())));
+					variable.appendChild(variableMin);
+
+					Element variableMax = doc.createElement("Max");
+					variableMax.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getMAX())));
+					variable.appendChild(variableMax);
+				} else if (type.equals("Binary")) {
+					Element variableName = doc.createElement("Name");
+					variableName.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getName())));
+					variable.appendChild(variableName);
+
+					Element variableType = doc.createElement("Type");
+					variableType.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getType())));
+					variable.appendChild(variableType);
+
+					Element variableValue = doc.createElement("Value");
+					variableValue.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getValue())));
+					variable.appendChild(variableValue);
+				}
+			}
+
+			Element algorithms = doc.createElement("Algorithms");
+			root.appendChild(algorithms);
+			algorithms.appendChild(doc.createTextNode(""));
+			ArrayList<String> algorithmsArray = p.getAlgorithms();
+			for (int i = 0; i < algorithmsArray.size(); i++) {
+				String algorithmName = algorithmsArray.get(i);
+				Element algorithm = doc.createElement(algorithmName);
+				algorithms.appendChild(algorithm);
+			}
+			Element daysToWait = doc.createElement("Days");
+			root.appendChild(daysToWait);
+			daysToWait.appendChild(doc.createTextNode(String.valueOf(p.getNumberOfDays())));
+
+			TransformerFactory tranFactory = TransformerFactory.newInstance();
+			Transformer aTransformer = tranFactory.newTransformer();
+			/*
+			 * Formata��o do ficheiro XML
+			 */
+			aTransformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
+			aTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+			aTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			DOMSource source = new DOMSource(doc);
+			try {
+
+				String date = new SimpleDateFormat("dd-MM-yyyy  HH:mm:ss").format(new Date());
+
+				System.out.println(date);
+
+				String problemName = p.getName() + " - " + date;
+
+				FileWriter fos = new FileWriter("/Users/albertoramos/Desktop/" + problemName);
+				StreamResult result = new StreamResult(fos);
+				aTransformer.transform(source, result);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (TransformerException ex) {
+			System.out.println("Error outputting document");
+		} catch (ParserConfigurationException ex) {
+			System.out.println("Error building document");
+		}
 	}
-	
-	
-	
-	
+
 	/*
 	 * Fun��o respons�vel pela leitura do ficheiro XML
 	 */
 	public void readXMLFile() {
 
 		try {
-			
+
 			JFileChooser fileChooser = new JFileChooser();
 			StringBuilder sb = new StringBuilder();
-			File file = new File("");;
+			File file = new File("");
+			;
 			ArrayList<Variable> variablesFromXML = new ArrayList<Variable>();
 			ArrayList<String> algorithmsFromXML = new ArrayList<String>();
 
-			
-			if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-				 file = fileChooser.getSelectedFile();
+			if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+				file = fileChooser.getSelectedFile();
 			}
-			
+
 			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 			Document doc = docBuilder.parse(file);
@@ -336,66 +357,72 @@ public class SharedClass {
 					Element EmailElement = (Element) email.item(0);
 
 					NodeList EmailList = EmailElement.getChildNodes();
-					if(((Node) EmailList.item(0)).getNodeValue().trim().equals(null))
+					if (((Node) EmailList.item(0)).getNodeValue().trim().equals(null))
 						System.out.println("Email : ");
 					else
 						System.out.println("Email : " + ((Node) EmailList.item(0)).getNodeValue().trim());
 
-				
 					NodeList variables = firstPersonElement.getElementsByTagName("Variables");
 					Element VarElement = (Element) variables.item(0);
 					NodeList varList = VarElement.getChildNodes();
-					if(varList!=null){
+					if (varList != null) {
 						int varLength = varList.getLength();
-						for(int i = 1; i<varLength; i=i+2){
-							if(varList.item(i).getNodeType() == Node.ELEMENT_NODE){
+						for (int i = 1; i < varLength; i = i + 2) {
+							if (varList.item(i).getNodeType() == Node.ELEMENT_NODE) {
 								Element varElement = (Element) varList.item(i);
-								if(varElement.getNodeName().contains("Var")){
+								if (varElement.getNodeName().contains("Var")) {
 									String varName = varElement.getElementsByTagName("Name").item(0).getTextContent();
 									String varType = varElement.getElementsByTagName("Type").item(0).getTextContent();
-									String varMin = varElement.getElementsByTagName("Min").item(0).getTextContent();
-									String varMax = varElement.getElementsByTagName("Max").item(0).getTextContent();
-									if(varType.equals("Integer")){
-										Variable v = new Variable(varName, varType, Integer.parseInt(varMin), Integer.parseInt(varMax));
+									if (varType.equals("Integer")) {
+										String varMin = varElement.getElementsByTagName("Min").item(0).getTextContent();
+										String varMax = varElement.getElementsByTagName("Max").item(0).getTextContent();
+										Variable v = new Variable(varName, varType, Integer.parseInt(varMin),
+												Integer.parseInt(varMax));
 										variablesFromXML.add(v);
 										guiDefinicaoVariaveis.getVariablesArray().add(v);
-									}else if(varType.equals("Double")){
-										Variable v = new Variable(varName, varType, Double.parseDouble(varMin),Double.parseDouble(varMax));
+									} else if (varType.equals("Double")) {
+										String varMin = varElement.getElementsByTagName("Min").item(0).getTextContent();
+										String varMax = varElement.getElementsByTagName("Max").item(0).getTextContent();
+										Variable v = new Variable(varName, varType, Double.parseDouble(varMin),
+												Double.parseDouble(varMax));
 										variablesFromXML.add(v);
 										guiDefinicaoVariaveis.getVariablesArray().add(v);
-									}else if(varType.equals("Binary")){
-										Variable v = new Variable(varName, varType, varMin, varMax);
+									} else if (varType.equals("Binary")) {
+										String value = varElement.getElementsByTagName("Value").item(0)
+												.getTextContent();
+										Variable v = new Variable(varName, varType, value);
 										variablesFromXML.add(v);
 										guiDefinicaoVariaveis.getVariablesArray().add(v);
 									}
 								}
 							}
-						}	
+						}
 					}
-					
-					
+
 					NodeList algorithms = firstPersonElement.getElementsByTagName("Algorithms");
 					Element AlgoriElement = (Element) algorithms.item(0);
 					NodeList algoriList = AlgoriElement.getChildNodes();
-					
-					if(algoriList!=null){
+
+					if (algoriList != null) {
 						int algoriLength = algoriList.getLength();
-						for(int i = 1; i<algoriLength; i=i+2){
-							if(algoriList.item(i).getNodeType() == Node.ELEMENT_NODE){
+						for (int i = 1; i < algoriLength; i = i + 2) {
+							if (algoriList.item(i).getNodeType() == Node.ELEMENT_NODE) {
 								Element SingleAlgoriElement = (Element) algoriList.item(i);
 								algorithmsFromXML.add(SingleAlgoriElement.getNodeName());
-							}	
+							}
 						}
 					}
 
 					NodeList days = firstPersonElement.getElementsByTagName("Days");
 					Element daysElement = (Element) days.item(0);
-					
+
 					NodeList daysContent = daysElement.getChildNodes();
 					System.out.println("Days : " + ((Node) daysContent.item(0)).getNodeValue().trim());
 
-					 
-					LoadProblem(((Node) textFNList.item(0)).getNodeValue().trim() , ((Node) textLNList.item(0)).getNodeValue().trim(), ((Node) EmailList.item(0)).getNodeValue().trim(), variablesFromXML, algorithmsFromXML, Integer.parseInt(((Node) daysContent.item(0)).getNodeValue().trim()));
+					LoadProblem(((Node) textFNList.item(0)).getNodeValue().trim(),
+							((Node) textLNList.item(0)).getNodeValue().trim(),
+							((Node) EmailList.item(0)).getNodeValue().trim(), variablesFromXML, algorithmsFromXML,
+							Integer.parseInt(((Node) daysContent.item(0)).getNodeValue().trim()));
 
 					// ------
 
@@ -417,46 +444,45 @@ public class SharedClass {
 		// System.exit (0);
 
 	}// end of main
-	//teste
+		// teste
 
-	
-	public void LoadProblem(String name, String description, String email, ArrayList<Variable> variables, ArrayList<String> algorithms, int days){
+	public void LoadProblem(String name, String description, String email, ArrayList<Variable> variables,
+			ArrayList<String> algorithms, int days) {
 		setVerifyLoad(true);
-		
+
 		guidescricaoproblema.setName(name);
 		guidescricaoproblema.setDescription(description);
 		guidescricaoproblema.setEmail(email);
-		
-		guiAlgo.setAlgorithms(algorithms);
-		guiAlgo.getTFTime().setText(""+days);
-		guiAlgo.setDays(days);
-		
-		for(int i=0; i<algorithms.size(); i++){
-			guiAlgo.addAlgorithm(algorithms.get(i));			
-		}
-		
-		
-		String s1 = guiDefinicaoVariaveis.getTextAreaString();
-		for(int i = 0 ; i< variables.size() ; i++){
-			s1 += "\n" + variables.get(i).toStringVariable();	
-			guiDefinicaoVariaveis.setTextAreaString(s1);
-			guiDefinicaoVariaveis.getTextArea().setText(s1);				
-		}
-		guiDefinicaoVariaveis.setTextAreaString(s1);
 
-		String s2 = "Algorithms chosen: "+"\n";		
-		for(int i = 0 ; i< algorithms.size() ; i++){
-			s2 += algorithms.get(i) + "\n" ;		
+		guiAlgo.setAlgorithms(algorithms);
+		guiAlgo.getTFTime().setText("" + days);
+		guiAlgo.setDays(days);
+
+		for (int i = 0; i < algorithms.size(); i++) {
+			guiAlgo.addAlgorithm(algorithms.get(i));
+		}
+
+		String s1 = guiDefinicaoVariaveis.getTextAreaStringIntDouble();
+		for (int i = 0; i < variables.size(); i++) {
+			s1 += "\n" + variables.get(i).toStringVariable();
+			guiDefinicaoVariaveis.setTextAreaStringIntDouble(s1);
+			guiDefinicaoVariaveis.getTextArea().setText(s1);
+		}
+		guiDefinicaoVariaveis.setTextAreaStringIntDouble(s1);
+
+		String s2 = "Algorithms chosen: " + "\n";
+		for (int i = 0; i < algorithms.size(); i++) {
+			s2 += algorithms.get(i) + "\n";
 			guiAlgo.getTAManu().setText(s2);
 		}
-		
-		if(!problem.getVariablesArray().isEmpty()){
+
+		if (!problem.getVariablesArray().isEmpty()) {
 			problem.getVariablesArray().clear();
 		}
-		if(!problem.getAlgorithms().isEmpty()){
+		if (!problem.getAlgorithms().isEmpty()) {
 			problem.getAlgorithms().clear();
-		}		
-	
+		}
+
 		problem.setName(name);
 		problem.setDescription(description);
 		problem.setEmail(email);
@@ -464,41 +490,48 @@ public class SharedClass {
 		problem.setType(variables.get(0).getType());
 		problem.setAlgorithms(algorithms);
 		problem.setNumberOfDays(days);
-		
+
 		guiDefinicaoVariaveis.setComboBoxValue(problem.getType());
 		guiDefinicaoVariaveis.getComboBox().setEnabled(false);
 
-		
 		setReviewProblem();
 	}
-	
-	public void setReviewProblem(){
-		String s1="";
-		String s2="";
+
+	public void setReviewProblem() {
+		String s1 = "";
+		String s2 = "";
 		guiFinal.getTFName().setText(problem.getName());
 		guiFinal.getTADescription().setText(problem.getDescription());
-		
-		if(!problem.getVariablesArray().isEmpty()){
-			for(int i=0; i<problem.getVariablesArray().size(); i++){
-				s1 += problem.getVariablesArray().get(i).getName() + "\n"  ;
+
+		if (!problem.getVariablesArray().isEmpty()) {
+			for (int i = 0; i < problem.getVariablesArray().size(); i++) {
+				s1 += problem.getVariablesArray().get(i).getName() + "\n";
 				guiFinal.getTAVariables().setText(s1);
 			}
-		}else {
+		} else {
 			guiFinal.getTAVariables().setText(s1);
 		}
-		
-		if(!problem.getAlgorithms().isEmpty()){
-			for(int i=0; i<problem.getAlgorithms().size(); i++){
-				s2 += problem.getAlgorithms().get(i) + "\n" ;
+
+		if (!problem.getAlgorithms().isEmpty()) {
+			for (int i = 0; i < problem.getAlgorithms().size(); i++) {
+				s2 += problem.getAlgorithms().get(i) + "\n";
 				guiFinal.getTAAlgorit().setText(s2);
 			}
-		}else{
+		} else {
 			guiFinal.getTAAlgorit().setText(s2);
 		}
-		
-		guiFinal.getTFDays().setText(""+problem.getNumberOfDays());
+
+		guiFinal.getTFDays().setText("" + problem.getNumberOfDays());
 	}
-	
+
+	public void setBinaryVariableSize(int size) {
+		binaryVariableSize = size;
+	}
+
+	public int getBinaryVariableSize() {
+		return binaryVariableSize;
+	}
+
 	public void setGUI(GUI gui) {
 		this.gui = gui;
 	}
@@ -506,16 +539,16 @@ public class SharedClass {
 	public ArrayList<JPanel> getArrayOfPanels() {
 		return ArrayOfPanels;
 	}
-	
-	public Problem getProblem(){
+
+	public Problem getProblem() {
 		return problem;
 	}
 
-	public Boolean getVerifyLoad(){
+	public Boolean getVerifyLoad() {
 		return verifyLoad;
 	}
-		
-	public void setVerifyLoad(boolean b){
-		verifyLoad=b;
+
+	public void setVerifyLoad(boolean b) {
+		verifyLoad = b;
 	}
 }

@@ -295,9 +295,9 @@ public class SharedClass {
 
 				String problemName = p.getName() + " - " + date;
 
-//				String outputfile = administrador.getProblemsDir();
+				String outputfile = administrador.getProblemsDir();
 				
-				FileWriter fos = new FileWriter("/Users/albertoramos/Desktop/" + problemName);
+				FileWriter fos = new FileWriter(outputfile + p.getName() + ".xml");
 				StreamResult result = new StreamResult(fos);
 				aTransformer.transform(source, result);
 			} catch (IOException e) {

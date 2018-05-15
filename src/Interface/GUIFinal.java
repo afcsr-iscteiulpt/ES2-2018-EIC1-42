@@ -122,7 +122,7 @@ public class GUIFinal extends JFrame {
 		BotaoBack.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				shared.setExistingPanel(shared.getNPArray(), 2);
+				shared.setExistingPanel(shared.getNPArray(), 3);
 			}
 		});
 		contentPane.add(BotaoBack);

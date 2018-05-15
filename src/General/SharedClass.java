@@ -38,6 +38,7 @@ import Interface.GUI;
 import Interface.GUIAlgorithms;
 import Interface.GUIVariables;
 import Interface.GUIProblem;
+import Interface.GUIRestrictions;
 import Interface.GUIStoredProblems;
 import Interface.GUIFAQ;
 import Interface.GUIFinal;
@@ -56,6 +57,7 @@ public class SharedClass {
 	private GUIAlgorithms guiAlgo;
 	private GUIFinal guiFinal;
 	private GUIGraphs guiGraphs;
+	private GUIRestrictions guiRestrictions;
 	private Boolean verifyLoad = false;
 	private int binaryVariableSize = 0;
 
@@ -137,14 +139,15 @@ public class SharedClass {
 		guiDefinicaoVariaveis = new GUIVariables(this);
 		ArrayNewProblem.add(guiDefinicaoVariaveis.getContentPane());
 		// 2 in ArrayNewProblem
+		guiRestrictions = new GUIRestrictions(this);
+		ArrayNewProblem.add(guiRestrictions.getContentPane());
+		// 3 in ArrayNewProblem
 		guiAlgo = new GUIAlgorithms(this);
 		ArrayNewProblem.add(guiAlgo.getContentPane());
-		// 3 in ArrayNewProblem
+		// 4 in ArrayNewProblem
 		guiFinal = new GUIFinal(this);
 		ArrayNewProblem.add(guiFinal.getContentPane());
-		// 3 in ArrayNewProblem
-		// guiGraphs = new GUIGraphs(this);
-		// ArrayNewProblem.add(guiGraphs.getPanel());
+
 	}
 
 	public ArrayList<JPanel> getNPArray() {
@@ -229,15 +232,16 @@ public class SharedClass {
 				Element variable = doc.createElement(varName);
 				variables.appendChild(variable);
 
+				Element variableName = doc.createElement("Name");
+				variableName.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getName())));
+				variable.appendChild(variableName);
+
+				Element variableType = doc.createElement("Type");
+				variableType.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getType())));
+				variable.appendChild(variableType);
+				
 				if (type.equals("Integer") || type.equals("Double")) {
-					Element variableName = doc.createElement("Name");
-					variableName.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getName())));
-					variable.appendChild(variableName);
-
-					Element variableType = doc.createElement("Type");
-					variableType.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getType())));
-					variable.appendChild(variableType);
-
+				
 					Element variableMin = doc.createElement("Min");
 					variableMin.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getMIN())));
 					variable.appendChild(variableMin);
@@ -245,19 +249,16 @@ public class SharedClass {
 					Element variableMax = doc.createElement("Max");
 					variableMax.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getMAX())));
 					variable.appendChild(variableMax);
+				
 				} else if (type.equals("Binary")) {
-					Element variableName = doc.createElement("Name");
-					variableName.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getName())));
-					variable.appendChild(variableName);
-
-					Element variableType = doc.createElement("Type");
-					variableType.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getType())));
-					variable.appendChild(variableType);
-
+		
 					Element variableValue = doc.createElement("Value");
 					variableValue.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getValue())));
 					variable.appendChild(variableValue);
 				}
+				Element objective = doc.createElement("Objective");
+				objective.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).isObjective())));
+				variable.appendChild(objective);
 			}
 
 			Element algorithms = doc.createElement("Algorithms");
@@ -383,21 +384,24 @@ public class SharedClass {
 									if (varType.equals("Integer")) {
 										String varMin = varElement.getElementsByTagName("Min").item(0).getTextContent();
 										String varMax = varElement.getElementsByTagName("Max").item(0).getTextContent();
+										Boolean objective = Boolean.parseBoolean(varElement.getElementsByTagName("Objective").item(0).getTextContent());
 										Variable v = new Variable(varName, varType, Integer.parseInt(varMin),
-												Integer.parseInt(varMax));
+												Integer.parseInt(varMax), new ArrayList<Integer>(), objective);
 										variablesFromXML.add(v);
 										guiDefinicaoVariaveis.getVariablesArray().add(v);
 									} else if (varType.equals("Double")) {
 										String varMin = varElement.getElementsByTagName("Min").item(0).getTextContent();
 										String varMax = varElement.getElementsByTagName("Max").item(0).getTextContent();
+										Boolean objective = Boolean.parseBoolean(varElement.getElementsByTagName("Objective").item(0).getTextContent());
 										Variable v = new Variable(varName, varType, Double.parseDouble(varMin),
-												Double.parseDouble(varMax));
+												Double.parseDouble(varMax), new ArrayList<Double>(), objective);
 										variablesFromXML.add(v);
 										guiDefinicaoVariaveis.getVariablesArray().add(v);
 									} else if (varType.equals("Binary")) {
 										String value = varElement.getElementsByTagName("Value").item(0)
 												.getTextContent();
-										Variable v = new Variable(varName, varType, value);
+										Boolean objective = Boolean.parseBoolean(varElement.getElementsByTagName("Objective").item(0).getTextContent());
+										Variable v = new Variable(varName, varType, value, objective);
 										variablesFromXML.add(v);
 										guiDefinicaoVariaveis.getVariablesArray().add(v);
 									}
@@ -542,6 +546,15 @@ public class SharedClass {
 		guiFinal.setTFBrowse(problem.getPath());
 	}
 
+	public void setGUIRestrictions(){
+		guiRestrictions.getModel().clear();
+		for (int i = 0; i < problem.getVariablesArray().size(); i++) {
+			guiRestrictions.getModel().addElement(problem.getVariablesArray().get(i).getName());
+			guiRestrictions.validate();
+			guiRestrictions.repaint();
+		}
+	}
+	
 	public void setBinaryVariableSize(int size) {
 		binaryVariableSize = size;
 	}

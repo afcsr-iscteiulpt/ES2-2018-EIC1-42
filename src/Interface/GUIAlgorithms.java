@@ -260,7 +260,9 @@ public class GUIAlgorithms extends JFrame {
 		BotaoBack.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				shared.setExistingPanel(shared.getNPArray(), 1);
+				
+					shared.setExistingPanel(shared.getNPArray(), 2);					
+				
 			}
 		});
 		contentPane.add(BotaoBack);
@@ -279,7 +281,7 @@ public class GUIAlgorithms extends JFrame {
 
 				shared.setReviewProblem();
 
-				shared.setExistingPanel(shared.getNPArray(), 3);
+				shared.setExistingPanel(shared.getNPArray(), 4);
 
 				Configuration conf = null;
 				switch (shared.getProblem().getVariablesArray().get(0).getType()) {

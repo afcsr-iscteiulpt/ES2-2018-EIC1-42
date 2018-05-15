@@ -1,4 +1,6 @@
 package General;
+import java.util.ArrayList;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -14,29 +16,38 @@ public class Variable {
 	private String value;
 	private Object MIN;
 	private Object MAX;
+	private ArrayList<Integer> restrictionsInt;
+	private ArrayList<Double> restrictionsDouble;
+	private boolean objective;
 	
-	public Variable(String name, String type, int min, int max){
+	public Variable(String name, String type, int min, int max, ArrayList<Integer> restrictionsInt, boolean objective){
 		this.name=name;
 		this.type=type;
 		this.minInt=min;
 		this.maxInt=max;
 		this.MIN = min;
 		this.MAX = max;
+		this.restrictionsInt = restrictionsInt;
+		this.objective = objective;
 	}
-	public Variable(String name, String type, double min, double max){
+	public Variable(String name, String type, double min, double max, ArrayList<Double> restrictionsDouble, boolean objective){
 		this.name=name;
 		this.type=type;
 		this.minDoub=min;
 		this.maxDoub=max;
 		this.MIN = min;
 		this.MAX = max;
+		this.restrictionsDouble = restrictionsDouble;
+		this.objective = objective;
 	}
-	public Variable(String name, String type, String value){
+	public Variable(String name, String type, String value, boolean objective){
 		this.name=name;
 		this.type=type;
 		this.value=value;
+		this.objective = objective;
 	}
 	
+
 	public String toStringVariable(){
 		String s="";
 		if(type.equals("Integer") || type.equals("Double")){
@@ -121,5 +132,22 @@ public class Variable {
 	public String convertAllToString(Object obj){
 		return String.valueOf(obj);
 	}
-   	
+	public ArrayList<Integer> getRestrictionsInt() {
+		return restrictionsInt;
+	}
+	public void setRestrictionsInt(ArrayList<Integer> restrictionsInt) {
+		this.restrictionsInt = restrictionsInt;
+	}
+	public ArrayList<Double> getRestrictionsDouble() {
+		return restrictionsDouble;
+	}
+	public void setRestrictionsDouble(ArrayList<Double> restrictionsDouble) {
+		this.restrictionsDouble = restrictionsDouble;
+	}
+	public boolean isObjective() {
+		return objective;
+	}
+	public void setObjective(boolean objective) {
+		this.objective = objective;
+	}
 }

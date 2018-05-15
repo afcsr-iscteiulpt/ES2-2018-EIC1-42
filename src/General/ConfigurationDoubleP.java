@@ -139,7 +139,7 @@ public class ConfigurationDoubleP extends Configuration{
 
 	@Override 
 	public void Run() throws IOException {
-		String experimentBaseDirectory = "/experimentBaseDirectory";
+		String experimentBaseDirectory = "/Users/albertoramos/Desktop";
 
 		System.out.println(problemToRun.getName());
 		List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
@@ -157,7 +157,7 @@ public class ConfigurationDoubleP extends Configuration{
 				.setOutputParetoSetFileName("VAR")
 				.setReferenceFrontDirectory(experimentBaseDirectory+"/referenceFronts")
 				.setIndicatorList(Arrays.asList(new PISAHypervolume<DoubleSolution>()))
-				.setIndependentRuns(5)//default for project
+				.setIndependentRuns(5) //default for project
 				.setNumberOfCores(8)
 				.build();
 

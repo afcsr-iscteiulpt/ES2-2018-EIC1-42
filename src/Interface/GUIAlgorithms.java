@@ -96,8 +96,6 @@ import javax.swing.JScrollPane;
 
 public class GUIAlgorithms extends JFrame {
 
-	// teste
-
 	private JPanel contentPane;
 	private SharedClass shared;
 	private JLabel LabelAuto = new JLabel("Your algorithms will be choosen automatically");
@@ -106,6 +104,8 @@ public class GUIAlgorithms extends JFrame {
 	private JButton ButtonAddMulti = new JButton("Add");
 	private String TAText = "Algorithms chosen: " + "\n";
 	private JTextField Time;
+	private JButton ButtonClearAll;
+	private JButton ButtonManu;
 	private int numberOfDays;
 
 	private ArrayList<String> SELECTEDAlgorithmsArray = new ArrayList<>();
@@ -171,18 +171,18 @@ public class GUIAlgorithms extends JFrame {
 		separator.setBounds(0, 84, 700, 12);
 		contentPane.add(separator);
 
-		CBMulti.setBounds(20, 206, 208, 27);
+		CBMulti.setBounds(20, 195, 208, 27);
 		CBMulti.setEnabled(false);
 		contentPane.add(CBMulti);
 
 		JLabel LabelMOA = new JLabel("Multi-objective algoritms");
 		LabelMOA.setForeground(new Color(47, 79, 79));
 		LabelMOA.setFont(new Font("Avenir Next", Font.PLAIN, 14));
-		LabelMOA.setBounds(30, 186, 206, 16);
+		LabelMOA.setBounds(30, 178, 206, 16);
 		contentPane.add(LabelMOA);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(20, 270, 306, 119);
+		scrollPane.setBounds(20, 234, 306, 122);
 		contentPane.add(scrollPane);
 		scrollPane.setViewportView(TAManu);
 
@@ -190,7 +190,7 @@ public class GUIAlgorithms extends JFrame {
 		TAManu.setEnabled(false);
 		
 		ButtonAddMulti.setForeground(new Color(47, 79, 79));
-		ButtonAddMulti.setBounds(227, 205, 99, 29);
+		ButtonAddMulti.setBounds(227, 194, 99, 29);
 		ButtonAddMulti.setEnabled(false);
 		ButtonAddMulti.addActionListener(new ActionListener() {
 
@@ -206,7 +206,8 @@ public class GUIAlgorithms extends JFrame {
 		});
 		contentPane.add(ButtonAddMulti);
 
-		JButton ButtonManu = new JButton("Manually");
+		ButtonManu = new JButton("Manually");
+		ButtonManu.setBackground(Color.WHITE);
 		ButtonManu.setForeground(new Color(47, 79, 79));
 		ButtonManu.setBounds(20, 145, 290, 29);
 		ButtonManu.addActionListener(new ActionListener() {
@@ -314,9 +315,26 @@ public class GUIAlgorithms extends JFrame {
 		JLabel LabelLogo = new JLabel();
 		ImageIcon imageIcon = new ImageIcon(
 				new ImageIcon("GenericPage.png").getImage().getScaledInstance(700, 500, Image.SCALE_DEFAULT));
+		
+		ButtonClearAll = new JButton("Clear All");
+		ButtonClearAll.setForeground(new Color(47, 79, 79));
+		ButtonClearAll.setBounds(227, 356, 99, 29);
+		contentPane.add(ButtonClearAll);
 		LabelLogo.setIcon(imageIcon);
 		LabelLogo.setBounds(0, 0, 700, 478);
 		contentPane.add(LabelLogo);
+		ButtonClearAll.setEnabled(false);
+		ButtonClearAll.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SELECTEDAlgorithmsArray.clear();
+				shared.getProblem().getAlgorithms().clear();
+				TAText = "Algorithms chosen: " + "\n";
+				TAManu.setText(TAText);
+				
+			}
+		});
 
 	}
 
@@ -371,6 +389,7 @@ public class GUIAlgorithms extends JFrame {
 	public void disableManually() {
 		CBMulti.setEnabled(false);
 		CBMulti.setSelectedItem("");
+		ButtonClearAll.setEnabled(false);
 		ButtonAddMulti.setEnabled(false);
 		TAText = "Algorithms chosen: " + "\n";
 		TAManu.setText(TAText);
@@ -379,6 +398,8 @@ public class GUIAlgorithms extends JFrame {
 	public void enableManually() {
 		CBMulti.setEnabled(true);
 		ButtonAddMulti.setEnabled(true);
+		ButtonClearAll.setEnabled(true);
+
 	}
 
 	public boolean checkIfThisStringExists(String s) {
@@ -410,5 +431,4 @@ public class GUIAlgorithms extends JFrame {
 		SELECTEDAlgorithmsArray.clear();
 		SELECTEDAlgorithmsArray = algorithms;
 	}
-
 }

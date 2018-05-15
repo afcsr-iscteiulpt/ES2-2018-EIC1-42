@@ -154,7 +154,7 @@ public class ConfigurationDoubleP extends Configuration{
 				configureAlgorithmList(problemList);
 
 		Experiment<DoubleSolution, List<DoubleSolution>> experiment =
-				new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("RunningAutomaticConfigurationTest")
+				new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ExperimentsDouble")
 				.setAlgorithmList(algorithmList)
 				.setProblemList(problemList)
 				.setExperimentBaseDirectory(experimentBaseDirectory)

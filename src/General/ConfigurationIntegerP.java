@@ -50,7 +50,7 @@ public class ConfigurationIntegerP extends Configuration {
 		for (int i = 0; i < problemList.size(); i++) {
 			for ( int j = 0 ; j < alg.size(); j++) {
 				switch(alg.get(j)) {
-				case "NSAGII":
+				case "NSGAII":
 					Algorithm<List<IntegerSolution>> algorithmnsgaii = new NSGAIIBuilder<>(
 							problemList.get(i).getProblem(),
 							new IntegerSBXCrossover(0.9, 20.0),

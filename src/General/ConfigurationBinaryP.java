@@ -35,9 +35,11 @@ public class ConfigurationBinaryP extends Configuration{
 	private static Problem problemToRun;
 	private static String problemType;
 	private static ArrayList<String> alg;
-
-	public ConfigurationBinaryP(Problem ToRun) {
-		super(ToRun);
+	private static String path;
+	
+	public ConfigurationBinaryP(String path, Problem ToRun) {
+		super(path, ToRun);
+		this.path=path;
 		problemToRun=ToRun;
 		problemType=ToRun.getType();
 		alg=ToRun.getAlgorithms();
@@ -130,7 +132,9 @@ public class ConfigurationBinaryP extends Configuration{
 	
 	@Override
 	public void Run() throws IOException {
-		String experimentBaseDirectory = "experimentBaseDirectory";
+//		String experimentBaseDirectory = "experimentBaseDirectory";
+		String experimentBaseDirectory = path;
+		
 	    List<ExperimentProblem<BinarySolution>> problemList = new ArrayList<>();
 	    problemList.add(new ExperimentProblem<>(new BinaryProblem(problemToRun,problemToRun.getVariablesArray().size()/*Confirm pls*/)));
 

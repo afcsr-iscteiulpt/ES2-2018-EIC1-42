@@ -27,7 +27,7 @@ public class Configuration {
 	private static String problemType;
 	private static String alg;
  
-	public Configuration(Problem ToRun) {
+	public Configuration(String path, Problem ToRun) {
 		problemToRun=ToRun;
 		problemType=ToRun.getType();
 		alg = ToRun.getAlgorithms().toString();

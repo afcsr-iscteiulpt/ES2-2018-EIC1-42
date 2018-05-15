@@ -66,6 +66,8 @@ public class SharedClass {
 																		// DaysToWait
 																		// Path
 
+	private Administrador administrador = new Administrador("config.xml");
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -293,6 +295,8 @@ public class SharedClass {
 
 				String problemName = p.getName() + " - " + date;
 
+//				String outputfile = administrador.getProblemsDir();
+				
 				FileWriter fos = new FileWriter("/Users/albertoramos/Desktop/" + problemName);
 				StreamResult result = new StreamResult(fos);
 				aTransformer.transform(source, result);
@@ -567,4 +571,16 @@ public class SharedClass {
 	public void setVerifyLoad(boolean b) {
 		verifyLoad = b;
 	}
+	
+	
+
+	//Modo Admin
+
+	public Administrador getAdministrador() {
+		return administrador;
+	}
+	
+	
+	
+	
 }

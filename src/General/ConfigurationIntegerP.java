@@ -32,9 +32,11 @@ public class ConfigurationIntegerP extends Configuration {
 	private static Problem problemToRun;
 	private static String problemType;
 	private static ArrayList<String> alg;
+	private static String path;
 
-	public ConfigurationIntegerP(Problem ToRun) {
-		super(ToRun);
+	public ConfigurationIntegerP(String path, Problem ToRun) {
+		super(path, ToRun);
+		this.path=path;
 		problemToRun=ToRun;
 		problemType=ToRun.getType();
 		alg=ToRun.getAlgorithms();
@@ -109,8 +111,9 @@ public class ConfigurationIntegerP extends Configuration {
 	 
 	@Override
 	public void Run() throws IOException {
-		String experimentBaseDirectory = "experimentBaseDirectory";
-
+//		String experimentBaseDirectory = "experimentBaseDirectory";
+		String experimentBaseDirectory = path;
+		
 	    List<ExperimentProblem<IntegerSolution>> problemList = new ArrayList<>();
 	    problemList.add(new ExperimentProblem<>(new IntegerProblem(problemToRun)));
 

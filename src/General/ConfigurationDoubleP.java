@@ -36,9 +36,11 @@ public class ConfigurationDoubleP extends Configuration{
 	private static Problem problemToRun;
 	private static String problemType;
 	private static ArrayList<String> alg;
+	private static String path;
 
-	public ConfigurationDoubleP(Problem ToRun) {
-		super(ToRun);
+	public ConfigurationDoubleP(String path, Problem ToRun) {
+		super(path, ToRun);
+		this.path=path;
 		problemToRun=ToRun;
 		problemType=ToRun.getType();
 		alg=ToRun.getAlgorithms();
@@ -139,8 +141,9 @@ public class ConfigurationDoubleP extends Configuration{
 
 	@Override 
 	public void Run() throws IOException {
-		String experimentBaseDirectory = "/Users/albertoramos/Desktop";
-
+//		String experimentBaseDirectory = "/Users/albertoramos/Desktop";
+		String experimentBaseDirectory = path;
+		
 		System.out.println(problemToRun.getName());
 		List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
 		problemList.add(new ExperimentProblem<>(new DoubleProblem(problemToRun)));

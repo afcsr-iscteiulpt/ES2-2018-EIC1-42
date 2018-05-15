@@ -208,7 +208,8 @@ public class GUIFinal extends JFrame {
 		LabelLogo.setBounds(0, 0, 700, 478);
 		LabelLogo.setIcon(imageIcon);
 		contentPane.add(LabelLogo);
-	}
+	} 
+	
 
 	public void search() {
 		JFileChooser fileChooser = new JFileChooser();

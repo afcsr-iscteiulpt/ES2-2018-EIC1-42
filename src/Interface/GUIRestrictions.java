@@ -112,6 +112,7 @@ public class GUIRestrictions extends JFrame {
 		
 		contentPane.add(checkBox);
 		
+		
 		Border border = BorderFactory.createLineBorder(new Color(0, 128, 128));
 		model = new DefaultListModel<>();
 		list = new JList<>(model);

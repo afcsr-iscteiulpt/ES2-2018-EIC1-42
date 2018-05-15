@@ -19,7 +19,7 @@ import javax.swing.JProgressBar;
 import java.awt.Color;
 
 public class GUIProblem {
-	//testex
+	//teste 
 
 	private JTextField TFNomeProblema;
 	private JLabel LabelDescricaoProblema;

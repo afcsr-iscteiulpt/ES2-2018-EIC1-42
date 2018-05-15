@@ -259,10 +259,8 @@ public class GUIAlgorithms extends JFrame {
 		BotaoBack.setBounds(34, 401, 53, 35);
 		BotaoBack.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-					shared.setExistingPanel(shared.getNPArray(), 2);					
-				
+			public void actionPerformed(ActionEvent e) {				
+					shared.setExistingPanel(shared.getNPArray(), 2);						
 			}
 		});
 		contentPane.add(BotaoBack);

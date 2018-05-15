@@ -358,7 +358,7 @@ public class GUIVariables extends JFrame {
 			} else {
 				b = false;
 				JOptionPane.showMessageDialog(null, "The variable interval must be Binary.");
-				// not an bitstring!
+				// not an bitstring !
 			}
 		}
 		if (b == true) {

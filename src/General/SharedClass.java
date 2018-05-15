@@ -59,11 +59,12 @@ public class SharedClass {
 	private Boolean verifyLoad = false;
 	private int binaryVariableSize = 0;
 
-	private Problem problem = new Problem("", "", "", null, null, 0); // name ;
+	private Problem problem = new Problem("", "", "", null, null, 0 , ""); // name ;
 																		// description
 																		// varArray
 																		// AlgorithmArray
 																		// DaysToWait
+																		// Path
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -83,7 +84,7 @@ public class SharedClass {
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBounds(100, 100, 700, 500);
-		problem = new Problem("", "", "", new ArrayList<Variable>(), new ArrayList<String>(), 0);
+		problem = new Problem("", "", "", new ArrayList<Variable>(), new ArrayList<String>(), 0, "");
 		launch();
 
 	}
@@ -269,6 +270,11 @@ public class SharedClass {
 			Element daysToWait = doc.createElement("Days");
 			root.appendChild(daysToWait);
 			daysToWait.appendChild(doc.createTextNode(String.valueOf(p.getNumberOfDays())));
+			
+			Element problemPath = doc.createElement("Path");
+			root.appendChild(problemPath);
+			problemPath.appendChild(doc.createTextNode(String.valueOf(p.getPath())));
+
 
 			TransformerFactory tranFactory = TransformerFactory.newInstance();
 			Transformer aTransformer = tranFactory.newTransformer();
@@ -342,14 +348,12 @@ public class SharedClass {
 					// -------
 					NodeList name = firstPersonElement.getElementsByTagName("Name");
 					Element NameElement = (Element) name.item(0);
-
 					NodeList textFNList = NameElement.getChildNodes();
 					System.out.println("Name : " + ((Node) textFNList.item(0)).getNodeValue().trim());
 
 					// -------
 					NodeList description = firstPersonElement.getElementsByTagName("Description");
 					Element DescriptionElement = (Element) description.item(0);
-
 					NodeList textLNList = DescriptionElement.getChildNodes();
 					System.out.println("Description : " + ((Node) textLNList.item(0)).getNodeValue().trim());
 
@@ -416,14 +420,21 @@ public class SharedClass {
 
 					NodeList days = firstPersonElement.getElementsByTagName("Days");
 					Element daysElement = (Element) days.item(0);
-
 					NodeList daysContent = daysElement.getChildNodes();
 					System.out.println("Days : " + ((Node) daysContent.item(0)).getNodeValue().trim());
-
+					
+					
+					NodeList problemPath = firstPersonElement.getElementsByTagName("Path");
+					Element problemPathElement = (Element) problemPath.item(0);
+					NodeList problemPathContent = problemPathElement.getChildNodes();
+					System.out.println("Path : " + ((Node) problemPathContent.item(0)).getNodeValue().trim());
+					
+					
 					LoadProblem(((Node) textFNList.item(0)).getNodeValue().trim(),
 							((Node) textLNList.item(0)).getNodeValue().trim(),
 							((Node) EmailList.item(0)).getNodeValue().trim(), variablesFromXML, algorithmsFromXML,
-							Integer.parseInt(((Node) daysContent.item(0)).getNodeValue().trim()));
+							Integer.parseInt(((Node) daysContent.item(0)).getNodeValue().trim()), 
+							((Node) problemPathContent.item(0)).getNodeValue().trim());
 
 					// -------
 
@@ -448,7 +459,7 @@ public class SharedClass {
 		// teste
 
 	public void LoadProblem(String name, String description, String email, ArrayList<Variable> variables,
-			ArrayList<String> algorithms, int days) {
+			ArrayList<String> algorithms, int days, String path) {
 		setVerifyLoad(true);
 
 		guidescricaoproblema.setName(name);
@@ -491,10 +502,13 @@ public class SharedClass {
 		problem.setType(variables.get(0).getType());
 		problem.setAlgorithms(algorithms);
 		problem.setNumberOfDays(days);
-
+		problem.setPath(path);
+		
 		guiDefinicaoVariaveis.setComboBoxValue(problem.getType());
 		guiDefinicaoVariaveis.getComboBox().setEnabled(false);
 
+		System.out.println(path);
+		
 		setReviewProblem();
 	}
 
@@ -523,6 +537,7 @@ public class SharedClass {
 		}
 
 		guiFinal.getTFDays().setText("" + problem.getNumberOfDays());
+		guiFinal.setTFBrowse(problem.getPath());
 	}
 
 	public void setBinaryVariableSize(int size) {

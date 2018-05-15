@@ -157,7 +157,7 @@ public class ConfigurationDoubleP extends Configuration{
 				.setOutputParetoSetFileName("VAR")
 				.setReferenceFrontDirectory(experimentBaseDirectory+"/referenceFronts")
 				.setIndicatorList(Arrays.asList(new PISAHypervolume<DoubleSolution>()))
-				.setIndependentRuns(5)//default for project
+				.setIndependentRuns(5) //default for project
 				.setNumberOfCores(8)
 				.build();
 

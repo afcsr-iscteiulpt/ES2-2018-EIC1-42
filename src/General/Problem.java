@@ -15,29 +15,30 @@ public class Problem {
 	private ArrayList<String> algorithms;
 	private int numberOfDays;
 	private String type;
+	private String path;
 
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
 
 	public Problem() {
 
 	}
 
-	public Problem(String name, String description, String email, ArrayList<Variable> variablesArray, ArrayList<String> algorithms, int numberOfDays) {
+	public Problem(String name, String description, String email, ArrayList<Variable> variablesArray, ArrayList<String> algorithms, int numberOfDays, String path) {
 		this.name = name;
 		this.description = description;
 		this.email = email;
 		this.variablesArray = variablesArray;
 		this.algorithms = algorithms;
 		this.numberOfDays = numberOfDays;
-
+		this.path = path;
 //		this.type = variablesArray.get(0).getType() ;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 
@@ -95,6 +96,17 @@ public class Problem {
 	public void setVariablesArray(ArrayList<Variable> variablesArray) {
 		this.variablesArray = variablesArray;
 	}
+	
+	@XmlElement
+	public void setPath(String path){
+		this.path=path;
+	}
+	
+	@XmlElement
+	public String getPath(){
+		return path;
+	}
+	
 	
 	public String stringConvert(){
 		String s = name + " 			"+description;

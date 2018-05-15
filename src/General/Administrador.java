@@ -15,8 +15,14 @@ import org.xml.sax.SAXException;
 
 public class Administrador {
 
+	static String name;
+	static String email;
+	static String password;
+	static String experimentDir;
+	static String problemsDir;
+	static String graphicsDir;
 	
-	public static void readConfigXML(String path) {
+	public Administrador(String path) {
 		try {
 			
 		File fXmlFile = new File(path);
@@ -26,28 +32,35 @@ public class Administrador {
 		
 		doc.getDocumentElement().normalize();
 		
-		System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+//		System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 		
 		NodeList listOfAdmin = doc.getElementsByTagName("administrador");
 		for (int temp = 0; temp < listOfAdmin.getLength(); temp++) {
 			Node nNode = listOfAdmin.item(temp);
-			System.out.println("Current Element :" + nNode.getNodeName());
+//			System.out.println("Current Element :" + nNode.getNodeName());
 			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 				Element eElement = (Element) nNode;
-				System.out.println("Name : " + eElement.getElementsByTagName("name").item(0).getTextContent());
-				System.out.println("Email : " + eElement.getElementsByTagName("email").item(0).getTextContent());	
+				name = eElement.getElementsByTagName("name").item(0).getTextContent();
+				email = eElement.getElementsByTagName("email").item(0).getTextContent();
+				password = eElement.getElementsByTagName("password").item(0).getTextContent();
+//				System.out.println("Name : " + name);
+//				System.out.println("Email : " + email);	
+//				System.out.println("Password : " + password);	
 			}
 		}
 		
 		NodeList listOfDir = doc.getElementsByTagName("directories");
 		for (int temp = 0; temp < listOfDir.getLength(); temp++) {
 			Node nNode = listOfDir.item(temp);
-			System.out.println("Current Element :" + nNode.getNodeName());
+//			System.out.println("Current Element :" + nNode.getNodeName());
 			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 				Element eElement = (Element) nNode;
-				System.out.println("experimentDir : " + eElement.getElementsByTagName("experimentDir").item(0).getTextContent());
-				System.out.println("problemsDir : " + eElement.getElementsByTagName("problemsDir").item(0).getTextContent());
-				System.out.println("graphicsDir : " + eElement.getElementsByTagName("graphicsDir").item(0).getTextContent());
+				experimentDir = eElement.getElementsByTagName("experimentDir").item(0).getTextContent();
+				problemsDir = eElement.getElementsByTagName("problemsDir").item(0).getTextContent();
+				graphicsDir = eElement.getElementsByTagName("graphicsDir").item(0).getTextContent();
+//				System.out.println("experimentDir : " + experimentDir);
+//				System.out.println("problemsDir : " + problemsDir);
+//				System.out.println("graphicsDir : " + graphicsDir);
 			}
 		}
 		
@@ -56,11 +69,37 @@ public class Administrador {
 			e.printStackTrace();
 		} 
 		
-		
 	}
 	
-	public static void main(String[] args) {
-		readConfigXML("C:/Users/bruno/Desktop/config.xml");
+	
+	public static String getName() {
+		return name;
 	}
+
+
+	public static String getEmail() {
+		return email;
+	}
+
+
+	public static String getPassword() {
+		return password;
+	}
+
+
+	public static String getExperimentDir() {
+		return experimentDir;
+	}
+
+
+	public static String getProblemsDir() {
+		return problemsDir;
+	}
+
+
+	public static String getGraphicsDir() {
+		return graphicsDir;
+	}
+
 	
 }

@@ -66,6 +66,8 @@ public class SharedClass {
 																		// DaysToWait
 																		// Path
 
+	private Administrador administrador = new Administrador("C:/Users/bruno/Desktop/config.xml");
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -567,4 +569,16 @@ public class SharedClass {
 	public void setVerifyLoad(boolean b) {
 		verifyLoad = b;
 	}
+	
+	
+
+	//Modo Admin
+
+	public Administrador getAdministrador() {
+		return administrador;
+	}
+	
+	
+	
+	
 }

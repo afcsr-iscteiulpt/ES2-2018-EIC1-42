@@ -15,8 +15,8 @@ import javax.swing.JOptionPane;
 
 public class EmailFAQ {
 	
-	final String ood1mail = "ood1.0chief@gmail.com";
-    final String password = "OOD1.0admin";
+	private String ood1mail;
+    private String password;
     
     private Properties props = new Properties();
     
@@ -24,7 +24,9 @@ public class EmailFAQ {
     private String FAQSubject;
     private String MessageFAQ;
     
-    public EmailFAQ(String usermail, String faqSubj, String messagefaq) {
+    public EmailFAQ(String ood1mail, String password, String usermail, String faqSubj, String messagefaq) {
+    	this.ood1mail = ood1mail;
+    	this.password = password;
     	
 		props.put("mail.smtp.host", "smtp.gmail.com");
 	    props.put("mail.smtp.starttls.enable", "true");

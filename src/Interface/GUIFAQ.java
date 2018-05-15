@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.xml.sax.SAXException;
 
+import General.Administrador;
 import General.SharedClass;
 import email.*;
 import javax.swing.JLabel;
@@ -34,9 +35,11 @@ public class GUIFAQ extends JFrame {
 	private JTextField TFSubject;
 	private JTextField TFFrom;
 	private JTextArea TAEmailText;
-
+	private SharedClass sharedClass;
+	
 	public GUIFAQ(SharedClass sharedClass) {
-
+		this.sharedClass = sharedClass;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 500);
 		contentPane = new JPanel();
@@ -164,7 +167,8 @@ public class GUIFAQ extends JFrame {
 				JOptionPane.showMessageDialog(null, "You must write something.");
 			}
 			else {
-				new EmailFAQ(TFFrom.getText(), TFSubject.getText(), TAEmailText.getText());
+				sharedClass.getAdministrador();
+				new EmailFAQ(Administrador.getEmail(),Administrador.getPassword() ,TFFrom.getText(), TFSubject.getText(), TAEmailText.getText());
 			}
 	}
 

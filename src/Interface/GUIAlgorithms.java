@@ -286,16 +286,16 @@ public class GUIAlgorithms extends JFrame {
 				Configuration conf = null;
 				switch (shared.getProblem().getVariablesArray().get(0).getType()) {
 				case "Double":
-					conf = new ConfigurationDoubleP(shared.getProblem());
+					conf = new ConfigurationDoubleP(shared.getAdministrador().getExperimentDir(),shared.getProblem());
 					break;
 				case "Integer":
-					conf = new ConfigurationIntegerP(shared.getProblem());
+					conf = new ConfigurationIntegerP(shared.getAdministrador().getExperimentDir(),shared.getProblem());
 					break;
 				case "Binary":
-					conf = new ConfigurationBinaryP(shared.getProblem());
+					conf = new ConfigurationBinaryP(shared.getAdministrador().getExperimentDir(),shared.getProblem());
 					break;
 				default:
-					conf = new Configuration(shared.getProblem());
+					conf = new Configuration(shared.getAdministrador().getExperimentDir(),shared.getProblem());
 					System.out.println("GUIAlgorithm:: ProblemType Not found");
 					break;
 				}

@@ -68,7 +68,7 @@ public class SharedClass {
 																		// DaysToWait
 																		// Path
 
-	private Administrador administrador = new Administrador("C:/Users/bruno/Desktop/config.xml");
+	private Administrador administrador = new Administrador("config.xml");
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -296,7 +296,9 @@ public class SharedClass {
 
 				String problemName = p.getName() + " - " + date;
 
-				FileWriter fos = new FileWriter("/Users/albertoramos/Desktop/" + problemName);
+				String outputfile = administrador.getProblemsDir();
+				
+				FileWriter fos = new FileWriter(outputfile + p.getName() + ".xml");
 				StreamResult result = new StreamResult(fos);
 				aTransformer.transform(source, result);
 			} catch (IOException e) {

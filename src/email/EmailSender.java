@@ -29,7 +29,7 @@ public class EmailSender {
     private String ProblemName;
     private String Adminmail;
     private String XMLPath;
-    private static Administrador administrador = new Administrador("C:/Users/bruno/Desktop/config.xml");
+    private static Administrador administrador = new Administrador("config.xml");
 	
 	public EmailSender(String ood1mail, String password, String usermail, String problemName, String adminmail, String XMLpath) throws AddressException, MessagingException {
 		this.ood1mail = ood1mail;

@@ -72,32 +72,32 @@ public class Administrador {
 	}
 	
 	
-	public static String getName() {
+	public String getName() {
 		return name;
 	}
 
 
-	public static String getEmail() {
+	public String getEmail() {
 		return email;
 	}
 
 
-	public static String getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
 
-	public static String getExperimentDir() {
+	public String getExperimentDir() {
 		return experimentDir;
 	}
 
 
-	public static String getProblemsDir() {
+	public String getProblemsDir() {
 		return problemsDir;
 	}
 
 
-	public static String getGraphicsDir() {
+	public String getGraphicsDir() {
 		return graphicsDir;
 	}
 

@@ -167,8 +167,7 @@ public class GUIFAQ extends JFrame {
 				JOptionPane.showMessageDialog(null, "You must write something.");
 			}
 			else {
-				sharedClass.getAdministrador();
-				new EmailFAQ(Administrador.getEmail(),Administrador.getPassword() ,TFFrom.getText(), TFSubject.getText(), TAEmailText.getText());
+				new EmailFAQ(sharedClass.getAdministrador().getEmail(),sharedClass.getAdministrador().getPassword() ,TFFrom.getText(), TFSubject.getText(), TAEmailText.getText());
 			}
 	}
 

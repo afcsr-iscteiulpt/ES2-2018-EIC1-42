@@ -9,6 +9,8 @@ import javax.mail.*;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import General.Administrador;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -18,8 +20,8 @@ import javax.mail.internet.MimeBodyPart;
 
 public class EmailSender {
 	
-	final String ood1mail = "ood1.0chief@gmail.com";
-    final String password = "OOD1.0admin";
+	final String ood1mail;
+    final String password;
     
     private Properties props = new Properties();
     
@@ -27,9 +29,11 @@ public class EmailSender {
     private String ProblemName;
     private String Adminmail;
     private String XMLPath;
-    
+    private static Administrador administrador = new Administrador("C:/Users/bruno/Desktop/config.xml");
 	
-	public EmailSender(String usermail, String problemName, String adminmail, String XMLpath) throws AddressException, MessagingException {
+	public EmailSender(String ood1mail, String password, String usermail, String problemName, String adminmail, String XMLpath) throws AddressException, MessagingException {
+		this.ood1mail = ood1mail;
+		this.password = password;
 		
 		props.put("mail.smtp.host", "smtp.gmail.com");
 	    props.put("mail.smtp.starttls.enable", "true");
@@ -228,8 +232,9 @@ public class EmailSender {
 		/*
 		 * Testing function
 		 */
+		
 		System.out.println("1");
-		EmailSender A= new EmailSender("albertosilveiramos@gmail.com", "EmailTesting","bfcca@iscte-iul.pt" , "File.xml");
+		EmailSender A= new EmailSender(administrador.getEmail(), administrador.getPassword() ,"albertosilveiramos@gmail.com", "EmailTesting","bfcca@iscte-iul.pt" , "File.xml");
 		System.out.println("2");
 		A.EmailCheck(50);
 		System.out.println("3");

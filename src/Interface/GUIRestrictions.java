@@ -34,24 +34,25 @@ public class GUIRestrictions extends JFrame {
 	private JTextField TFName;
 	private JTextField TFRestrictions;
 	private DefaultListModel<String> model;
-	private JList<String> list ;
+	private JList<String> list;
 	private JCheckBox checkBox;
+	private JLabel LabelName;
+	private JLabel LabelInterval;
 
 	public GUIRestrictions(SharedClass shared) {
-		this.shared=shared;
-		
+		this.shared = shared;
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setBounds(34, 448, 633, 20);
-		progressBar.setValue(100);
+		progressBar.setValue(60);
 		contentPane.add(progressBar);
-
 
 		JButton BotaoBack = new JButton("◀");
 		BotaoBack.setBounds(34, 401, 53, 35);
@@ -78,41 +79,40 @@ public class GUIRestrictions extends JFrame {
 			}
 		});
 		contentPane.add(BotaoNext);
-		
+
 		TFName = new JTextField();
 		TFName.setEnabled(false);
 		TFName.setFont(new Font("Avenir Next", Font.PLAIN, 13));
 		TFName.setBounds(349, 129, 221, 35);
 		contentPane.add(TFName);
 		TFName.setColumns(10);
-		
-		JLabel LabelName = new JLabel("Variable selected:");
+
+		LabelName = new JLabel("Variable selected:");
 		LabelName.setForeground(new Color(47, 79, 79));
 		LabelName.setFont(new Font("Avenir Next", Font.PLAIN, 15));
 		LabelName.setBounds(352, 111, 154, 16);
 		contentPane.add(LabelName);
-		
-		JLabel LabelInterval = new JLabel("Remove values from interval:");
+
+		LabelInterval = new JLabel("Remove values from interval:");
 		LabelInterval.setForeground(new Color(47, 79, 79));
 		LabelInterval.setFont(new Font("Avenir Next", Font.PLAIN, 15));
 		LabelInterval.setBounds(352, 183, 267, 16);
 		contentPane.add(LabelInterval);
-		
+
 		TFRestrictions = new JTextField();
 		TFRestrictions.setEnabled(false);
 		TFRestrictions.setFont(new Font("Avenir Next", Font.PLAIN, 9));
 		TFRestrictions.setColumns(10);
 		TFRestrictions.setBounds(349, 198, 318, 35);
 		contentPane.add(TFRestrictions);
-		
+
 		checkBox = new JCheckBox("Set as objective");
 		checkBox.setForeground(new Color(47, 79, 79));
 		checkBox.setFont(new Font("Avenir Next", Font.PLAIN, 15));
 		checkBox.setBounds(349, 244, 210, 23);
-		
+
 		contentPane.add(checkBox);
-		
-		
+
 		Border border = BorderFactory.createLineBorder(new Color(0, 128, 128));
 		model = new DefaultListModel<>();
 		list = new JList<>(model);
@@ -128,23 +128,23 @@ public class GUIRestrictions extends JFrame {
 		});
 		list.setBorder(border);
 		contentPane.add(list);
-		
+
 		JButton ButtonSet = new JButton("Set restriction");
 		ButtonSet.setForeground(new Color(0, 128, 128));
 		ButtonSet.setBounds(349, 289, 130, 29);
 		ButtonSet.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				validateChanges();
-				
+
 			}
 		});
 		contentPane.add(ButtonSet);
-		
+
 		ImageIcon imageIcon = new ImageIcon(
 				new ImageIcon("GenericPage.png").getImage().getScaledInstance(700, 500, Image.SCALE_DEFAULT));
-		
+
 		JLabel LabelRestrictions = new JLabel("Apply your restrictions");
 		LabelRestrictions.setForeground(Color.WHITE);
 		LabelRestrictions.setFont(new Font("Avenir Next", Font.BOLD, 29));
@@ -156,66 +156,72 @@ public class GUIRestrictions extends JFrame {
 		contentPane.add(LabelLogo);
 
 	}
-	
-	public void convertIntervalToString(String var){
+
+	public void convertIntervalToString(String var) {
 		boolean b = false;
 		String intervalString = "[ ";
-		for(int i=0; i<shared.getProblem().getVariablesArray().size(); i++){
-			if(shared.getProblem().getVariablesArray().get(i).getName().equals(var)){
-				if(shared.getProblem().getVariablesArray().get(i).getType().equals("Integer")){
+		for (int i = 0; i < shared.getProblem().getVariablesArray().size(); i++) {
+			if (shared.getProblem().getVariablesArray().get(i).getName().equals(var)) {
+				if (shared.getProblem().getVariablesArray().get(i).getType().equals("Integer")) {
 					int min = shared.getProblem().getVariablesArray().get(i).getMinI();
 					int max = shared.getProblem().getVariablesArray().get(i).getMaxI();
-					for(int j=min; j<=max; j++){
-						if(j != max){
-							intervalString += j + " , ";							
+					for (int j = min; j <= max; j++) {
+						if (j != max) {
+							intervalString += j + " , ";
+						} else {
+							intervalString += j + " ]";
 						}
-						else{
-							intervalString += j + " ]";							
-						}					
 					}
 				}
-				if(shared.getProblem().getVariablesArray().get(i).getType().equals("Double")){
+				if (shared.getProblem().getVariablesArray().get(i).getType().equals("Double")) {
 					double min = shared.getProblem().getVariablesArray().get(i).getMinD();
 					double max = shared.getProblem().getVariablesArray().get(i).getMaxD();
-					for(double j=min; j<=max; j++){
-						if(j != max){
-							intervalString += j + " , ";							
-						}
-						else{
-							intervalString += j + " ]";							
+					for (double j = min; j <= max; j++) {
+						if (j != max) {
+							intervalString += j + " , ";
+						} else {
+							intervalString += j + " ]";
 						}
 					}
 				}
 			}
 		}
 		TFRestrictions.setText(intervalString);
-		
+
 	}
-	
-	public void validateChanges(){
+
+	public void validateChanges() {
 		String name = TFName.getText();
-		if(checkBox.isSelected()){
-			for(int i=0; i<shared.getProblem().getVariablesArray().size(); i++){
-				if(shared.getProblem().getVariablesArray().get(i).getName().equals(name)){
+		if (checkBox.isSelected()) {
+			for (int i = 0; i < shared.getProblem().getVariablesArray().size(); i++) {
+				if (shared.getProblem().getVariablesArray().get(i).getName().equals(name)) {
 					shared.getProblem().getVariablesArray().get(i).setObjective(true);
 				}
 			}
 		}
 	}
-	
-	public void validateCheckBox(){
+
+	public void validateCheckBox() {
 		String name = TFName.getText();
-		for(int i=0; i<shared.getProblem().getVariablesArray().size(); i++){
-			if(shared.getProblem().getVariablesArray().get(i).getName().equals(name)){
+		for (int i = 0; i < shared.getProblem().getVariablesArray().size(); i++) {
+			if (shared.getProblem().getVariablesArray().get(i).getName().equals(name)) {
 				checkBox.setSelected(shared.getProblem().getVariablesArray().get(i).isObjective());
 			}
 		}
 	}
-	
+
+	public void it_is_a_Binary() {
+		LabelName.setVisible(false);
+		TFName.setVisible(false);
+		LabelInterval.setVisible(false);
+		TFRestrictions.setVisible(false);
+		
+	}
 
 	public DefaultListModel<String> getModel() {
 		return model;
 	}
+
 	public JPanel getContentPane() {
 		return contentPane;
 	}

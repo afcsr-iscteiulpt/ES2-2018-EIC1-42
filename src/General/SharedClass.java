@@ -557,6 +557,12 @@ public class SharedClass {
 		}
 	}
 	
+	public void verifyType(){
+		if(problem.getVariablesArray().get(0).getType().equals("Binary")){
+			guiRestrictions.it_is_a_Binary();
+		}
+	}
+	
 	public void setBinaryVariableSize(int size) {
 		binaryVariableSize = size;
 	}

@@ -309,7 +309,7 @@ public class GUIAlgorithms extends JFrame {
 
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setBounds(34, 448, 633, 20);
-		progressBar.setValue(75);
+		progressBar.setValue(80);
 		contentPane.add(progressBar);
 
 		JLabel LabelLogo = new JLabel();

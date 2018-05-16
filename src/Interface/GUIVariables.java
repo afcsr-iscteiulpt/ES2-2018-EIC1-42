@@ -167,6 +167,7 @@ public class GUIVariables extends JFrame {
 				shared.getProblem().setVariablesArray(variablesArray);
 				shared.setGUIRestrictions();
 				shared.setExistingPanel(shared.getNPArray(), 2);
+				shared.verifyType();
 				
 
 			}
@@ -175,7 +176,7 @@ public class GUIVariables extends JFrame {
 
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setBounds(34, 448, 633, 20);
-		progressBar.setValue(50);
+		progressBar.setValue(40);
 		contentPane.add(progressBar);
 
 		ButtonAddVariable = new JButton("Add Variable");

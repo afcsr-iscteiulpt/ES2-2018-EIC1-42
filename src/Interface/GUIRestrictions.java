@@ -215,7 +215,7 @@ public class GUIRestrictions extends JFrame {
 		TFName.setVisible(false);
 		LabelInterval.setVisible(false);
 		TFRestrictions.setVisible(false);
-		
+
 	}
 
 	public DefaultListModel<String> getModel() {

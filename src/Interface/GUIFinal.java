@@ -48,7 +48,6 @@ public class GUIFinal extends JFrame {
 
 	public GUIFinal(SharedClass shared) {
 		this.shared = shared;
-		// teste
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 500);
@@ -151,11 +150,9 @@ public class GUIFinal extends JFrame {
 		ButtonSave.setFont(new Font("Avenir Next", Font.BOLD, 20));
 		contentPane.add(ButtonSave);
 		ButtonSave.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				shared.writeXmlFile(shared.getProblem());
-
 			}
 		});
 
@@ -187,7 +184,6 @@ public class GUIFinal extends JFrame {
 		ButtonBrowse.setBounds(32, 341, 90, 29);
 		contentPane.add(ButtonBrowse);
 		ButtonBrowse.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				search();
@@ -208,15 +204,12 @@ public class GUIFinal extends JFrame {
 		LabelLogo.setBounds(0, 0, 700, 478);
 		LabelLogo.setIcon(imageIcon);
 		contentPane.add(LabelLogo);
-	} 
-	
+	}
 
 	public void search() {
 		JFileChooser fileChooser = new JFileChooser();
 		StringBuilder sb = new StringBuilder();
 		File file = new File("");
-		;
-
 		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 			file = fileChooser.getSelectedFile();
 		}
@@ -228,10 +221,8 @@ public class GUIFinal extends JFrame {
 				JOptionPane.showMessageDialog(null, "The file must be .jar");
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	public static boolean isJarFile(File file) throws IOException {

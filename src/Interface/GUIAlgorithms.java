@@ -154,7 +154,7 @@ public class GUIAlgorithms extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					int numberOfDaysTEMP = Integer.parseInt(Time.getText());
-					numberOfDays=numberOfDaysTEMP;
+					numberOfDays = numberOfDaysTEMP;
 					shared.getProblem().setNumberOfDays(numberOfDays);
 					// is an integer!
 
@@ -188,7 +188,7 @@ public class GUIAlgorithms extends JFrame {
 
 		TAManu.setText(TAText);
 		TAManu.setEnabled(false);
-		
+
 		ButtonAddMulti.setForeground(new Color(47, 79, 79));
 		ButtonAddMulti.setBounds(227, 194, 99, 29);
 		ButtonAddMulti.setEnabled(false);
@@ -223,12 +223,10 @@ public class GUIAlgorithms extends JFrame {
 		ButtonAuto.setForeground(new Color(47, 79, 79));
 		ButtonAuto.setBounds(375, 145, 290, 29);
 		ButtonAuto.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				shared.getProblem().getAlgorithms().clear();
 				automaticallySelected();
-
 			}
 		});
 		contentPane.add(ButtonAuto);
@@ -259,8 +257,8 @@ public class GUIAlgorithms extends JFrame {
 		BotaoBack.setBounds(34, 401, 53, 35);
 		BotaoBack.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {				
-					shared.setExistingPanel(shared.getNPArray(), 2);						
+			public void actionPerformed(ActionEvent e) {
+				shared.setExistingPanel(shared.getNPArray(), 2);
 			}
 		});
 		contentPane.add(BotaoBack);
@@ -269,31 +267,28 @@ public class GUIAlgorithms extends JFrame {
 		BotaoNext.setFont(new Font("Avenir Next", Font.PLAIN, 14));
 		BotaoNext.setBounds(614, 401, 53, 35);
 		BotaoNext.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (shared.getVerifyLoad() == false) {
 					shared.getProblem().setNumberOfDays(numberOfDays);
 					shared.getProblem().setAlgorithms(SELECTEDAlgorithmsArray);
 				}
-
 				shared.setReviewProblem();
-
 				shared.setExistingPanel(shared.getNPArray(), 4);
 
 				Configuration conf = null;
 				switch (shared.getProblem().getVariablesArray().get(0).getType()) {
 				case "Double":
-					conf = new ConfigurationDoubleP(shared.getAdministrador().getExperimentDir(),shared.getProblem());
+					conf = new ConfigurationDoubleP(shared.getAdministrador().getExperimentDir(), shared.getProblem());
 					break;
 				case "Integer":
-					conf = new ConfigurationIntegerP(shared.getAdministrador().getExperimentDir(),shared.getProblem());
+					conf = new ConfigurationIntegerP(shared.getAdministrador().getExperimentDir(), shared.getProblem());
 					break;
 				case "Binary":
-					conf = new ConfigurationBinaryP(shared.getAdministrador().getExperimentDir(),shared.getProblem());
+					conf = new ConfigurationBinaryP(shared.getAdministrador().getExperimentDir(), shared.getProblem());
 					break;
 				default:
-					conf = new Configuration(shared.getAdministrador().getExperimentDir(),shared.getProblem());
+					conf = new Configuration(shared.getAdministrador().getExperimentDir(), shared.getProblem());
 					System.out.println("GUIAlgorithm:: ProblemType Not found");
 					break;
 				}
@@ -315,7 +310,7 @@ public class GUIAlgorithms extends JFrame {
 		JLabel LabelLogo = new JLabel();
 		ImageIcon imageIcon = new ImageIcon(
 				new ImageIcon("GenericPage.png").getImage().getScaledInstance(700, 500, Image.SCALE_DEFAULT));
-		
+
 		ButtonClearAll = new JButton("Clear All");
 		ButtonClearAll.setForeground(new Color(47, 79, 79));
 		ButtonClearAll.setBounds(227, 356, 99, 29);
@@ -325,14 +320,12 @@ public class GUIAlgorithms extends JFrame {
 		contentPane.add(LabelLogo);
 		ButtonClearAll.setEnabled(false);
 		ButtonClearAll.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				SELECTEDAlgorithmsArray.clear();
 				shared.getProblem().getAlgorithms().clear();
 				TAText = "Algorithms chosen: " + "\n";
 				TAManu.setText(TAText);
-				
 			}
 		});
 
@@ -368,7 +361,6 @@ public class GUIAlgorithms extends JFrame {
 		for (int i = 0; i < multiAlgorithmsArray.size(); i++) {
 			CBMulti.addItem(multiAlgorithmsArray.get(i));
 		}
-
 	}
 
 	public void automaticallySelected() {
@@ -381,11 +373,11 @@ public class GUIAlgorithms extends JFrame {
 		enableManually();
 	}
 
-	public void addAlgorithm(String toAdd){
-		TAManu.setText(TAText + toAdd +"\n");
-		TAText = TAText + toAdd +"\n";
+	public void addAlgorithm(String toAdd) {
+		TAManu.setText(TAText + toAdd + "\n");
+		TAText = TAText + toAdd + "\n";
 	}
-	
+
 	public void disableManually() {
 		CBMulti.setEnabled(false);
 		CBMulti.setSelectedItem("");
@@ -399,7 +391,6 @@ public class GUIAlgorithms extends JFrame {
 		CBMulti.setEnabled(true);
 		ButtonAddMulti.setEnabled(true);
 		ButtonClearAll.setEnabled(true);
-
 	}
 
 	public boolean checkIfThisStringExists(String s) {
@@ -426,8 +417,8 @@ public class GUIAlgorithms extends JFrame {
 	public void setDays(int days) {
 		this.numberOfDays = days;
 	}
-	
-	public void setAlgorithms(ArrayList<String> algorithms){
+
+	public void setAlgorithms(ArrayList<String> algorithms) {
 		SELECTEDAlgorithmsArray.clear();
 		SELECTEDAlgorithmsArray = algorithms;
 	}

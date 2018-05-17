@@ -42,6 +42,7 @@ import Interface.GUIRestrictions;
 import Interface.GUIStoredProblems;
 import Interface.GUIFAQ;
 import Interface.GUIFinal;
+import Interface.GUIGraph;
 import Interface.GUIGraphs;
 
 public class SharedClass {
@@ -58,18 +59,21 @@ public class SharedClass {
 	private GUIFinal guiFinal;
 	private GUIGraphs guiGraphs;
 	private GUIRestrictions guiRestrictions;
+	private GUIGraph guiGraph;
 	private Boolean verifyLoad = false;
 	private int binaryVariableSize = 0;
+	private boolean isSolved=false;
 
-	private Problem problem = new Problem("", "", "", null, null, 0 , ""); // name ;
-																		// description
-																		// varArray
-																		// AlgorithmArray
-																		// DaysToWait
-																		// Path
+	private Problem problem = new Problem("", "", "", null, null, 0, ""); // name
+																			// ;
+																			// description
+																			// varArray
+																			// AlgorithmArray
+																			// DaysToWait
+																			// Path
 
 	private Administrador administrador = new Administrador("config.xml");
-	
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -147,7 +151,9 @@ public class SharedClass {
 		// 4 in ArrayNewProblem
 		guiFinal = new GUIFinal(this);
 		ArrayNewProblem.add(guiFinal.getContentPane());
-
+		// 5 in ArrayNewProblem
+		guiGraph = new GUIGraph(this);
+		ArrayNewProblem.add(guiGraph.getContentPane());
 	}
 
 	public ArrayList<JPanel> getNPArray() {
@@ -239,9 +245,9 @@ public class SharedClass {
 				Element variableType = doc.createElement("Type");
 				variableType.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getType())));
 				variable.appendChild(variableType);
-				
+
 				if (type.equals("Integer") || type.equals("Double")) {
-				
+
 					Element variableMin = doc.createElement("Min");
 					variableMin.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getMIN())));
 					variable.appendChild(variableMin);
@@ -249,9 +255,9 @@ public class SharedClass {
 					Element variableMax = doc.createElement("Max");
 					variableMax.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getMAX())));
 					variable.appendChild(variableMax);
-				
+
 				} else if (type.equals("Binary")) {
-		
+
 					Element variableValue = doc.createElement("Value");
 					variableValue.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getValue())));
 					variable.appendChild(variableValue);
@@ -273,11 +279,10 @@ public class SharedClass {
 			Element daysToWait = doc.createElement("Days");
 			root.appendChild(daysToWait);
 			daysToWait.appendChild(doc.createTextNode(String.valueOf(p.getNumberOfDays())));
-			
+
 			Element problemPath = doc.createElement("Path");
 			root.appendChild(problemPath);
 			problemPath.appendChild(doc.createTextNode(String.valueOf(p.getPath())));
-
 
 			TransformerFactory tranFactory = TransformerFactory.newInstance();
 			Transformer aTransformer = tranFactory.newTransformer();
@@ -297,7 +302,7 @@ public class SharedClass {
 				String problemName = p.getName() + " - " + date;
 
 				String outputfile = administrador.getProblemsDir();
-				
+
 				FileWriter fos = new FileWriter(outputfile + p.getName() + ".xml");
 				StreamResult result = new StreamResult(fos);
 				aTransformer.transform(source, result);
@@ -362,7 +367,7 @@ public class SharedClass {
 					NodeList textLNList = DescriptionElement.getChildNodes();
 					System.out.println("Description : " + ((Node) textLNList.item(0)).getNodeValue().trim());
 
-					// ----
+					// -------
 					NodeList email = firstPersonElement.getElementsByTagName("Email");
 					Element EmailElement = (Element) email.item(0);
 
@@ -386,7 +391,8 @@ public class SharedClass {
 									if (varType.equals("Integer")) {
 										String varMin = varElement.getElementsByTagName("Min").item(0).getTextContent();
 										String varMax = varElement.getElementsByTagName("Max").item(0).getTextContent();
-										Boolean objective = Boolean.parseBoolean(varElement.getElementsByTagName("Objective").item(0).getTextContent());
+										Boolean objective = Boolean.parseBoolean(
+												varElement.getElementsByTagName("Objective").item(0).getTextContent());
 										Variable v = new Variable(varName, varType, Integer.parseInt(varMin),
 												Integer.parseInt(varMax), new ArrayList<Integer>(), objective);
 										variablesFromXML.add(v);
@@ -394,7 +400,8 @@ public class SharedClass {
 									} else if (varType.equals("Double")) {
 										String varMin = varElement.getElementsByTagName("Min").item(0).getTextContent();
 										String varMax = varElement.getElementsByTagName("Max").item(0).getTextContent();
-										Boolean objective = Boolean.parseBoolean(varElement.getElementsByTagName("Objective").item(0).getTextContent());
+										Boolean objective = Boolean.parseBoolean(
+												varElement.getElementsByTagName("Objective").item(0).getTextContent());
 										Variable v = new Variable(varName, varType, Double.parseDouble(varMin),
 												Double.parseDouble(varMax), new ArrayList<Double>(), objective);
 										variablesFromXML.add(v);
@@ -402,7 +409,8 @@ public class SharedClass {
 									} else if (varType.equals("Binary")) {
 										String value = varElement.getElementsByTagName("Value").item(0)
 												.getTextContent();
-										Boolean objective = Boolean.parseBoolean(varElement.getElementsByTagName("Objective").item(0).getTextContent());
+										Boolean objective = Boolean.parseBoolean(
+												varElement.getElementsByTagName("Objective").item(0).getTextContent());
 										Variable v = new Variable(varName, varType, value, objective);
 										variablesFromXML.add(v);
 										guiDefinicaoVariaveis.getVariablesArray().add(v);
@@ -430,18 +438,16 @@ public class SharedClass {
 					Element daysElement = (Element) days.item(0);
 					NodeList daysContent = daysElement.getChildNodes();
 					System.out.println("Days : " + ((Node) daysContent.item(0)).getNodeValue().trim());
-					
-					
+
 					NodeList problemPath = firstPersonElement.getElementsByTagName("Path");
 					Element problemPathElement = (Element) problemPath.item(0);
 					NodeList problemPathContent = problemPathElement.getChildNodes();
 					System.out.println("Path : " + ((Node) problemPathContent.item(0)).getNodeValue().trim());
-					
-					
+
 					LoadProblem(((Node) textFNList.item(0)).getNodeValue().trim(),
 							((Node) textLNList.item(0)).getNodeValue().trim(),
 							((Node) EmailList.item(0)).getNodeValue().trim(), variablesFromXML, algorithmsFromXML,
-							Integer.parseInt(((Node) daysContent.item(0)).getNodeValue().trim()), 
+							Integer.parseInt(((Node) daysContent.item(0)).getNodeValue().trim()),
 							((Node) problemPathContent.item(0)).getNodeValue().trim());
 
 					// -------
@@ -461,13 +467,12 @@ public class SharedClass {
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
-		// System.exit (0);
 
-	}// end of main
-		// teste
+	}
 
 	public void LoadProblem(String name, String description, String email, ArrayList<Variable> variables,
 			ArrayList<String> algorithms, int days, String path) {
+		
 		setVerifyLoad(true);
 
 		guidescricaoproblema.setName(name);
@@ -511,12 +516,12 @@ public class SharedClass {
 		problem.setAlgorithms(algorithms);
 		problem.setNumberOfDays(days);
 		problem.setPath(path);
-		
+
 		guiDefinicaoVariaveis.setComboBoxValue(problem.getType());
 		guiDefinicaoVariaveis.getComboBox().setEnabled(false);
 
 		System.out.println(path);
-		
+
 		setReviewProblem();
 	}
 
@@ -543,12 +548,11 @@ public class SharedClass {
 		} else {
 			guiFinal.getTAAlgorit().setText(s2);
 		}
-
 		guiFinal.getTFDays().setText("" + problem.getNumberOfDays());
 		guiFinal.setTFBrowse(problem.getPath());
 	}
 
-	public void setGUIRestrictions(){
+	public void setGUIRestrictions() {
 		guiRestrictions.getModel().clear();
 		for (int i = 0; i < problem.getVariablesArray().size(); i++) {
 			guiRestrictions.getModel().addElement(problem.getVariablesArray().get(i).getName());
@@ -556,13 +560,25 @@ public class SharedClass {
 			guiRestrictions.repaint();
 		}
 	}
-	
-	public void verifyType(){
-		if(problem.getVariablesArray().get(0).getType().equals("Binary")){
+
+	public void verifyType() {
+		if (problem.getVariablesArray().get(0).getType().equals("Binary")) {
 			guiRestrictions.it_is_a_Binary();
 		}
 	}
 	
+	public void waitForASolution(){
+		while(isSolved==false){
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		setExistingPanel(getNPArray(), 5);
+	}
+
 	public void setBinaryVariableSize(int size) {
 		binaryVariableSize = size;
 	}
@@ -590,16 +606,11 @@ public class SharedClass {
 	public void setVerifyLoad(boolean b) {
 		verifyLoad = b;
 	}
-	
-	
 
-	//Modo Admin
+	// Modo Admin
 
 	public Administrador getAdministrador() {
 		return administrador;
 	}
-	
-	
-	
-	
+
 }

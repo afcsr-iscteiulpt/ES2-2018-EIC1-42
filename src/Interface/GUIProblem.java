@@ -1,4 +1,5 @@
 package Interface;
+
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import General.SharedClass;
@@ -19,7 +20,7 @@ import javax.swing.JProgressBar;
 import java.awt.Color;
 
 public class GUIProblem {
-	//teste 
+	// teste
 
 	private JTextField TFNomeProblema;
 	private JLabel LabelDescricaoProblema;
@@ -33,8 +34,8 @@ public class GUIProblem {
 	private SharedClass shared;
 
 	public GUIProblem(SharedClass shared) {
-		this.shared=shared;
-		
+		this.shared = shared;
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
@@ -114,87 +115,85 @@ public class GUIProblem {
 		contentPane.add(progressBar);
 
 		JLabel LabelLogo = new JLabel();
-		ImageIcon imageIcon = new ImageIcon(new ImageIcon("GenericPage.png").getImage().getScaledInstance(700, 500, Image.SCALE_DEFAULT));
+		ImageIcon imageIcon = new ImageIcon(
+				new ImageIcon("GenericPage.png").getImage().getScaledInstance(700, 500, Image.SCALE_DEFAULT));
 
 		ButtonLoad = new JButton("Load Problem");
 		ButtonLoad.setForeground(new Color(0, 128, 128));
 		ButtonLoad.setFont(new Font("Avenir Next", Font.PLAIN, 13));
 		ButtonLoad.setBounds(412, 32, 117, 33);
 		ButtonLoad.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				shared.readXMLFile();
 			}
 		});
 		contentPane.add(ButtonLoad);
-		
+
 		LabelLogo.setIcon(imageIcon);
 		LabelLogo.setBounds(0, 0, 700, 478);
 		contentPane.add(LabelLogo);
 	}
 
-	public void validate(JButton button){
-		if(TFNomeProblema.getText().equals("") && TADescricaoProblema.getText().equals("")){
+	public void validate(JButton button) {
+		if (TFNomeProblema.getText().equals("") && TADescricaoProblema.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "You must fill the Problems Name and Description.");
-		}
-		else if(TFNomeProblema.getText().equals("") && !TADescricaoProblema.getText().equals("")){
+		} else if (TFNomeProblema.getText().equals("") && !TADescricaoProblema.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "You must fill the Problems Name.");
-		}
-		else if(!TFNomeProblema.getText().equals("") && TADescricaoProblema.getText().equals("")){
+		} else if (!TFNomeProblema.getText().equals("") && TADescricaoProblema.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "You must fill the Problems Description.");
-		}
-		else if(!TFEmail.getText().equals("") && !isValidEmailAddress(TFEmail.getText())){
+		} else if (!TFEmail.getText().equals("") && !isValidEmailAddress(TFEmail.getText())) {
 			JOptionPane.showMessageDialog(null, "You must type a valid email.");
-		}
-		else{			
+		} else {
 			shared.getProblem().setName(TFNomeProblema.getText());
 			shared.getProblem().setDescription(TADescricaoProblema.getText());
 			shared.getProblem().setEmail(TFEmail.getText());
 			shared.setExistingPanel(shared.getNPArray(), 1);
 		}
 	}
-	
+
 	public static boolean isValidEmailAddress(String email) {
-		   boolean result = true;
-		   try {
-		      InternetAddress emailAddr = new InternetAddress(email);
-		      emailAddr.validate();
-		   } catch (AddressException ex) {
-		      result = false;
-		   }
-		   return result;
+		boolean result = true;
+		try {
+			InternetAddress emailAddr = new InternetAddress(email);
+			emailAddr.validate();
+		} catch (AddressException ex) {
+			result = false;
 		}
-	
-	
-	public String getName(){
+		return result;
+	}
+
+	public String getName() {
 		String s = TFNomeProblema.getText();
 		System.out.println(s);
 		return s;
 	}
-	public void setName(String s){
+
+	public void setName(String s) {
 		TFNomeProblema.setText(s);
 	}
-	
-	public String getDescription(){
+
+	public String getDescription() {
 		String s = TADescricaoProblema.getText();
 		return s;
 	}
-	public void setDescription(String s){
+
+	public void setDescription(String s) {
 		TADescricaoProblema.setText(s);
 	}
-	
-	public String getEmail(){
+
+	public String getEmail() {
 		String s = TFEmail.getText();
 		return s;
 	}
-	public void setEmail(String s){
+
+	public void setEmail(String s) {
 		TFEmail.setText(s);
 	}
-	
+
 	public JPanel getContentPane() {
 		return contentPane;
 	}
-	
 
 }

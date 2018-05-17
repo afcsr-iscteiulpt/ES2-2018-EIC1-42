@@ -49,7 +49,7 @@ public class GUI {
 		ButtonStoredProblems.setFont(new Font("Krungthep", Font.PLAIN, 12));
 		ButtonStoredProblems.setBounds(45, 325, 133, 48);
 		ButtonStoredProblems.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				shared.acessStoredProblems();
@@ -80,6 +80,5 @@ public class GUI {
 	public JPanel getContentPane() {
 		return contentPane;
 	}
-
 
 }

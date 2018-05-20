@@ -10,45 +10,32 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Scale extends JPanel{
-
-	private ArrayList<String> objectivos;
-	private ArrayList<Integer> values;
+	
+	ArrayList<ArrayList<Double>> values = new ArrayList<ArrayList<Double>>();
 	private ArrayList<Graph> graphs = new ArrayList<Graph>();
+	private double max;
 
 	private Color bottomColor;
 
 	/**
-	 * so para testes
+	 *Dado um array de arrays em que cada um destes é um resultado da optimização este faz a representação do mesmo
+	 * 
+	 * @param values
 	 */
-	public Scale() {
-		objectivos = new ArrayList<String>();
-		objectivos.add("Var1");
-		objectivos.add("Var1");
-		objectivos.add("Var1");
-		objectivos.add("Var1");
+	public Scale(ArrayList<ArrayList<Double>> values) {
+		this.values = values;
+		calcMaxValue();
 		contruct();
 	}
 
-	/**
-	 * Objectivos e ArrayList<String> com o nome de cada objectivo.<br>
-	 * barra1 e barra2 sao as duas core para alternar na representaçao.<br>
-	 * valores para objectivos ArrayList<Integer> values.<br>
-	 * bottom e a cor da base dos graficos.<p>
-	 * 
-	 * values sao os valores para a respectiva variavel.<br>
-	 * se algum destes valores for dado como null cria o grafico com valores aleatorios e/ou cores default.<br>
-	 * 
-	 * @param objectivos
-	 * @param values
-	 * @param barra1
-	 * @param barra2
-	 * @param bottomColor
-	 */
-	public Scale(ArrayList<String> objectivos, ArrayList<Integer> values) {
-		// e possivel ser nessesario uma calsse variavel para inserir para os graficos ou os values vao ser os mesmos para toods os values
-		this.objectivos = objectivos;
-		this.values = values;
-		contruct();
+	private void calcMaxValue() {
+		for (int i = 0; i < values.size(); i++) {
+			for (int j = 0; j < values.get(i).get(j); j++) {
+				if (max < values.get(i).get(j)) {
+					max = values.get(i).get(j);
+				}
+			}
+		}
 	}
 
 	private void contruct() {
@@ -60,8 +47,8 @@ public class Scale extends JPanel{
 		JPanel fillW = new JPanel();
 		objective.add(fillW, BorderLayout.WEST);
 
-		for (int i = 0; i < objectivos.size(); i++) {
-			Graph grafico = new Graph(values);
+		for (int i = 0; i < values.size(); i++) {
+			Graph grafico = new Graph(values.get(i), max);
 			grafico.setLayout(new GridLayout(1, 1));
 			grafico.setOpaque(false);
 			graphs.add(grafico);

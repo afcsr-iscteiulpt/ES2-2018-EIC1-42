@@ -12,8 +12,11 @@ import javax.swing.JPanel;
 public class Graph extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private ArrayList<Integer> values;
-	private final int RADIUS = 10;
+	private ArrayList<Double> values;
+	private static final int RADIUS = 10;
+	private static final double CONSTANT = 0.5;
+
+	private double max;
 
 
 	/**
@@ -25,13 +28,11 @@ public class Graph extends JPanel {
 	 * @param barra1
 	 * @param barra2
 	 */
-	public Graph(ArrayList<Integer> values) {
+	public Graph(ArrayList<Double> values, Double max) {
 		this.setLayout(new GridLayout(1, 0));
-		if(values == null) {
-			createValues();
-		}else {
-			this.values = values;
-		}
+		this.max = max;
+		System.out.println(max);
+		this.values = values;
 	}
 
 	@Override
@@ -39,42 +40,26 @@ public class Graph extends JPanel {
 		super.paintComponent(currentGraphics);
 
 		Graphics2D mainGraphics = (Graphics2D)currentGraphics;
-
 		int xDistance = this.getWidth()/values.size()/2;
-
-
-		int max = 0;
-		for (int i = 0; i < values.size(); i++) {
-			if (values.get(max) < values.get(i))
-				max = i;
-		}
-		int yDistance = this.getHeight() / (values.get(max) + 1);
-
+		
+		int yDistance = (int) (this.getHeight() / (max + 1));
+		
+		Random r = new Random();
 		mainGraphics.setColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
 
 		int lastX = -1, lastY = -1;
 		for (int i = 0; i < values.size(); i++) {
 
-			mainGraphics.fillOval(xDistance , (int)(yDistance * ((values.get(max)-values.get(i)) + 0.5)), RADIUS, RADIUS);
-			mainGraphics.drawString(Integer.toString(values.get(i)), xDistance + RADIUS, (int)(yDistance * ((values.get(max)-values.get(i)) + 0.5)) + RADIUS);
+			mainGraphics.fillOval(xDistance , (int)(yDistance *((max-values.get(i)) + CONSTANT)), RADIUS, RADIUS);
+			mainGraphics.drawString(Double.toString(values.get(i)), xDistance + RADIUS, (int)(yDistance * ((max-values.get(i)) + CONSTANT)) + RADIUS);
 
 			if(lastX != -1 || lastY != -1){
-				mainGraphics.drawLine(lastX + RADIUS/2, lastY + RADIUS/2, xDistance + RADIUS/2, (int)(yDistance * ((values.get(max)-values.get(i)) + 0.5)) + RADIUS/2);
+				mainGraphics.drawLine(lastX + RADIUS/2, lastY + RADIUS/2, xDistance + RADIUS/2, (int)(yDistance * ((max-values.get(i)) + CONSTANT)) + RADIUS/2);
 			}
 			lastX = xDistance;
-			lastY = (int)(yDistance * ((values.get(max)-values.get(i)) + 0.5));
+			lastY = (int)(yDistance * ((max-values.get(i)) + CONSTANT));
 
 			xDistance += this.getWidth()/values.size();
-		}
-	}
-
-	//TODO So para testes
-	private Random r = new Random();
-	private void createValues() {
-		values = new ArrayList<Integer>(); 
-		int max = 30; 
-		for (int i = 0; i < max; i++) {
-			values.add(r.nextInt(20));
 		}
 	}
 

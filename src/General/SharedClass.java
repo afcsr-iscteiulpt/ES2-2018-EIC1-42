@@ -42,7 +42,7 @@ import Interface.GUIRestrictions;
 import Interface.GUIStoredProblems;
 import Interface.GUIFAQ;
 import Interface.GUIFinal;
-import Interface.GUIGraph;
+import Interface.GUIGraphs;
 import Interface.GUIGraphs;
 
 public class SharedClass {
@@ -59,7 +59,7 @@ public class SharedClass {
 	private GUIFinal guiFinal;
 	private GUIGraphs guiGraphs;
 	private GUIRestrictions guiRestrictions;
-	private GUIGraph guiGraph;
+	private GUIGraphs guiGraph;
 	private Boolean verifyLoad = false;
 	private int binaryVariableSize = 0;
 	private boolean isSolved=false;
@@ -152,7 +152,7 @@ public class SharedClass {
 		guiFinal = new GUIFinal(this);
 		ArrayNewProblem.add(guiFinal.getContentPane());
 		// 5 in ArrayNewProblem
-		guiGraph = new GUIGraph(this);
+		guiGraph = new GUIGraphs(this);
 		ArrayNewProblem.add(guiGraph.getContentPane());
 	}
 

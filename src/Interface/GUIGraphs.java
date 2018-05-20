@@ -5,9 +5,14 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import General.SharedClass;
+import graphs.FinalFileReader;
 import graphs.Scale;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.ArrayList;
 
 public class GUIGraphs extends JFrame {
 
@@ -26,7 +31,19 @@ public class GUIGraphs extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		PANELGraphs = new Scale();
+		File[] files = new File(shared.getAdministrador().getProblemsDir()).listFiles((dir, name) -> {//path para onde estão os ficheiros
+			return name.toLowerCase().startsWith(shared.getProblem().getName());//nome no problema
+		});
+		try {
+			ArrayList<ArrayList<Double>> totalValues = new ArrayList<ArrayList<Double>>();
+			for (int i = 0; i < files.length; i++) {
+				if (files[i].getName().endsWith(".rf")) {
+					new FinalFileReader(totalValues).values(files[i]);
+				}
+			}
+			Scale PANELGraphs = new Scale(totalValues);
+		} catch (Exception e) {
+		}
 		PANELGraphs.setBounds(6, 6, 688, 466);
 		PANELGraphs.setBackground(Color.WHITE);
 		contentPane.add(PANELGraphs);
@@ -41,6 +58,5 @@ public class GUIGraphs extends JFrame {
 		return PANELGraphs;
 	}
 	//--
-
 
 }

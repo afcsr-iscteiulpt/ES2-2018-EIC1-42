@@ -322,7 +322,7 @@ public class SharedClass {
 
 		try {
 
-			JFileChooser fileChooser = new JFileChooser();
+			JFileChooser fileChooser = new JFileChooser(administrador.getProblemsDir());
 			StringBuilder sb = new StringBuilder();
 			File file = new File("");
 			;

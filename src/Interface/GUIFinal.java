@@ -153,6 +153,15 @@ public class GUIFinal extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				shared.writeXmlFile(shared.getProblem());
+				try {
+					shared.makeMeGraphs();
+					Thread.sleep(300);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				shared.setExistingPanel(shared.getNPArray(), 5);
 			}
 		});
 

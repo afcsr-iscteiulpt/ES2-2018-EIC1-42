@@ -59,7 +59,6 @@ public class SharedClass {
 	private GUIFinal guiFinal;
 	private GUIGraphs guiGraphs;
 	private GUIRestrictions guiRestrictions;
-	private GUIGraphs guiGraph;
 	private Boolean verifyLoad = false;
 	private int binaryVariableSize = 0;
 	private boolean isSolved=false;
@@ -152,8 +151,8 @@ public class SharedClass {
 		guiFinal = new GUIFinal(this);
 		ArrayNewProblem.add(guiFinal.getContentPane());
 		// 5 in ArrayNewProblem
-		guiGraph = new GUIGraphs(this);
-		ArrayNewProblem.add(guiGraph.getContentPane());
+		guiGraphs = new GUIGraphs(this);
+//		ArrayNewProblem.add(guiGraphs.getContentPane());
 	}
 
 	public ArrayList<JPanel> getNPArray() {
@@ -579,6 +578,12 @@ public class SharedClass {
 		setExistingPanel(getNPArray(), 5);
 	}
 
+	public void makeMeGraphs(){
+		guiGraphs.resolve();
+		ArrayNewProblem.add(guiGraphs.getContentPane());
+	}
+	
+	
 	public void setBinaryVariableSize(int size) {
 		binaryVariableSize = size;
 	}
@@ -612,5 +617,5 @@ public class SharedClass {
 	public Administrador getAdministrador() {
 		return administrador;
 	}
-
+	
 }

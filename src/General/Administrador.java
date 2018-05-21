@@ -57,6 +57,7 @@ public class Administrador {
 				Element eElement = (Element) nNode;
 				experimentDir = eElement.getElementsByTagName("experimentDir").item(0).getTextContent();
 				problemsDir = eElement.getElementsByTagName("problemsDir").item(0).getTextContent();
+				System.out.println("HERE IT IS: "+problemsDir);
 				graphicsDir = eElement.getElementsByTagName("graphicsDir").item(0).getTextContent();
 //				System.out.println("experimentDir : " + experimentDir);
 //				System.out.println("problemsDir : " + problemsDir);

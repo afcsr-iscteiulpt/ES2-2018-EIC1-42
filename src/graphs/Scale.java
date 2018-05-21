@@ -14,21 +14,21 @@ public class Scale extends JPanel{
 	ArrayList<ArrayList<Double>> values = new ArrayList<ArrayList<Double>>();
 	private ArrayList<Graph> graphs = new ArrayList<Graph>();
 	private double max;
-
 	private Color bottomColor;
 
+
 	/**
-	 *Dado um array de arrays em que cada um destes é um resultado da optimização este faz a representação do mesmo
+	 *Dado um array de arrays em que cada um destes ï¿½ um resultado da optimizaï¿½ï¿½o este faz a representaï¿½ï¿½o do mesmo
 	 * 
 	 * @param values
 	 */
 	public Scale(ArrayList<ArrayList<Double>> values) {
 		this.values = values;
 		calcMaxValue();
-		contruct();
+		construct();
 	}
 
-	private void calcMaxValue() {
+	public void calcMaxValue() {
 		for (int i = 0; i < values.size(); i++) {
 			for (int j = 0; j < values.get(i).get(j); j++) {
 				if (max < values.get(i).get(j)) {
@@ -38,7 +38,7 @@ public class Scale extends JPanel{
 		}
 	}
 
-	private void contruct() {
+	public void construct() {
 		this.setLayout(new BorderLayout());
 
 		JPanel objective = new JPanel();
@@ -82,4 +82,9 @@ public class Scale extends JPanel{
 		this.add(objective);
 	}
 
+
+	
+	
+	
+	
 }

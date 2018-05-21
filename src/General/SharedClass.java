@@ -165,6 +165,7 @@ public class SharedClass {
 	 * pertencentes � funcionalidade do "Stored Problem"
 	 */
 	public void acessStoredProblems() {
+		storedProblem.resolve();
 		setExistingPanelX(storedProblem.getContentPane());
 	}
 
@@ -197,7 +198,7 @@ public class SharedClass {
 		problem.setEmail(guidescricaoproblema.getEmail());
 		problem.setVariablesArray(guiDefinicaoVariaveis.getVariablesArray());
 
-		storedProblem.addProblem(problem);
+//		storedProblem.addProblem(problem);
 
 		writeXmlFile(problem);
 	}

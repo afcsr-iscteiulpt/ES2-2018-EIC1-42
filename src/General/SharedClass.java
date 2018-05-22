@@ -64,7 +64,7 @@ public class SharedClass {
 	private int binaryVariableSize = 0;
 	private boolean isSolved = false;
 
-	private Problem problem = new Problem("", "", "", null, null, 0, ""); // name
+	private Problem problem = new Problem("", "", "",  new ArrayList<Variable>() , new ArrayList<String>(), 0, ""); // name
 																			// ;
 																			// description
 																			// varArray
@@ -482,7 +482,7 @@ public class SharedClass {
 			ArrayList<String> algorithms, int days, String path) {
 
 		setVerifyLoad(true);
-		problem = new Problem();
+		problem = new Problem("", "", "",  new ArrayList<Variable>() , new ArrayList<String>(), 0, "");
 		guidescricaoproblema.setName(name);
 		guidescricaoproblema.setDescription(description);
 		guidescricaoproblema.setEmail(email);

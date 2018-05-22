@@ -155,8 +155,9 @@ public class GUIFinal extends JFrame {
 				shared.writeXmlFile(shared.getProblem());
 				try {
 					shared.makeMeGraphs();
+					shared.getFileViewer().create_view_LateX();
 					Thread.sleep(300);
-				} catch (InterruptedException e1) {
+				} catch (InterruptedException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}

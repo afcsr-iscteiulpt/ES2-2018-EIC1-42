@@ -27,6 +27,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.commons.io.output.ThresholdingOutputStream;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -72,12 +73,14 @@ public class SharedClass {
 																			// Path
 
 	private Administrador administrador = new Administrador("config.xml");
-
+	private FileViewer fileviewer = new FileViewer(this);
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					new SharedClass();
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -103,6 +106,7 @@ public class SharedClass {
 		gui = new GUI(this);
 		ArrayOfPanels.add(gui.getContentPane());
 		setExistingPanel(ArrayOfPanels, 0);
+		
 	}
 
 	public void setFrame(JFrame frameX) {
@@ -614,9 +618,13 @@ public class SharedClass {
 	}
 
 	// Modo Admin
-
 	public Administrador getAdministrador() {
 		return administrador;
+	}
+	
+	//Visualizar o LatexPDF
+	public FileViewer getFileViewer() {
+		return fileviewer;
 	}
 	
 }

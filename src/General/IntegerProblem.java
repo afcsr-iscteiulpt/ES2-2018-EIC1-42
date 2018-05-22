@@ -41,9 +41,9 @@ public class IntegerProblem extends AbstractIntegerProblem{
 	@Override
 	public void evaluate(IntegerSolution solution) {
 
-		if (this.problema.getAlgorithms()!= null) { //mudar para a parte do jar
-			evaluateJar(solution);
-		}else {
+//		if (this.problema.getAlgorithms()!= null) { //mudar para a parte do jar
+//			evaluateJar(solution);
+//		}else {
 			double[] fx = new double[getNumberOfObjectives()];
 			int[] x = new int[getNumberOfVariables()];
 			for (int i = 0; i < solution.getNumberOfVariables(); i++) {
@@ -62,7 +62,7 @@ public class IntegerProblem extends AbstractIntegerProblem{
 
 			solution.setObjective(0, fx[0]);
 			solution.setObjective(1, fx[1]);
-		}
+		//}
 		// TODO Auto-generated method stub
 		// Ir buscar e correr o jar com uma função de evaluate aqui ...
 		//sol.setObjective(arg0, arg1);

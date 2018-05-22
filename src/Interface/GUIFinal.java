@@ -152,6 +152,7 @@ public class GUIFinal extends JFrame {
 		ButtonSave.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				shared.getProblem().setPath(TFBrowse.getText());
 				shared.writeXmlFile(shared.getProblem());
 				try {
 					shared.makeMeGraphs();
@@ -225,7 +226,7 @@ public class GUIFinal extends JFrame {
 		try {
 			if (isJarFile(file)) {
 				TFBrowse.setText(file.getPath());
-				shared.getProblem().setPath(file.getPath());
+//				shared.getProblem().setPath(file.getPath());
 			} else {
 				JOptionPane.showMessageDialog(null, "The file must be .jar");
 			}

@@ -460,7 +460,7 @@ public class SharedClass {
 
 				} // end of if clause
 
-			} // end of for loop with s var
+			} // end of for loop with s var .
 
 		} catch (SAXParseException err) {
 			System.out.println("** Parsing error" + ", line " + err.getLineNumber() + ", uri " + err.getSystemId());
@@ -480,7 +480,7 @@ public class SharedClass {
 			ArrayList<String> algorithms, int days, String path) {
 		
 		setVerifyLoad(true);
-
+		problem = new Problem();
 		guidescricaoproblema.setName(name);
 		guidescricaoproblema.setDescription(description);
 		guidescricaoproblema.setEmail(email);

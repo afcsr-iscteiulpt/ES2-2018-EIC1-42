@@ -299,11 +299,17 @@ public class SharedClass {
 
 				System.out.println(date);
 
-				String problemName = p.getName() + " - " + date;
+				String problemNameAndDate = p.getName() + " - " + date;
 
 				String outputfile = administrador.getProblemsDir();
+				
+				for(int i=0; i< getAllFileName(outputfile).length ; i++){
+					if(getAllFileName(outputfile)[i].getName().contains(p.getName() + " - ")){
+						getAllFileName(outputfile)[i].delete();
+					}
+				}
 
-				FileWriter fos = new FileWriter(outputfile + p.getName() + ".xml");
+				FileWriter fos = new FileWriter(outputfile + problemNameAndDate + ".xml");
 				StreamResult result = new StreamResult(fos);
 				aTransformer.transform(source, result);
 			} catch (IOException e) {
@@ -578,6 +584,14 @@ public class SharedClass {
 		}
 		setExistingPanel(getNPArray(), 5);
 	}
+	
+	
+	public File[] getAllFileName(String path){
+		File folder = new File(path);
+		File[] listOfFiles = folder.listFiles();
+	    return listOfFiles;
+	}
+	
 
 	public void makeMeGraphs(){
 		guiGraphs.resolve();

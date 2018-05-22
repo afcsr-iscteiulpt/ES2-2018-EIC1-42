@@ -309,7 +309,7 @@ public class SharedClass {
 					}
 				}
 
-				FileWriter fos = new FileWriter(outputfile + problemNameAndDate + ".xml");
+				FileWriter fos = new FileWriter(outputfile + p.getName() + ".xml");
 				StreamResult result = new StreamResult(fos);
 				aTransformer.transform(source, result);
 			} catch (IOException e) {

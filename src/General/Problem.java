@@ -107,6 +107,15 @@ public class Problem {
 		return path;
 	}
 	
+	public int getObjNumber() {
+		int num=0;
+		for (Variable var : variablesArray) {
+			if(var.isObjective())
+				num++;
+		}
+		return num;
+	}
+	
 	
 	public String stringConvert(){
 		String s = name + " 			"+description;

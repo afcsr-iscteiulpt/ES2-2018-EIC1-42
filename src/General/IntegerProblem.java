@@ -23,7 +23,7 @@ public class IntegerProblem extends AbstractIntegerProblem{
 
 	public void createIntegerProblem(Problem problema) {
 		this.problema = problema;
-		setNumberOfObjectives(/*problema.getOjetivos()*/2);//ver objetivos (perguntar ao utilizador)default:2
+		setNumberOfObjectives(problema.getObjNumber());
 		setName(problema.getName());
 
 		List<Integer> lowerLimit = new ArrayList<>(getNumberOfVariables());
@@ -50,18 +50,14 @@ public class IntegerProblem extends AbstractIntegerProblem{
 				x[i] = solution.getVariableValue(i) ;
 			}
 
-			fx[0] = 0;
-			for (int var = 0; var < solution.getNumberOfVariables() - 1; var++) {
-				fx[0] += Math.abs(x[0]+Math.random()*10); // Example for testing
+			for(int i = 0 ; i < solution.getNumberOfObjectives();i++) {
+				fx[i] = 0;
+				for (int var = 0; var < solution.getNumberOfVariables(); var++) {
+					fx[i] += Math.abs(x[i]); // Example for testing
+				}
+				solution.setObjective(i, fx[i]);
 			}
-
-			fx[1] = 0;
-			for (int var = 0; var < solution.getNumberOfVariables(); var++) {
-				fx[1] += Math.abs(x[1]+Math.random()*10); // Example for testing
-			}
-
-			solution.setObjective(0, fx[0]);
-			solution.setObjective(1, fx[1]);
+			
 		//}
 		// TODO Auto-generated method stub
 		// Ir buscar e correr o jar com uma função de evaluate aqui ...

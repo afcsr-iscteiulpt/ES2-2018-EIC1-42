@@ -27,7 +27,7 @@ public class BinaryProblem  extends AbstractBinaryProblem {
 
 	public void createBinaryProblem(Problem problema) {
 		this.problema = problema;
-		setNumberOfObjectives(2);//ver objetivos (perguntar ao utilizador) !!conferir com a função evaluate!! default:2
+		setNumberOfObjectives(problema.getObjNumber());//ver objetivos (perguntar ao utilizador) !!conferir com a função evaluate!! default:2
 
 		setName(problema.getName());
 	}
@@ -66,11 +66,9 @@ public class BinaryProblem  extends AbstractBinaryProblem {
 //		if (this.problema.getAlgorithms()!= null) { //mudar para a parte do jar
 //			evaluateJar(solution);
 //		}else {
-			int counterOnes;
-			int counterZeroes;
-			counterOnes = 0;
-			counterZeroes = 0;
-
+			int counterOnes=0;
+			int counterZeroes=0;
+			
 			BitSet bitset = solution.getVariableValue(0) ;
 			for (int i = 0; i < bitset.length(); i++) {
 				if (bitset.get(i)) {

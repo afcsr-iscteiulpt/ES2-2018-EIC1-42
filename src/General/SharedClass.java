@@ -62,7 +62,7 @@ public class SharedClass {
 	private GUIRestrictions guiRestrictions;
 	private Boolean verifyLoad = false;
 	private int binaryVariableSize = 0;
-	private boolean isSolved=false;
+	private boolean isSolved = false;
 
 	private Problem problem = new Problem("", "", "", null, null, 0, ""); // name
 																			// ;
@@ -156,7 +156,7 @@ public class SharedClass {
 		ArrayNewProblem.add(guiFinal.getContentPane());
 		// 5 in ArrayNewProblem
 		guiGraphs = new GUIGraphs(this);
-//		ArrayNewProblem.add(guiGraphs.getContentPane());
+		// ArrayNewProblem.add(guiGraphs.getContentPane());
 	}
 
 	public ArrayList<JPanel> getNPArray() {
@@ -202,7 +202,7 @@ public class SharedClass {
 		problem.setEmail(guidescricaoproblema.getEmail());
 		problem.setVariablesArray(guiDefinicaoVariaveis.getVariablesArray());
 
-//		storedProblem.addProblem(problem);
+		// storedProblem.addProblem(problem);
 
 		writeXmlFile(problem);
 	}
@@ -306,9 +306,9 @@ public class SharedClass {
 				String problemNameAndDate = p.getName() + " - " + date;
 
 				String outputfile = administrador.getProblemsDir();
-				
-				for(int i=0; i< getAllFileName(outputfile).length ; i++){
-					if(getAllFileName(outputfile)[i].getName().contains(p.getName() + " - ")){
+
+				for (int i = 0; i < getAllFileName(outputfile).length; i++) {
+					if (getAllFileName(outputfile)[i].getName().contains(p.getName() + " - ")) {
 						getAllFileName(outputfile)[i].delete();
 					}
 				}
@@ -417,10 +417,8 @@ public class SharedClass {
 										variablesFromXML.add(v);
 										guiDefinicaoVariaveis.getVariablesArray().add(v);
 									} else if (varType.equals("Binary")) {
-										String value = varElement.getElementsByTagName("Value").item(0)
-												.getTextContent();
-										Boolean objective = Boolean.parseBoolean(
-												varElement.getElementsByTagName("Objective").item(0).getTextContent());
+										String value = varElement.getElementsByTagName("Value").item(0).getTextContent();
+										Boolean objective = Boolean.parseBoolean(varElement.getElementsByTagName("Objective").item(0).getTextContent());
 										Variable v = new Variable(varName, varType, value, objective);
 										variablesFromXML.add(v);
 										guiDefinicaoVariaveis.getVariablesArray().add(v);
@@ -464,7 +462,7 @@ public class SharedClass {
 
 				} // end of if clause
 
-			} // end of for loop with s var
+			} // end of for loop with s var .
 
 		} catch (SAXParseException err) {
 			System.out.println("** Parsing error" + ", line " + err.getLineNumber() + ", uri " + err.getSystemId());
@@ -482,9 +480,9 @@ public class SharedClass {
 
 	public void LoadProblem(String name, String description, String email, ArrayList<Variable> variables,
 			ArrayList<String> algorithms, int days, String path) {
-		
-		setVerifyLoad(true);
 
+		setVerifyLoad(true);
+		problem = new Problem();
 		guidescricaoproblema.setName(name);
 		guidescricaoproblema.setDescription(description);
 		guidescricaoproblema.setEmail(email);
@@ -576,9 +574,9 @@ public class SharedClass {
 			guiRestrictions.it_is_a_Binary();
 		}
 	}
-	
-	public void waitForASolution(){
-		while(isSolved==false){
+
+	public void waitForASolution() {
+		while (isSolved == false) {
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
@@ -588,21 +586,18 @@ public class SharedClass {
 		}
 		setExistingPanel(getNPArray(), 5);
 	}
-	
-	
-	public File[] getAllFileName(String path){
+
+	public File[] getAllFileName(String path) {
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
-	    return listOfFiles;
+		return listOfFiles;
 	}
-	
 
-	public void makeMeGraphs(){
+	public void makeMeGraphs() {
 		guiGraphs.resolve();
 		ArrayNewProblem.add(guiGraphs.getContentPane());
 	}
-	
-	
+
 	public void setBinaryVariableSize(int size) {
 		binaryVariableSize = size;
 	}
@@ -635,6 +630,7 @@ public class SharedClass {
 	public Administrador getAdministrador() {
 		return administrador;
 	}
+
 	
 	//Visualizar o LatexPDF
 	public FileViewer getFileViewer() {

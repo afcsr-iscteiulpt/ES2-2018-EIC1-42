@@ -495,13 +495,25 @@ public class SharedClass {
 			guiAlgo.addAlgorithm(algorithms.get(i));
 		}
 
-		String s1 = guiDefinicaoVariaveis.getTextAreaStringIntDouble();
-		for (int i = 0; i < variables.size(); i++) {
-			s1 += "\n" + variables.get(i).toStringVariable();
+		if(variables.get(0).getType().equals("Integer") || variables.get(0).getType().equals("Double")){
+			String s1 = guiDefinicaoVariaveis.getTextAreaStringIntDouble();
+			for (int i = 0; i < variables.size(); i++) {
+				s1 += "\n" + variables.get(i).toStringVariable();
+				guiDefinicaoVariaveis.setTextAreaStringIntDouble(s1);
+				guiDefinicaoVariaveis.getTextArea().setText(s1);
+			}
 			guiDefinicaoVariaveis.setTextAreaStringIntDouble(s1);
-			guiDefinicaoVariaveis.getTextArea().setText(s1);
 		}
-		guiDefinicaoVariaveis.setTextAreaStringIntDouble(s1);
+		else if(variables.get(0).getType().equals("Binary")){
+			String s1 = guiDefinicaoVariaveis.getTextAreaStringBinary();
+			for (int i = 0; i < variables.size(); i++) {
+				s1 += "\n" + variables.get(i).toStringVariable();
+				guiDefinicaoVariaveis.setTextAreaStringBinary(s1);
+				guiDefinicaoVariaveis.getTextArea().setText(s1);
+			}
+			guiDefinicaoVariaveis.setTextAreaStringBinary(s1);
+
+		}
 
 		String s2 = "Algorithms chosen: " + "\n";
 		for (int i = 0; i < algorithms.size(); i++) {

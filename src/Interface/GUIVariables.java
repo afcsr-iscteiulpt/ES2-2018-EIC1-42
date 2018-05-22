@@ -479,6 +479,12 @@ public class GUIVariables extends JFrame {
 	public String getTextAreaStringIntDouble() {
 		return textAreaStringIntDouble;
 	}
+	public String getTextAreaStringBinary() {
+		return textAreaStringBinary;
+	}
+	public void setTextAreaStringBinary(String toadd) {
+		textAreaStringBinary = toadd;
+	}
 
 	public void setTextAreaStringIntDouble(String toadd) {
 		textAreaStringIntDouble = toadd;

@@ -41,7 +41,7 @@ public class FileViewer {
                 System.out.println(line);
             }
 	}
-	
+	 
 	public void create_view_LateX() throws IOException {
 		
 		String latexpath =  sharedClass.getAdministrador().getProblemsDir();

@@ -153,7 +153,7 @@ public class GUIFinal extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				shared.getProblem().setPath(TFBrowse.getText());
-				shared.writeXmlFile(shared.getProblem());
+				shared.writeXmlFile(shared.getProblem()); 
 				try {
 					shared.makeMeGraphs();
 					shared.getFileViewer().create_view_LateX();

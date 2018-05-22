@@ -70,7 +70,7 @@ public class SharedClass {
 																			// varArray
 																			// AlgorithmArray
 																			// DaysToWait
-																			// Path
+										 									// Path
 
 	private Administrador administrador = new Administrador("config.xml");
 	private FileViewer fileviewer = new FileViewer(this);

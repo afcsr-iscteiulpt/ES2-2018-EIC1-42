@@ -91,7 +91,7 @@ public class Problem {
 	public ArrayList<Variable> getVariablesArray() {
 		return variablesArray;
 	}
-
+ 
 	@XmlElement
 	public void setVariablesArray(ArrayList<Variable> variablesArray) {
 		this.variablesArray = variablesArray;

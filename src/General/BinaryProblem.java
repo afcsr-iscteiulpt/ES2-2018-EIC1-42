@@ -58,7 +58,7 @@ public class BinaryProblem  extends AbstractBinaryProblem {
 			i++;
 		}
 		return s.length - i;
-	}
+	} 
 	//--------<changed>------------
 	@Override
 	public void evaluate(BinarySolution solution) {

@@ -43,7 +43,7 @@ public class IntegerProblem extends AbstractIntegerProblem{
 
 //		if (this.problema.getAlgorithms()!= null) { //mudar para a parte do jar
 //			evaluateJar(solution);
-//		}else {
+//		}else { 
 			double[] fx = new double[getNumberOfObjectives()];
 			int[] x = new int[getNumberOfVariables()];
 			for (int i = 0; i < solution.getNumberOfVariables(); i++) {

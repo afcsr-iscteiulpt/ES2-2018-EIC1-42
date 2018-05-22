@@ -44,7 +44,7 @@ public class DoubleProblem extends AbstractDoubleProblem{
 		//sol.setObjective(arg0, arg1);
 //		if (this.problema.getPath().equals("1")) { //mudar para a parte do jar
 //			evaluateJar(solution);
-//		}else {
+//		}else { 
 			double[] fx = new double[getNumberOfObjectives()];
 			double[] x = new double[getNumberOfVariables()];
 			for (int i = 0; i < solution.getNumberOfVariables(); i++) {

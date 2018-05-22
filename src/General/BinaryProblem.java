@@ -63,9 +63,9 @@ public class BinaryProblem  extends AbstractBinaryProblem {
 	@Override
 	public void evaluate(BinarySolution solution) {
 
-		if (this.problema.getAlgorithms()!= null) { //mudar para a parte do jar
-			evaluateJar(solution);
-		}else {
+//		if (this.problema.getAlgorithms()!= null) { //mudar para a parte do jar
+//			evaluateJar(solution);
+//		}else {
 			int counterOnes;
 			int counterZeroes;
 			counterOnes = 0;
@@ -82,7 +82,7 @@ public class BinaryProblem  extends AbstractBinaryProblem {
 			// OneZeroMax is a maximization problem: multiply by -1 to minimize
 			solution.setObjective(0, -1.0 * counterOnes);
 			solution.setObjective(1, -1.0 * counterZeroes);		  
-		}
+//		}
 		// TODO Auto-generated method stub
 		// Ir buscar e correr o jar com uma função de evaluate aqui ...
 		//sol.setObjective(arg0, arg1);

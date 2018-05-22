@@ -1,5 +1,6 @@
 package Interface;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -10,6 +11,9 @@ import graphs.Scale;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
@@ -29,6 +33,21 @@ public class GUIGraphs extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
+		
+
+		JButton BotaoBack = new JButton("◀");
+		BotaoBack.setBounds(37, 419, 53, 35);
+		BotaoBack.setForeground(new Color(0, 128, 128));
+		BotaoBack.setFont(new Font("Avenir Next", Font.PLAIN, 14));
+		BotaoBack.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+//				contentPane.removeAll();
+				shared.setExistingPanel(shared.getNPArray(), 4);
+			}
+		});
+		contentPane.add(BotaoBack);
 
 	}
 
@@ -52,14 +71,13 @@ public class GUIGraphs extends JFrame {
 				}
 			}
 			PANELGraphs = new Scale(totalValues);
-			PANELGraphs.setBounds(6, 6, 688, 466);
+			PANELGraphs.setBounds(6, 6, 688, 400);
 			PANELGraphs.setBackground(Color.WHITE);
 			contentPane.add(PANELGraphs);
 			contentPane.setVisible(true);
 			contentPane.revalidate();
 		} catch (Exception e) {
 		}
-		listThisPlease();
 	}
 
 	public JPanel getContentPane() {

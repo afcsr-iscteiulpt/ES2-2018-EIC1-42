@@ -42,9 +42,9 @@ public class DoubleProblem extends AbstractDoubleProblem{
 		// TODO Auto-generated method stub
 		// Ir buscar e correr o jar com uma fun��o de evaluate aqui ...
 		//sol.setObjective(arg0, arg1);
-		if (this.problema.getPath().equals("1")) { //mudar para a parte do jar
-			evaluateJar(solution);
-		}else {
+//		if (this.problema.getPath().equals("1")) { //mudar para a parte do jar
+//			evaluateJar(solution);
+//		}else {
 			double[] fx = new double[getNumberOfObjectives()];
 			double[] x = new double[getNumberOfVariables()];
 			for (int i = 0; i < solution.getNumberOfVariables(); i++) {
@@ -63,7 +63,7 @@ public class DoubleProblem extends AbstractDoubleProblem{
 			
 			solution.setObjective(0, fx[0]);
 			solution.setObjective(1, fx[1]);
-		}
+//		}
 	}
 	
 	public void evaluateJar(DoubleSolution solution){

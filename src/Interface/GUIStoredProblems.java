@@ -59,7 +59,10 @@ public class GUIStoredProblems {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				model.clear();
+				contentPane.remove(PanelGraph);
 				shared.setExistingPanel(shared.getArrayOfPanels(), 0);
+				
 			}
 		});
 		contentPane.add(BotaoBack);
@@ -131,7 +134,6 @@ public class GUIStoredProblems {
 			for (int i = 0; i < files.length; i++) {
 				if (countOccurencies(files[i].getName(), ".") == 1 && files[i].getName().endsWith(".rf")) {
 					String[] s = files[i].getName().split(".",1);
-					System.out.println("Hi mom - " + s[0]);
 					model.addElement(s[0]);
 				
 				}

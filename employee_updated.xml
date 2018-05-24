@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
-<Problem>
-    <VariablesDetails>
-        <Name>w</Name>
-        <Type>Double</Type>
-        <Min>2</Min>
-        <Max>2</Max>
-    </VariablesDetails>
-</Problem>

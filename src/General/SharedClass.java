@@ -27,6 +27,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.commons.io.output.ThresholdingOutputStream;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -61,23 +62,25 @@ public class SharedClass {
 	private GUIRestrictions guiRestrictions;
 	private Boolean verifyLoad = false;
 	private int binaryVariableSize = 0;
-	private boolean isSolved=false;
+	private boolean isSolved = false;
 
-	private Problem problem = new Problem("", "", "", null, null, 0, ""); // name
+	private Problem problem = new Problem("", "", "",  new ArrayList<Variable>() , new ArrayList<String>(), 0, ""); // name
 																			// ;
 																			// description
 																			// varArray
 																			// AlgorithmArray
 																			// DaysToWait
-																			// Path
+										 									// Path
 
 	private Administrador administrador = new Administrador("config.xml");
-
+	private FileViewer fileviewer = new FileViewer(this);
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					new SharedClass();
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -103,6 +106,7 @@ public class SharedClass {
 		gui = new GUI(this);
 		ArrayOfPanels.add(gui.getContentPane());
 		setExistingPanel(ArrayOfPanels, 0);
+		
 	}
 
 	public void setFrame(JFrame frameX) {
@@ -152,7 +156,7 @@ public class SharedClass {
 		ArrayNewProblem.add(guiFinal.getContentPane());
 		// 5 in ArrayNewProblem
 		guiGraphs = new GUIGraphs(this);
-//		ArrayNewProblem.add(guiGraphs.getContentPane());
+		// ArrayNewProblem.add(guiGraphs.getContentPane());
 	}
 
 	public ArrayList<JPanel> getNPArray() {
@@ -198,7 +202,7 @@ public class SharedClass {
 		problem.setEmail(guidescricaoproblema.getEmail());
 		problem.setVariablesArray(guiDefinicaoVariaveis.getVariablesArray());
 
-//		storedProblem.addProblem(problem);
+		// storedProblem.addProblem(problem);
 
 		writeXmlFile(problem);
 	}
@@ -299,9 +303,15 @@ public class SharedClass {
 
 				System.out.println(date);
 
-				String problemName = p.getName() + " - " + date;
+				String problemNameAndDate = p.getName() + " - " + date;
 
 				String outputfile = administrador.getProblemsDir();
+
+				for (int i = 0; i < getAllFileName(outputfile).length; i++) {
+					if (getAllFileName(outputfile)[i].getName().contains(p.getName() + " - ")) {
+						getAllFileName(outputfile)[i].delete();
+					}
+				}
 
 				FileWriter fos = new FileWriter(outputfile + p.getName() + ".xml");
 				StreamResult result = new StreamResult(fos);
@@ -407,10 +417,8 @@ public class SharedClass {
 										variablesFromXML.add(v);
 										guiDefinicaoVariaveis.getVariablesArray().add(v);
 									} else if (varType.equals("Binary")) {
-										String value = varElement.getElementsByTagName("Value").item(0)
-												.getTextContent();
-										Boolean objective = Boolean.parseBoolean(
-												varElement.getElementsByTagName("Objective").item(0).getTextContent());
+										String value = varElement.getElementsByTagName("Value").item(0).getTextContent();
+										Boolean objective = Boolean.parseBoolean(varElement.getElementsByTagName("Objective").item(0).getTextContent());
 										Variable v = new Variable(varName, varType, value, objective);
 										variablesFromXML.add(v);
 										guiDefinicaoVariaveis.getVariablesArray().add(v);
@@ -454,7 +462,7 @@ public class SharedClass {
 
 				} // end of if clause
 
-			} // end of for loop with s var
+			} // end of for loop with s var .
 
 		} catch (SAXParseException err) {
 			System.out.println("** Parsing error" + ", line " + err.getLineNumber() + ", uri " + err.getSystemId());
@@ -472,9 +480,9 @@ public class SharedClass {
 
 	public void LoadProblem(String name, String description, String email, ArrayList<Variable> variables,
 			ArrayList<String> algorithms, int days, String path) {
-		
-		setVerifyLoad(true);
 
+		setVerifyLoad(true);
+		problem = new Problem("", "", "",  new ArrayList<Variable>() , new ArrayList<String>(), 0, "");
 		guidescricaoproblema.setName(name);
 		guidescricaoproblema.setDescription(description);
 		guidescricaoproblema.setEmail(email);
@@ -487,13 +495,25 @@ public class SharedClass {
 			guiAlgo.addAlgorithm(algorithms.get(i));
 		}
 
-		String s1 = guiDefinicaoVariaveis.getTextAreaStringIntDouble();
-		for (int i = 0; i < variables.size(); i++) {
-			s1 += "\n" + variables.get(i).toStringVariable();
+		if(variables.get(0).getType().equals("Integer") || variables.get(0).getType().equals("Double")){
+			String s1 = guiDefinicaoVariaveis.getTextAreaStringIntDouble();
+			for (int i = 0; i < variables.size(); i++) {
+				s1 += "\n" + variables.get(i).toStringVariable();
+				guiDefinicaoVariaveis.setTextAreaStringIntDouble(s1);
+				guiDefinicaoVariaveis.getTextArea().setText(s1);
+			}
 			guiDefinicaoVariaveis.setTextAreaStringIntDouble(s1);
-			guiDefinicaoVariaveis.getTextArea().setText(s1);
 		}
-		guiDefinicaoVariaveis.setTextAreaStringIntDouble(s1);
+		else if(variables.get(0).getType().equals("Binary")){
+			String s1 = guiDefinicaoVariaveis.getTextAreaStringBinary();
+			for (int i = 0; i < variables.size(); i++) {
+				s1 += "\n" + variables.get(i).toStringVariable();
+				guiDefinicaoVariaveis.setTextAreaStringBinary(s1);
+				guiDefinicaoVariaveis.getTextArea().setText(s1);
+			}
+			guiDefinicaoVariaveis.setTextAreaStringBinary(s1);
+
+		}
 
 		String s2 = "Algorithms chosen: " + "\n";
 		for (int i = 0; i < algorithms.size(); i++) {
@@ -566,9 +586,9 @@ public class SharedClass {
 			guiRestrictions.it_is_a_Binary();
 		}
 	}
-	
-	public void waitForASolution(){
-		while(isSolved==false){
+
+	public void waitForASolution() {
+		while (isSolved == false) {
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
@@ -579,12 +599,17 @@ public class SharedClass {
 		setExistingPanel(getNPArray(), 5);
 	}
 
-	public void makeMeGraphs(){
+	public File[] getAllFileName(String path) {
+		File folder = new File(path);
+		File[] listOfFiles = folder.listFiles();
+		return listOfFiles;
+	}
+
+	public void makeMeGraphs() {
 		guiGraphs.resolve();
 		ArrayNewProblem.add(guiGraphs.getContentPane());
 	}
-	
-	
+
 	public void setBinaryVariableSize(int size) {
 		binaryVariableSize = size;
 	}
@@ -614,9 +639,14 @@ public class SharedClass {
 	}
 
 	// Modo Admin
-
 	public Administrador getAdministrador() {
 		return administrador;
+	}
+
+	
+	//Visualizar o LatexPDF
+	public FileViewer getFileViewer() {
+		return fileviewer;
 	}
 	
 }

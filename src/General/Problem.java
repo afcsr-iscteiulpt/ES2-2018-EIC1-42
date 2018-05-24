@@ -91,7 +91,7 @@ public class Problem {
 	public ArrayList<Variable> getVariablesArray() {
 		return variablesArray;
 	}
-
+ 
 	@XmlElement
 	public void setVariablesArray(ArrayList<Variable> variablesArray) {
 		this.variablesArray = variablesArray;
@@ -105,6 +105,15 @@ public class Problem {
 	@XmlElement
 	public String getPath(){
 		return path;
+	}
+	
+	public int getObjNumber() {
+		int num=0;
+		for (Variable var : variablesArray) {
+			if(var.isObjective())
+				num++;
+		}
+		return num;
 	}
 	
 	

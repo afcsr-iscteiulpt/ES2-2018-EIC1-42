@@ -343,7 +343,7 @@ public class GUIAlgorithms extends JFrame {
 		multiAlgorithmsArray.add("GWASFGA");
 		multiAlgorithmsArray.add("IBEA");
 		multiAlgorithmsArray.add("MOCell");
-		multiAlgorithmsArray.add("MOCHC");
+		multiAlgorithmsArray.add("MOCH");
 		multiAlgorithmsArray.add("MOEAD");
 		multiAlgorithmsArray.add("MOMBI");
 		multiAlgorithmsArray.add("NSGAII");

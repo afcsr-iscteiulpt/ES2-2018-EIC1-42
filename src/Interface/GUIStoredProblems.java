@@ -60,6 +60,7 @@ public class GUIStoredProblems {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				model.clear();
+				PanelGraph.setVisible(false);
 				contentPane.remove(PanelGraph);
 				shared.setExistingPanel(shared.getArrayOfPanels(), 0);
 				
@@ -100,9 +101,14 @@ public class GUIStoredProblems {
 						}
 					}
 				}
+				
 				PanelGraph = new Graph(totalValues);
 				PanelGraph.setBackground(Color.WHITE);
 				PanelGraph.setBounds(176, 58, 367, 242);
+				
+				for (int i = 5;i<contentPane.getComponentCount();i++) {
+						contentPane.remove(i);
+				}
 				contentPane.add(PanelGraph);
 				contentPane.setVisible(true);
 				contentPane.revalidate();
@@ -127,9 +133,7 @@ public class GUIStoredProblems {
 	
 	public void resolve() {
 		File[] files = listThisPlease();
-		System.out.println("Files length: " + files.length);
-		System.out.println("/Users/albertoramos/Desktop/referenceFronts/");
-		ArrayList<ArrayList<Double>> totalValues = new ArrayList<ArrayList<Double>>();
+		
 		try {
 			for (int i = 0; i < files.length; i++) {
 				if (countOccurencies(files[i].getName(), ".") == 1 && files[i].getName().endsWith(".rf")) {
@@ -138,17 +142,8 @@ public class GUIStoredProblems {
 				
 				}
 			}
-			PanelGraph = new Graph(totalValues);
-			PanelGraph.setBounds(6, 6, 355, 238);
-			PanelGraph.setBackground(Color.WHITE);
-			contentPane.add(PanelGraph);
-			
-				
-			contentPane.setVisible(true);
-			contentPane.revalidate();
 		} catch (Exception e) {
 		}
-		listThisPlease();
 	}
 	
 	
@@ -162,7 +157,6 @@ public class GUIStoredProblems {
 		        lastIndex += find.length();
 		    }
 		}
-		System.out.println("COUNT: "+count);
 		return count;
 		}
 	

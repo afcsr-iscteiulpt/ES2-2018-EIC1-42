@@ -15,7 +15,7 @@ public class PanelGraph extends JPanel{
 	ArrayList<ArrayList<Double>> values = new ArrayList<ArrayList<Double>>();
 	private double max;
 	private static final int RADIUS = 10;
-	private static final int DIVISIONS = 10;
+	private static final int DIVISIONS = 7;
 	
 	public PanelGraph(ArrayList<ArrayList<Double>> values) {
 		this.values = values;
@@ -39,7 +39,7 @@ public class PanelGraph extends JPanel{
 		
 		Graphics2D mainGraphics = (Graphics2D)currentGraphics;
 		
-		int yIncrements = (int)(this.getHeight()/(DIVISIONS)) - 20;
+		int yIncrements = Math.max(1, (int)(this.getHeight()/(DIVISIONS)) - 20);
 		
 		int k = -1;
 		for (int i = this.getHeight(), c = 0; i > 0 ; i -= yIncrements, c++) {

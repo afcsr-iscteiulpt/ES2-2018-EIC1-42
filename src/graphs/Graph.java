@@ -11,7 +11,8 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class Graph extends JPanel{
 	
-	ArrayList<ArrayList<Double>> values = new ArrayList<ArrayList<Double>>();
+	private ArrayList<ArrayList<Double>> values = new ArrayList<ArrayList<Double>>();
+	private String problemTag;
 	
 	private Color bottomColor;
 
@@ -25,7 +26,14 @@ public class Graph extends JPanel{
 		this.values = values;
 		construct();
 	}
+	
+	public Graph(ArrayList<ArrayList<Double>> values, String problem) {
+		this.values = values;
+		this.problemTag = problem;
+		construct();
+	}
 
+	@SuppressWarnings("unused")
 	public void construct() {
 		this.setLayout(new BorderLayout());
 
@@ -43,8 +51,13 @@ public class Graph extends JPanel{
 
 		JPanel southpanel = new JPanel();
 		southpanel.setLayout(new BorderLayout());
-
+		
 		JLabel problem = new JLabel("Problem");
+		
+		if(problem == null)
+			problem.setText("Problem");
+		else
+			problem.setText(problemTag);
 		Font font = new Font("Dialog", Font.BOLD, 20);
 		problem.setFont(font);
 		problem.setHorizontalAlignment(JLabel.CENTER);

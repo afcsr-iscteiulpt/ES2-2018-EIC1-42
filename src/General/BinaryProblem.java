@@ -11,12 +11,14 @@ import org.uma.jmetal.solution.BinarySolution;
 public class BinaryProblem  extends AbstractBinaryProblem {
 
 	private Problem problema;
+	private int bits;
 
 	private int upper;
 	private int lower;
 
 	public BinaryProblem(Problem problema,int num_var) {
 		this(problema.getVariablesArray().size());
+		this.bits = problema.getVariablesArray().get(0).getValue().length();
 		createBinaryProblem(problema);
 	}
 
@@ -117,7 +119,7 @@ public class BinaryProblem  extends AbstractBinaryProblem {
 	@Override
 	protected int getBitsPerVariable(int variable) {
 		// TODO Auto-generated method stub
-		return 0;//getfromGUIvariablenum().bitT_or_F();
+		return bits;
 	}
 
 }

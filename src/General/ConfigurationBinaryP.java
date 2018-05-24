@@ -152,7 +152,7 @@ public class ConfigurationBinaryP extends Configuration{
 	            .setOutputParetoSetFileName("VAR")
 	            .setReferenceFrontDirectory(experimentBaseDirectory+"/referenceFronts")
 	            .setIndicatorList(Arrays.asList(new PISAHypervolume<BinarySolution>()))
-	            .setIndependentRuns(1)
+	            .setIndependentRuns(5)
 	            .setNumberOfCores(8)
 	            .build();
 

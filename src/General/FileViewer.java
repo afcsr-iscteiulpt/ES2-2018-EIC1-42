@@ -47,12 +47,22 @@ public class FileViewer {
 		String latexpath =  sharedClass.getAdministrador().getProblemsDir();
 		String latexfilename = null;
 		
-		if(sharedClass.getProblem().getType().equals("Double")) {
+		switch(sharedClass.getProblem().getType()) {
+		case "Double":
 			latexpath = latexpath + "ExperimentsDouble/latex";
 			latexfilename = "ExperimentsDouble";
-		} else if(sharedClass.getProblem().getType().equals("Integer")) {
+			break;
+		case "Integer":
 			latexpath = latexpath + "ExperimentsInteger/latex";
 			latexfilename = "ExperimentsInteger";
+			break;
+		case "Binary":
+			latexpath = latexpath + "ExperimentsBinary/latex";
+			latexfilename = "ExperimentsBinary";
+			break;
+		default:
+			System.out.println("Latex case not found");
+			break;
 		}
 		
 		createLateXPDF(latexpath, latexfilename);

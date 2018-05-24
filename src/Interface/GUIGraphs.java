@@ -7,7 +7,7 @@ import javax.swing.border.EmptyBorder;
 
 import General.SharedClass;
 import graphs.FinalFileReader;
-import graphs.Scale;
+import graphs.Graph;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -22,7 +22,7 @@ public class GUIGraphs extends JFrame {
 
 	private JPanel contentPane;
 	private SharedClass shared;
-	private Scale PANELGraphs;
+	private Graph PANELGraphs;
 
 	// --
 	public GUIGraphs(SharedClass shared) {
@@ -67,7 +67,7 @@ public class GUIGraphs extends JFrame {
 					new FinalFileReader(totalValues).values(files[i]);
 				}
 			}
-			PANELGraphs = new Scale(totalValues);
+			PANELGraphs = new Graph(totalValues);
 			PANELGraphs.setBounds(6, 6, 688, 400);
 			PANELGraphs.setBackground(Color.WHITE);
 			contentPane.add(PANELGraphs);

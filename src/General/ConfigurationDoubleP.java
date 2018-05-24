@@ -109,7 +109,7 @@ public class ConfigurationDoubleP extends Configuration{
 					.setMaxEvaluations(500)
 					.build();
 					algorithms.add(new ExperimentAlgorithm<>(algorithmmoead, "MOEAD" , problemList.get(i).getTag()));
-					break; 
+					break;
 
 					// cuidar dos warnings embaixo
 				case "PAES":

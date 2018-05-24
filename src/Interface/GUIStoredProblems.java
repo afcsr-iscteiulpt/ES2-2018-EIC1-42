@@ -37,6 +37,7 @@ public class GUIStoredProblems {
 	private DefaultListModel<String> model;
 	private JList<String> list;
 	JPanel PanelGraph;
+	private boolean clicked=false;
 
 	public GUIStoredProblems(SharedClass shared) {
 		this.shared=shared;
@@ -60,8 +61,11 @@ public class GUIStoredProblems {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				model.clear();
-				PanelGraph.setVisible(false);
-				contentPane.remove(PanelGraph);
+				if(clicked) {
+					PanelGraph.setVisible(false);
+					contentPane.remove(PanelGraph);
+					clicked=false;
+				}
 				shared.setExistingPanel(shared.getArrayOfPanels(), 0);
 				
 			}
@@ -86,6 +90,7 @@ public class GUIStoredProblems {
 		list.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				clicked =true;
 				File[] files = listThisPlease();
 				System.out.println("Files length: " + files.length);
 				System.out.println(shared.getAdministrador().getProblemsDir() + "referenceFronts/");
@@ -105,10 +110,9 @@ public class GUIStoredProblems {
 				PanelGraph = new Graph(totalValues);
 				PanelGraph.setBackground(Color.WHITE);
 				PanelGraph.setBounds(176, 58, 367, 242);
-				
-				for (int i = 5;i<contentPane.getComponentCount();i++) {
-						contentPane.remove(i);
-				}
+				if(contentPane.getComponentCount()>5) 
+				for (int i = 5;i<contentPane.getComponentCount();i++)
+					contentPane.remove(i);
 				contentPane.add(PanelGraph);
 				contentPane.setVisible(true);
 				contentPane.revalidate();

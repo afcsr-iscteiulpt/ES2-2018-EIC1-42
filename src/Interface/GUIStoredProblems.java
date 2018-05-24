@@ -28,7 +28,7 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import General.*;
 import graphs.FinalFileReader;
-import graphs.Scale;
+import graphs.Graph;
 
 public class GUIStoredProblems {
 
@@ -100,7 +100,7 @@ public class GUIStoredProblems {
 						}
 					}
 				}
-				PanelGraph = new Scale(totalValues);
+				PanelGraph = new Graph(totalValues);
 				PanelGraph.setBackground(Color.WHITE);
 				PanelGraph.setBounds(176, 58, 367, 242);
 				contentPane.add(PanelGraph);
@@ -138,7 +138,7 @@ public class GUIStoredProblems {
 				
 				}
 			}
-			PanelGraph = new Scale(totalValues);
+			PanelGraph = new Graph(totalValues);
 			PanelGraph.setBounds(6, 6, 355, 238);
 			PanelGraph.setBackground(Color.WHITE);
 			contentPane.add(PanelGraph);

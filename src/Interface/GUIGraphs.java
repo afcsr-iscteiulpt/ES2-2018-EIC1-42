@@ -54,14 +54,11 @@ public class GUIGraphs extends JFrame {
 	//
 
 	public JPanel getGraphPanel() {
-		System.out.println("teste");
 		return PANELGraphs;
 	}
 
 	public void resolve() {
 		File[] files = listThisPlease();
-		System.out.println("Files length: " + files.length);
-		System.out.println(shared.getAdministrador().getProblemsDir() + "referenceFronts/");
 
 		ArrayList<ArrayList<Double>> totalValues = new ArrayList<ArrayList<Double>>();
 		try {

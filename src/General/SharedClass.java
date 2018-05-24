@@ -492,7 +492,7 @@ public class SharedClass {
 		guiAlgo.setDays(days);
 
 		for (int i = 0; i < algorithms.size(); i++) {
-			guiAlgo.addAlgorithm(algorithms.get(i));
+			guiAlgo.addAlgorithm(algorithms.get(i), "Manually");
 		}
 
 		if(variables.get(0).getType().equals("Integer") || variables.get(0).getType().equals("Double")){
@@ -598,6 +598,8 @@ public class SharedClass {
 		}
 		setExistingPanel(getNPArray(), 5);
 	}
+	
+
 
 	public File[] getAllFileName(String path) {
 		File folder = new File(path);
@@ -613,6 +615,8 @@ public class SharedClass {
 	public void setBinaryVariableSize(int size) {
 		binaryVariableSize = size;
 	}
+	
+
 
 	public int getBinaryVariableSize() {
 		return binaryVariableSize;

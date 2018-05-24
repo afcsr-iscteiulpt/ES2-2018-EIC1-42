@@ -101,11 +101,17 @@ public class GUIAlgorithms extends JFrame {
 	private JLabel LabelAuto = new JLabel("Your algorithms will be choosen automatically");
 	private JComboBox CBMulti = new JComboBox();
 	private JTextArea TAManu = new JTextArea();
+	private JTextArea TAMixed = new JTextArea();
 	private JButton ButtonAddMulti = new JButton("Add");
+	private JButton ButtonAddMixed = new JButton("Add");
+
 	private String TAText = "Algorithms chosen: " + "\n";
+	private String TAMixedText = "Algorithms chosen: " + "\n";
 	private JTextField Time;
 	private JButton ButtonClearAll;
 	private JButton ButtonManu;
+	private JComboBox comboBoxMixed = new JComboBox();
+	private JButton ButtonClearAllMixed;
 	private int numberOfDays;
 
 	private ArrayList<String> SELECTEDAlgorithmsArray = new ArrayList<>();
@@ -184,6 +190,7 @@ public class GUIAlgorithms extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(20, 234, 306, 122);
 		contentPane.add(scrollPane);
+		TAManu.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		scrollPane.setViewportView(TAManu);
 
 		TAManu.setText(TAText);
@@ -198,9 +205,9 @@ public class GUIAlgorithms extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				shared.setVerifyLoad(false);
 				String toAdd = (String) CBMulti.getSelectedItem();
-				if (!toAdd.equals("") && checkIfThisStringExists(toAdd) == false) {
+				if (!toAdd.equals("") && checkIfThisStringExists(toAdd, "Manually") == false) {
 					SELECTEDAlgorithmsArray.add(toAdd);
-					addAlgorithm(toAdd);
+					addAlgorithm(toAdd, "Manually");
 				}
 			}
 		});
@@ -214,30 +221,31 @@ public class GUIAlgorithms extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				manuallySelected();
+				disableOrEnable("Manually");
 			}
 		});
 		contentPane.add(ButtonManu);
 
 		JButton ButtonAuto = new JButton("Automatically");
 		ButtonAuto.setForeground(new Color(47, 79, 79));
-		ButtonAuto.setBounds(375, 145, 290, 29);
+		ButtonAuto.setBounds(377, 145, 290, 29);
 		ButtonAuto.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				shared.getProblem().getAlgorithms().clear();
-				automaticallySelected();
+				disableOrEnable("Automatically");
 			}
 		});
 		contentPane.add(ButtonAuto);
+		LabelAuto.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		LabelAuto.setForeground(new Color(47, 79, 79));
 
-		LabelAuto.setBounds(375, 185, 300, 16);
+		LabelAuto.setBounds(377, 171, 300, 16);
 		contentPane.add(LabelAuto);
 
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setOrientation(SwingConstants.VERTICAL);
-		separator_1.setBounds(338, 145, 11, 258);
+		separator_1.setBounds(338, 145, 11, 237);
 		contentPane.add(separator_1);
 
 		JLabel LabelInfo = new JLabel("How will your algorithms be chosen?");
@@ -306,8 +314,6 @@ public class GUIAlgorithms extends JFrame {
 		progressBar.setBounds(34, 448, 633, 20);
 		progressBar.setValue(80);
 		contentPane.add(progressBar);
-
-		JLabel LabelLogo = new JLabel();
 		ImageIcon imageIcon = new ImageIcon(
 				new ImageIcon("GenericPage.png").getImage().getScaledInstance(700, 500, Image.SCALE_DEFAULT));
 
@@ -315,10 +321,88 @@ public class GUIAlgorithms extends JFrame {
 		ButtonClearAll.setForeground(new Color(47, 79, 79));
 		ButtonClearAll.setBounds(227, 356, 99, 29);
 		contentPane.add(ButtonClearAll);
+		ButtonClearAll.setEnabled(false);
+
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setBounds(342, 196, 336, 12);
+		contentPane.add(separator_2);
+
+		JButton ButtonMixed = new JButton("Mixed");
+		ButtonMixed.setForeground(new Color(47, 79, 79));
+		ButtonMixed.setBackground(Color.WHITE);
+		ButtonMixed.setBounds(377, 209, 290, 29);
+		ButtonMixed.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				disableOrEnable("Mixed");
+				
+			}
+		});
+		contentPane.add(ButtonMixed);
+
+		JLabel LabelMixed = new JLabel(
+				"<html>Your algorithms will be choosen both </br> automatically and manually </html>");
+		LabelMixed.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
+		LabelMixed.setForeground(new Color(47, 79, 79));
+		LabelMixed.setBounds(361, 234, 339, 16);
+		contentPane.add(LabelMixed);
+
+		JLabel LabelMixedChose = new JLabel("Multi-objective algoritms");
+		LabelMixedChose.setForeground(new Color(47, 79, 79));
+		LabelMixedChose.setFont(new Font("Avenir Next", Font.PLAIN, 14));
+		LabelMixedChose.setBounds(371, 255, 206, 16);
+		contentPane.add(LabelMixedChose);
+
+		comboBoxMixed.setEnabled(false);
+		comboBoxMixed.setBounds(361, 272, 208, 27);
+		contentPane.add(comboBoxMixed);
+
+		ButtonAddMixed.setForeground(new Color(47, 79, 79));
+		ButtonAddMixed.setEnabled(false);
+		ButtonAddMixed.setBounds(568, 271, 99, 29);
+		ButtonAddMixed.addActionListener(new ActionListener() {
+		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				shared.setVerifyLoad(false);
+				String toAdd = (String) comboBoxMixed.getSelectedItem();
+				if (!toAdd.equals("") && checkIfThisStringExists(toAdd, "Mixed") == false) {
+					SELECTEDAlgorithmsArray.add(toAdd);
+					addAlgorithm(toAdd, "Mixed");
+				}				
+			}
+		});
+		contentPane.add(ButtonAddMixed);
+
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(365, 300, 302, 56);
+		contentPane.add(scrollPane_1);
+
+		TAMixed.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
+		scrollPane_1.setViewportView(TAMixed);
+		TAMixed.setText("Algorithms chosen: \n");
+		TAMixed.setEnabled(false);
+
+		ButtonClearAllMixed = new JButton("Clear All");
+		ButtonClearAllMixed.setForeground(new Color(47, 79, 79));
+		ButtonClearAllMixed.setEnabled(false);
+		ButtonClearAllMixed.setBounds(361, 356, 99, 29);
+		ButtonClearAllMixed.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SELECTEDAlgorithmsArray.clear();
+				shared.getProblem().getAlgorithms().clear();
+				TAMixedText = "Algorithms chosen: " + "\n";
+				TAMixed.setText(TAMixedText);
+			}
+		});
+		contentPane.add(ButtonClearAllMixed);
+
+		JLabel LabelLogo = new JLabel();
 		LabelLogo.setIcon(imageIcon);
 		LabelLogo.setBounds(0, 0, 700, 478);
 		contentPane.add(LabelLogo);
-		ButtonClearAll.setEnabled(false);
 		ButtonClearAll.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -358,24 +442,31 @@ public class GUIAlgorithms extends JFrame {
 		multiAlgorithmsArray.add("SPEA2");
 		multiAlgorithmsArray.add("WASFGA");
 		CBMulti.addItem(new String(""));
+		comboBoxMixed.addItem(new String(""));
 		for (int i = 0; i < multiAlgorithmsArray.size(); i++) {
 			CBMulti.addItem(multiAlgorithmsArray.get(i));
+			comboBoxMixed.addItem(multiAlgorithmsArray.get(i));
 		}
 	}
 
-	public void automaticallySelected() {
+	public void enableAutomatically() {
 		LabelAuto.setForeground(new Color(58, 153, 58));
-		disableManually();
 	}
 
-	public void manuallySelected() {
+	public void disableAuto(){
 		LabelAuto.setForeground(Color.RED);
-		enableManually();
 	}
+	
 
-	public void addAlgorithm(String toAdd) {
-		TAManu.setText(TAText + toAdd + "\n");
-		TAText = TAText + toAdd + "\n";
+	public void addAlgorithm(String toAdd, String mixedOrManu) {
+		if(mixedOrManu.equals("Manually")){
+			TAManu.setText(TAText + toAdd + "\n");
+			TAText = TAText + toAdd + "\n";
+		}
+		else if(mixedOrManu.equals("Mixed")){
+			TAMixed.setText(TAMixedText + toAdd + "\n");
+			TAMixedText = TAMixedText + toAdd + "\n";
+		}
 	}
 
 	public void disableManually() {
@@ -387,18 +478,58 @@ public class GUIAlgorithms extends JFrame {
 		TAManu.setText(TAText);
 	}
 
+	public void disableMixed(){
+		comboBoxMixed.setEnabled(false);
+		comboBoxMixed.setSelectedItem("");
+		ButtonClearAllMixed.setEnabled(false);
+		ButtonAddMixed.setEnabled(false);
+		TAMixedText = "Algorithms chosen: " + "\n";
+		TAMixed.setText(TAMixedText);
+	}
+
+	public void enableMixed(){
+		comboBoxMixed.setEnabled(true);
+		ButtonClearAllMixed.setEnabled(true);
+		ButtonAddMixed.setEnabled(true);
+	}
+	
 	public void enableManually() {
 		CBMulti.setEnabled(true);
 		ButtonAddMulti.setEnabled(true);
 		ButtonClearAll.setEnabled(true);
 	}
 
-	public boolean checkIfThisStringExists(String s) {
-		boolean b = false;
-		if (TAText.toLowerCase().contains(s.toLowerCase())) {
-			b = true;
-			JOptionPane.showMessageDialog(null, "Algorithm already added.");
+	public void disableOrEnable(String button) {
+		if (button.equals("Automatically")) {
+			enableAutomatically();
+			disableManually();
+			disableMixed();
+		} else if (button.equals("Manually")) {
+			enableManually();
+			disableAuto();
+			disableMixed();
+		} else if (button.equals("Mixed")) {
+			enableMixed();
+			disableManually();
+			disableAuto();
 		}
+		
+	}
+
+	public boolean checkIfThisStringExists(String s, String mixedOrmanu) {
+		boolean b = false;
+		if(mixedOrmanu.equals("Manually")){
+			if (TAText.toLowerCase().contains(s.toLowerCase())) {
+				b = true;
+				JOptionPane.showMessageDialog(null, "Algorithm already added.");
+			}
+		}
+		else if(mixedOrmanu.equals("Mixed")){
+			if (TAMixedText.toLowerCase().contains(s.toLowerCase())) {
+				b = true;
+				JOptionPane.showMessageDialog(null, "Algorithm already added.");
+			}
+		}	
 		return b;
 	}
 

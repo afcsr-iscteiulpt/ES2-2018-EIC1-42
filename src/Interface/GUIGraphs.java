@@ -48,6 +48,33 @@ public class GUIGraphs extends JFrame {
 			}
 		});
 		contentPane.add(BotaoBack);
+		
+		JButton buttonFrontPage = new JButton("Main Menu");
+		buttonFrontPage.setForeground(new Color(0, 128, 128));
+		buttonFrontPage.setFont(new Font("Avenir Next", Font.PLAIN, 14));
+		buttonFrontPage.setBounds(391, 419, 104, 35);
+		buttonFrontPage.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				shared.setExistingPanel(shared.getArrayOfPanels(), 0);
+
+			}
+		});
+		contentPane.add(buttonFrontPage);
+		
+		JButton buttonSP = new JButton("Go to Stored Problems");
+		buttonSP.setForeground(new Color(0, 128, 128));
+		buttonSP.setFont(new Font("Avenir Next", Font.PLAIN, 14));
+		buttonSP.setBounds(507, 419, 167, 35);
+		buttonSP.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				shared.acessStoredProblems();
+			}
+		});
+		contentPane.add(buttonSP);
 
 	}
 
@@ -87,5 +114,4 @@ public class GUIGraphs extends JFrame {
 		return listOfFiles;
 
 	}
-
 }

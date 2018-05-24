@@ -351,7 +351,7 @@ public class GUIAlgorithms extends JFrame {
 		multiAlgorithmsArray.add("OMOPSO");
 		multiAlgorithmsArray.add("PAES");
 		multiAlgorithmsArray.add("PESA2");
-		multiAlgorithmsArray.add("Random Search");
+		multiAlgorithmsArray.add("RandomSearch");
 		multiAlgorithmsArray.add("RNSGAII");
 		multiAlgorithmsArray.add("SMPSO");
 		multiAlgorithmsArray.add("SMSEMOA");

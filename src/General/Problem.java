@@ -19,10 +19,6 @@ public class Problem {
 	private ArrayList<String> objectivesArray;
 	//
 
-	public Problem() {
-
-	}
-
 	public Problem(String name, String description, String email, ArrayList<Variable> variablesArray, ArrayList<String> algorithms, int numberOfDays, String path, ArrayList<String> objectivesArray) {
 		this.name = name;
 		this.description = description;

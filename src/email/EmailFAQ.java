@@ -85,4 +85,24 @@ public class EmailFAQ {
         }
     }
 
+	public String getOod1mail() {
+		return ood1mail;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getUserMail() {
+		return UserMail;
+	}
+
+	public String getFAQSubject() {
+		return FAQSubject;
+	}
+
+	public String getMessageFAQ() {
+		return MessageFAQ;
+	}
+
 }

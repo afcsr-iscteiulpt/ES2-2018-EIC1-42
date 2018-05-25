@@ -69,3 +69,9 @@ public class FileViewer {
 		viewLateXPDF(latexpath, latexfilename);
 	}
 }
+//Process process = new ProcessBuilder("D:\\Programas\\R-3.4.3\\bin\\RScript.exe", "HV.Boxplot.R")
+//.directory(new File("experimentBaseDirectory\\AntiSpamStudy\\R")).start();
+//
+//Process process2 = new ProcessBuilder(
+//"D:\\Programas\\Nova pasta (2)\\miktex\\bin\\x64\\miktex-pdflatex.exe", "AntiSpamStudy.tex")
+//		.directory(new File("experimentBaseDirectory\\AntiSpamStudy\\latex")).start();

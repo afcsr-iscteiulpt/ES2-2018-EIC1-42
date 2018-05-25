@@ -53,7 +53,7 @@ public class DoubleProblem extends AbstractDoubleProblem{
 			
 			for(int i = 0 ; i < solution.getNumberOfObjectives();i++) {
 				fx[i] = 0;
-				for (int var = 0; var < solution.getNumberOfVariables(); var++) {
+				for (int var = 0; var < solution.getNumberOfObjectives(); var++) {
 					fx[i] += Math.abs(x[i]+Math.random()*10); // Example for testing
 				}
 				solution.setObjective(i, fx[i]);

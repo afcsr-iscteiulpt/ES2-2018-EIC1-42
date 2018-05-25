@@ -286,14 +286,28 @@ public class GUIVariables extends JFrame {
 				int num2 = Integer.parseInt(tfmax.getText());
 				if (num1 < num2 && validateName(TFName.getText())) {
 					b = true;
-					Variable v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(),
-							Integer.parseInt(TFMin.getText()), Integer.parseInt(TFMax.getText()),
-							new ArrayList<Integer>(), false);
-					shared.getProblem().getVariablesArray().add(v);
-					shared.getProblem().setType((String) comboBox.getSelectedItem());
-					variablesArray.add(v);
-					textAreaStringIntDouble += "\n" + v.toStringVariable();
-					textArea.setText(textAreaStringIntDouble);
+					Variable v;
+					if(/*getQuantaty */30>1) {
+						for(int q=1;q<=/*getQuantaty*/30;q++) {
+						v = new Variable(TFName.getText()+"_"+q, (String) comboBox.getSelectedItem(),
+								Integer.parseInt(TFMin.getText()), Integer.parseInt(TFMax.getText()),
+								new ArrayList<Integer>(), false);
+						shared.getProblem().getVariablesArray().add(v);
+						shared.getProblem().setType((String) comboBox.getSelectedItem());
+						variablesArray.add(v);
+						textAreaStringIntDouble += "\n" + v.toStringVariable();
+						textArea.setText(textAreaStringIntDouble);
+						}
+					}else {
+						v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(),
+								Integer.parseInt(TFMin.getText()), Integer.parseInt(TFMax.getText()),
+								new ArrayList<Integer>(), false);
+						shared.getProblem().getVariablesArray().add(v);
+						shared.getProblem().setType((String) comboBox.getSelectedItem());
+						variablesArray.add(v);
+						textAreaStringIntDouble += "\n" + v.toStringVariable();
+						textArea.setText(textAreaStringIntDouble);
+					}
 
 				} else if (num1 > num2) {
 					JOptionPane.showMessageDialog(null, "The Minimum value must be lower than the Maximum value.");

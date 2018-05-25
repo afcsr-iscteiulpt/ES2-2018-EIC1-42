@@ -351,7 +351,7 @@ public class GUIVariables extends JFrame {
 					Variable v;
 					if(quant>1) {
 						for(int q=1;q<=quant;q++) {
-							v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(),
+							v = new Variable(TFName.getText()+"_"+q, (String) comboBox.getSelectedItem(),
 									Double.parseDouble(TFMin.getText()), Double.parseDouble(TFMax.getText()),
 									new ArrayList<Double>());
 							textAreaStringIntDouble += "\n" + v.toStringVariable();
@@ -386,25 +386,50 @@ public class GUIVariables extends JFrame {
 
 	public void validateVariableBinary(JTextField tf) {
 		boolean b = false;
+		int quant = Integer.parseInt(TFQuantity.getText());
 		if (comboBox.getSelectedItem().equals("Binary")) {
 			if (TFValue.getText().matches("[01]+") && validateName(TFName.getText())) {
-				if (variablesArray.size() == 0) {
-					shared.setBinaryVariableSize((TFValue.getText().length()));
-					b = true;
-					Variable v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(), TFValue.getText());
-					textAreaStringBinary += "\n" + v.toStringVariable();
-					variablesArray.add(v);
-					shared.getProblem().setType((String) comboBox.getSelectedItem());
-					textArea.setText(textAreaStringBinary);
-				} else if (variablesArray.size() > 0 && TFValue.getText().length() == shared.getBinaryVariableSize()) {
-					b = true;
-					Variable v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(), TFValue.getText());
-					textAreaStringBinary += "\n" + v.toStringVariable();
-					variablesArray.add(v);
-					shared.getProblem().setType((String) comboBox.getSelectedItem());
-					textArea.setText(textAreaStringBinary);
-				} else if (variablesArray.size() > 0 && TFValue.getText().length() != shared.getBinaryVariableSize()) {
-					JOptionPane.showMessageDialog(null, "The value length must be: " + shared.getBinaryVariableSize());
+				Variable v;
+				if(quant>1) {
+					for(int q = 1;q<=quant;q++) {
+						if (variablesArray.size() == 0) {
+							shared.setBinaryVariableSize((TFValue.getText().length()));
+							b = true;
+							v = new Variable(TFName.getText()+"_"+q, (String) comboBox.getSelectedItem(), TFValue.getText());
+							textAreaStringBinary += "\n" + v.toStringVariable();
+							variablesArray.add(v);
+							shared.getProblem().setType((String) comboBox.getSelectedItem());
+							textArea.setText(textAreaStringBinary);
+						} else if (variablesArray.size() > 0 && TFValue.getText().length() == shared.getBinaryVariableSize()) {
+							b = true;
+							v = new Variable(TFName.getText()+"_"+q, (String) comboBox.getSelectedItem(), TFValue.getText());
+							textAreaStringBinary += "\n" + v.toStringVariable();
+							variablesArray.add(v);
+							shared.getProblem().setType((String) comboBox.getSelectedItem());
+							textArea.setText(textAreaStringBinary);
+						} else if (variablesArray.size() > 0 && TFValue.getText().length() != shared.getBinaryVariableSize()) {
+							JOptionPane.showMessageDialog(null, "The value length must be: " + shared.getBinaryVariableSize());
+						}
+					}
+				}else {
+					if (variablesArray.size() == 0) {
+						shared.setBinaryVariableSize((TFValue.getText().length()));
+						b = true;
+						v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(), TFValue.getText());
+						textAreaStringBinary += "\n" + v.toStringVariable();
+						variablesArray.add(v);
+						shared.getProblem().setType((String) comboBox.getSelectedItem());
+						textArea.setText(textAreaStringBinary);
+					} else if (variablesArray.size() > 0 && TFValue.getText().length() == shared.getBinaryVariableSize()) {
+						b = true;
+						v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(), TFValue.getText());
+						textAreaStringBinary += "\n" + v.toStringVariable();
+						variablesArray.add(v);
+						shared.getProblem().setType((String) comboBox.getSelectedItem());
+						textArea.setText(textAreaStringBinary);
+					} else if (variablesArray.size() > 0 && TFValue.getText().length() != shared.getBinaryVariableSize()) {
+						JOptionPane.showMessageDialog(null, "The value length must be: " + shared.getBinaryVariableSize());
+					}
 				}
 
 				// is a bitstring!

@@ -54,6 +54,9 @@ public class GUIVariables extends JFrame {
 	private JTextField TFValue;
 	private JLabel LabelValue;
 	private JLabel LabelInterval;
+	private JTextField TFQuantity;
+	private JLabel LabelMultiply;
+	private JLabel LabelQuantity;
 
 	public GUIVariables(SharedClass shared) {
 		this.shared = shared;
@@ -124,13 +127,13 @@ public class GUIVariables extends JFrame {
 		LabelInterval = new JLabel("Interval (Integer & Double) :");
 		LabelInterval.setForeground(Color.WHITE);
 		LabelInterval.setFont(new Font("Avenir Next", Font.BOLD, 13));
-		LabelInterval.setBounds(273, 33, 176, 16);
+		LabelInterval.setBounds(317, 33, 176, 16);
 		LabelInterval.setVisible(false);
 		contentPane.add(LabelInterval);
 
 		TFMin = new JTextField();
 		TFMin.setForeground(new Color(0, 128, 128));
-		TFMin.setBounds(273, 51, 46, 26);
+		TFMin.setBounds(323, 51, 46, 26);
 		TFMin.setText("");
 		TFMin.setColumns(10);
 		TFMin.setVisible(false);
@@ -139,7 +142,7 @@ public class GUIVariables extends JFrame {
 		TFMax = new JTextField();
 		TFMax.setForeground(new Color(0, 128, 128));
 		TFMax.setColumns(10);
-		TFMax.setBounds(331, 51, 46, 26);
+		TFMax.setBounds(378, 51, 46, 26);
 		TFMax.setText("");
 		TFMax.setVisible(false);
 		contentPane.add(TFMax);
@@ -168,7 +171,6 @@ public class GUIVariables extends JFrame {
 				shared.setGUIRestrictions();
 				shared.setExistingPanel(shared.getNPArray(), 2);
 				shared.verifyType();
-
 			}
 		});
 		contentPane.add(BotaoNext);
@@ -178,10 +180,10 @@ public class GUIVariables extends JFrame {
 		progressBar.setValue(40);
 		contentPane.add(progressBar);
 
-		ButtonAddVariable = new JButton("Add Variable");
+		ButtonAddVariable = new JButton("Add Variable(s)");
 		ButtonAddVariable.setForeground(new Color(0, 128, 128));
 		ButtonAddVariable.setFont(new Font("Avenir Next", Font.PLAIN, 13));
-		ButtonAddVariable.setBounds(273, 154, 104, 29);
+		ButtonAddVariable.setBounds(273, 154, 120, 29);
 		contentPane.add(ButtonAddVariable);
 		ButtonAddVariable.addActionListener(new ActionListener() {
 
@@ -203,7 +205,7 @@ public class GUIVariables extends JFrame {
 				SwingConstants.CENTER);
 		LabelInformation.setForeground(Color.WHITE);
 		LabelInformation.setFont(new Font("Avenir Next", Font.PLAIN, 12));
-		LabelInformation.setBounds(531, 1, 169, 76);
+		LabelInformation.setBounds(525, 21, 169, 76);
 		contentPane.add(LabelInformation);
 
 		JButton ButtonClearAll = new JButton("Clear All");
@@ -236,7 +238,7 @@ public class GUIVariables extends JFrame {
 		LabelValue = new JLabel("Value (Binary) :");
 		LabelValue.setForeground(Color.WHITE);
 		LabelValue.setFont(new Font("Avenir Next", Font.BOLD, 13));
-		LabelValue.setBounds(273, 33, 176, 16);
+		LabelValue.setBounds(323, 33, 176, 16);
 		LabelValue.setVisible(false);
 		contentPane.add(LabelValue);
 
@@ -244,14 +246,31 @@ public class GUIVariables extends JFrame {
 		TFValue.setText("");
 		TFValue.setForeground(new Color(0, 128, 128));
 		TFValue.setColumns(10);
-		TFValue.setBounds(273, 51, 76, 26);
+		TFValue.setBounds(323, 52, 76, 26);
 		TFValue.setVisible(false);
 		contentPane.add(TFValue);
-
-		JLabel LabelLogo = new JLabel();
-		LabelLogo.setIcon(imageIcon);
-		LabelLogo.setBounds(0, 0, 700, 478);
-		contentPane.add(LabelLogo);
+		
+		TFQuantity = new JTextField();
+		TFQuantity.setBounds(229, 50, 39, 26);
+		contentPane.add(TFQuantity);
+		TFQuantity.setColumns(10);
+				
+				LabelMultiply = new JLabel("X");
+				LabelMultiply.setForeground(Color.WHITE);
+				LabelMultiply.setFont(new Font("Avenir Next", Font.BOLD, 13));
+				LabelMultiply.setBounds(214, 55, 15, 16);
+				contentPane.add(LabelMultiply);
+						
+						LabelQuantity = new JLabel("Quantity");
+						LabelQuantity.setForeground(Color.WHITE);
+						LabelQuantity.setFont(new Font("Avenir Next", Font.PLAIN, 11));
+						LabelQuantity.setBounds(228, 33, 46, 16);
+						contentPane.add(LabelQuantity);
+						
+								JLabel LabelLogo = new JLabel();
+								LabelLogo.setIcon(imageIcon);
+								LabelLogo.setBounds(0, -30, 700, 478);
+								contentPane.add(LabelLogo);
 
 	}
 

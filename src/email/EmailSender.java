@@ -23,13 +23,14 @@ public class EmailSender {
 	final String ood1mail;
     final String password;
     
-    private Properties props = new Properties();
+
+	private Properties props = new Properties();
     
     private String UserMail;
     private String ProblemName;
     private String Adminmail;
     private String XMLPath;
-    private static Administrador administrador = new Administrador("config.xml");
+//    private static Administrador administrador = new Administrador("config.xml");
 	
 	public EmailSender(String ood1mail, String password, String usermail, String problemName, String adminmail, String XMLpath) throws AddressException, MessagingException {
 		this.ood1mail = ood1mail;
@@ -227,18 +228,41 @@ public class EmailSender {
 		
 	}
 	
+	public String getOod1mail() {
+		return ood1mail;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public String getUserMail() {
+		return UserMail;
+	}
+	
+	public String getProblemName() {
+		return ProblemName;
+	}
+	
+	public String getAdminmail() {
+		return Adminmail;
+	}
+	
+	public String getXMLPath() {
+		return XMLPath;
+	}
 
-	public static void main(String[] args) throws AddressException, MessagingException {
-		/*
-		 * Testing function
-		 */
-		
-		System.out.println("1");
-		EmailSender A= new EmailSender(administrador.getEmail(), administrador.getPassword() ,"albertosilveiramos@gmail.com", "EmailTesting","bfcca@iscte-iul.pt" , "File.xml");
-		System.out.println("2");
-		A.EmailCheck(50);
-		System.out.println("3");
-		A.EmailFinish("File.xml");
-    }
+//	public static void main(String[] args) throws AddressException, MessagingException {
+//		/*
+//		 * Testing function
+//		 */
+//		
+//		System.out.println("1");
+//		EmailSender A= new EmailSender(administrador.getEmail(), administrador.getPassword() ,"albertosilveiramos@gmail.com", "EmailTesting","bfcca@iscte-iul.pt" , "File.xml");
+//		System.out.println("2");
+//		A.EmailCheck(50);
+//		System.out.println("3");
+//		A.EmailFinish("File.xml");
+//    }
 
 }

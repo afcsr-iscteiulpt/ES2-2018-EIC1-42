@@ -19,8 +19,7 @@ import validationMethods.IntrevalExclusion;
 class JUnitTest {
 
 	Administrador admin	= new Administrador("config.xml");
-
-
+	
 	@Test
 	public void testEmailFAQ() {
 		EmailFAQ faq = new EmailFAQ(admin.getEmail(), admin.getPassword(),

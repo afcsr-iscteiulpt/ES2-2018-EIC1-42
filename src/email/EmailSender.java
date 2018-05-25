@@ -48,7 +48,7 @@ public class EmailSender {
 		
 	    
 	    /*
-	     * Criação da sessão e respetiva autenticação
+	     * Criaï¿½ï¿½o da sessï¿½o e respetiva autenticaï¿½ï¿½o
 	     */
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
@@ -64,7 +64,7 @@ public class EmailSender {
 
         	
         	/*
-        	 * Criação da mensagem a ser enviada para o utilizador sobre o inicio do processo de otimização
+        	 * Criaï¿½ï¿½o da mensagem a ser enviada para o utilizador sobre o inicio do processo de otimizaï¿½ï¿½o
         	 */
             Message message = new MimeMessage(session);
             message.setFrom(From);
@@ -86,7 +86,7 @@ public class EmailSender {
 			multipart.addBodyPart(messageBodyPart);
 
         	/*
-        	 * Associação do ficheiro XML (do progresso feito) ao email a ser enviado para o utilizador
+        	 * Associaï¿½ï¿½o do ficheiro XML (do progresso feito) ao email a ser enviado para o utilizador
         	 */
 			messageBodyPart = new MimeBodyPart();
 			DataSource source = new FileDataSource(XMLpath);
@@ -110,7 +110,7 @@ public class EmailSender {
 	public void EmailCheck(int percentage) {
 	   
 		/*
-		 * Criação da sessão e respetiva autenticação
+		 * Criaï¿½ï¿½o da sessï¿½o e respetiva autenticaï¿½ï¿½o
 		 */
 		Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
@@ -125,7 +125,7 @@ public class EmailSender {
         	InternetAddress[] CClist = InternetAddress.parse(Adminmail);
 
         	/*
-        	 * Criação da mensagem a ser enviada para o utilizador sobre a evolução do processo de otimização
+        	 * Criaï¿½ï¿½o da mensagem a ser enviada para o utilizador sobre a evoluï¿½ï¿½o do processo de otimizaï¿½ï¿½o
         	 */
             Message message = new MimeMessage(session);
             message.setFrom(From);
@@ -160,7 +160,7 @@ public class EmailSender {
 	public void EmailFinish(String finishXML) {
 		
 		/*
-		 *  Criação da sessão e respetiva autenticação
+		 *  Criaï¿½ï¿½o da sessï¿½o e respetiva autenticaï¿½ï¿½o
 		 */
 		Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
@@ -175,7 +175,7 @@ public class EmailSender {
         	InternetAddress[] CClist = InternetAddress.parse(Adminmail);
 
         	/*
-        	 * Criação da mensagem a ser enviada para o utilizador sobre o fim do processo de otimização
+        	 * Criaï¿½ï¿½o da mensagem a ser enviada para o utilizador sobre o fim do processo de otimizaï¿½ï¿½o
         	 */
             Message message = new MimeMessage(session);
             message.setFrom(From);
@@ -198,7 +198,7 @@ public class EmailSender {
 			multipart.addBodyPart(messageBodyPart);
 			
         	/*
-        	 * Associação do ficheiro XML (do progresso feito)  ao email a ser enviado para o utilizador
+        	 * Associaï¿½ï¿½o do ficheiro XML (do progresso feito)  ao email a ser enviado para o utilizador
         	 */
 			messageBodyPart = new MimeBodyPart();
 			DataSource configFile = new FileDataSource(XMLPath);
@@ -207,7 +207,7 @@ public class EmailSender {
 			multipart.addBodyPart(messageBodyPart);
 			
         	/*
-        	 * Associação do ficheiro FinishStats ao email a ser enviado para o utilizador
+        	 * Associaï¿½ï¿½o do ficheiro FinishStats ao email a ser enviado para o utilizador
         	 */
 			messageBodyPart = new MimeBodyPart();
 			DataSource finishFile = new FileDataSource(XMLPath);

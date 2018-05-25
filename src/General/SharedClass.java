@@ -64,13 +64,14 @@ public class SharedClass {
 	private int binaryVariableSize = 0;
 	private boolean isSolved = false;
 
-	private Problem problem = new Problem("", "", "",  new ArrayList<Variable>() , new ArrayList<String>(), 0, ""); // name
+	private Problem problem = new Problem("", "", "",  new ArrayList<Variable>() , new ArrayList<String>(), 0, "", new ArrayList<String>()); // name
 																			// ;
 																			// description
 																			// varArray
 																			// AlgorithmArray
 																			// DaysToWait
 										 									// Path
+																			// Objectives Array
 
 	private Administrador administrador = new Administrador("config.xml");
 	private FileViewer fileviewer = new FileViewer(this);
@@ -94,7 +95,6 @@ public class SharedClass {
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBounds(100, 100, 700, 500);
-		problem = new Problem("", "", "", new ArrayList<Variable>(), new ArrayList<String>(), 0, "");
 		launch();
 
 	}
@@ -266,10 +266,9 @@ public class SharedClass {
 					variableValue.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).getValue())));
 					variable.appendChild(variableValue);
 				}
-				Element objective = doc.createElement("Objective");
-				objective.appendChild(doc.createTextNode(String.valueOf(variablesArray.get(i).isObjective())));
-				variable.appendChild(objective);
 			}
+			
+		
 
 			Element algorithms = doc.createElement("Algorithms");
 			root.appendChild(algorithms);
@@ -287,6 +286,16 @@ public class SharedClass {
 			Element problemPath = doc.createElement("Path");
 			root.appendChild(problemPath);
 			problemPath.appendChild(doc.createTextNode(String.valueOf(p.getPath())));
+			
+			Element objectives = doc.createElement("Objectives");
+			root.appendChild(objectives);
+			objectives.appendChild(doc.createTextNode(""));
+			ArrayList<String> objectivesArray = p.getObjectivesArray();
+			for (int i = 0; i < objectivesArray.size(); i++) {
+				String objNum = objectivesArray.get(i);
+				Element objX = doc.createElement(objNum);
+				objectives.appendChild(objX);
+			}
 
 			TransformerFactory tranFactory = TransformerFactory.newInstance();
 			Transformer aTransformer = tranFactory.newTransformer();
@@ -339,6 +348,7 @@ public class SharedClass {
 			;
 			ArrayList<Variable> variablesFromXML = new ArrayList<Variable>();
 			ArrayList<String> algorithmsFromXML = new ArrayList<String>();
+			ArrayList<String> objectivesFromXML = new ArrayList<String>(); 
 
 			if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 				file = fileChooser.getSelectedFile();
@@ -401,25 +411,21 @@ public class SharedClass {
 									if (varType.equals("Integer")) {
 										String varMin = varElement.getElementsByTagName("Min").item(0).getTextContent();
 										String varMax = varElement.getElementsByTagName("Max").item(0).getTextContent();
-										Boolean objective = Boolean.parseBoolean(
-												varElement.getElementsByTagName("Objective").item(0).getTextContent());
+										
 										Variable v = new Variable(varName, varType, Integer.parseInt(varMin),
-												Integer.parseInt(varMax), new ArrayList<Integer>(), objective);
+												Integer.parseInt(varMax), new ArrayList<Integer>());
 										variablesFromXML.add(v);
 										guiDefinicaoVariaveis.getVariablesArray().add(v);
 									} else if (varType.equals("Double")) {
 										String varMin = varElement.getElementsByTagName("Min").item(0).getTextContent();
 										String varMax = varElement.getElementsByTagName("Max").item(0).getTextContent();
-										Boolean objective = Boolean.parseBoolean(
-												varElement.getElementsByTagName("Objective").item(0).getTextContent());
 										Variable v = new Variable(varName, varType, Double.parseDouble(varMin),
-												Double.parseDouble(varMax), new ArrayList<Double>(), objective);
+												Double.parseDouble(varMax), new ArrayList<Double>());
 										variablesFromXML.add(v);
 										guiDefinicaoVariaveis.getVariablesArray().add(v);
 									} else if (varType.equals("Binary")) {
 										String value = varElement.getElementsByTagName("Value").item(0).getTextContent();
-										Boolean objective = Boolean.parseBoolean(varElement.getElementsByTagName("Objective").item(0).getTextContent());
-										Variable v = new Variable(varName, varType, value, objective);
+										Variable v = new Variable(varName, varType, value);
 										variablesFromXML.add(v);
 										guiDefinicaoVariaveis.getVariablesArray().add(v);
 									}
@@ -427,6 +433,17 @@ public class SharedClass {
 							}
 						}
 					}
+
+					NodeList days = firstPersonElement.getElementsByTagName("Days");
+					Element daysElement = (Element) days.item(0);
+					NodeList daysContent = daysElement.getChildNodes();
+					System.out.println("Days : " + ((Node) daysContent.item(0)).getNodeValue().trim());
+
+					NodeList problemPath = firstPersonElement.getElementsByTagName("Path");
+					Element problemPathElement = (Element) problemPath.item(0);
+					NodeList problemPathContent = problemPathElement.getChildNodes();
+					System.out.println("Path : " + ((Node) problemPathContent.item(0)).getNodeValue().trim());
+					
 
 					NodeList algorithms = firstPersonElement.getElementsByTagName("Algorithms");
 					Element AlgoriElement = (Element) algorithms.item(0);
@@ -441,22 +458,30 @@ public class SharedClass {
 							}
 						}
 					}
+					
 
-					NodeList days = firstPersonElement.getElementsByTagName("Days");
-					Element daysElement = (Element) days.item(0);
-					NodeList daysContent = daysElement.getChildNodes();
-					System.out.println("Days : " + ((Node) daysContent.item(0)).getNodeValue().trim());
+					NodeList objectives = firstPersonElement.getElementsByTagName("Objectives");
+					Element ObjectiElement = (Element) objectives.item(0);
+					NodeList objectiList = ObjectiElement.getChildNodes();
 
-					NodeList problemPath = firstPersonElement.getElementsByTagName("Path");
-					Element problemPathElement = (Element) problemPath.item(0);
-					NodeList problemPathContent = problemPathElement.getChildNodes();
-					System.out.println("Path : " + ((Node) problemPathContent.item(0)).getNodeValue().trim());
+					if (objectiList != null) {
+						int objectiLength = objectiList.getLength();
+						for (int i = 1; i < objectiLength; i = i + 2) {
+							if (objectiList.item(i).getNodeType() == Node.ELEMENT_NODE) {
+								Element ObjectiveElementX = (Element) objectiList.item(i);
+								objectivesFromXML.add(ObjectiveElementX.getNodeName());
+							}
+						}
+					}
+					
+					
+					
 
 					LoadProblem(((Node) textFNList.item(0)).getNodeValue().trim(),
 							((Node) textLNList.item(0)).getNodeValue().trim(),
 							((Node) EmailList.item(0)).getNodeValue().trim(), variablesFromXML, algorithmsFromXML,
 							Integer.parseInt(((Node) daysContent.item(0)).getNodeValue().trim()),
-							((Node) problemPathContent.item(0)).getNodeValue().trim());
+							((Node) problemPathContent.item(0)).getNodeValue().trim(), objectivesFromXML);
 
 					// -------
 
@@ -479,10 +504,10 @@ public class SharedClass {
 	}
 
 	public void LoadProblem(String name, String description, String email, ArrayList<Variable> variables,
-			ArrayList<String> algorithms, int days, String path) {
+			ArrayList<String> algorithms, int days, String path, ArrayList<String> objectives) {
 
 		setVerifyLoad(true);
-		problem = new Problem("", "", "",  new ArrayList<Variable>() , new ArrayList<String>(), 0, "");
+		problem = new Problem("", "", "",  new ArrayList<Variable>() , new ArrayList<String>(), 0, "", new ArrayList<String>());
 		guidescricaoproblema.setName(name);
 		guidescricaoproblema.setDescription(description);
 		guidescricaoproblema.setEmail(email);
@@ -527,6 +552,12 @@ public class SharedClass {
 		if (!problem.getAlgorithms().isEmpty()) {
 			problem.getAlgorithms().clear();
 		}
+		
+		String objToAdd = "Objective name:";
+		for(int i = 0; i<objectives.size();i++){
+			objToAdd += "\n" + objectives.get(i);	
+		}
+		guiRestrictions.setTAObjectivesText(objToAdd);
 
 		problem.setName(name);
 		problem.setDescription(description);
@@ -536,7 +567,8 @@ public class SharedClass {
 		problem.setAlgorithms(algorithms);
 		problem.setNumberOfDays(days);
 		problem.setPath(path);
-
+		problem.setObjectivesArray(objectives);
+		
 		guiDefinicaoVariaveis.setComboBoxValue(problem.getType());
 		guiDefinicaoVariaveis.getComboBox().setEnabled(false);
 

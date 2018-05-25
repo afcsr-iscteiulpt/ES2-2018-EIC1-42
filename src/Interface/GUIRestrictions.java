@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -22,10 +23,14 @@ import javax.swing.border.EmptyBorder;
 
 import General.SharedClass;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JSeparator;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class GUIRestrictions extends JFrame {
 
@@ -35,9 +40,17 @@ public class GUIRestrictions extends JFrame {
 	private JTextField TFRestrictions;
 	private DefaultListModel<String> model;
 	private JList<String> list;
-	private JCheckBox checkBox;
 	private JLabel LabelName;
 	private JLabel LabelInterval;
+	private JSeparator separator;
+	private JScrollPane scrollPane;
+	private JLabel LabelObjective;
+	private JTextField TFObjective;
+	private JButton ButtonAddObj;
+	private JTextArea TAObjectives;
+	private String TAObjectivesText = "Objective name:";
+	private JScrollPane scrollPane_1;
+	private ArrayList<String> objectivesArray = new ArrayList<String>();
 
 	public GUIRestrictions(SharedClass shared) {
 		this.shared = shared;
@@ -83,55 +96,50 @@ public class GUIRestrictions extends JFrame {
 		TFName = new JTextField();
 		TFName.setEnabled(false);
 		TFName.setFont(new Font("Avenir Next", Font.PLAIN, 13));
-		TFName.setBounds(349, 129, 221, 35);
+		TFName.setBounds(260, 73, 221, 35);
 		contentPane.add(TFName);
 		TFName.setColumns(10);
 
 		LabelName = new JLabel("Variable selected:");
 		LabelName.setForeground(new Color(47, 79, 79));
 		LabelName.setFont(new Font("Avenir Next", Font.PLAIN, 15));
-		LabelName.setBounds(352, 111, 154, 16);
+		LabelName.setBounds(263, 55, 154, 16);
 		contentPane.add(LabelName);
 
 		LabelInterval = new JLabel("Remove values from interval:");
 		LabelInterval.setForeground(new Color(47, 79, 79));
 		LabelInterval.setFont(new Font("Avenir Next", Font.PLAIN, 15));
-		LabelInterval.setBounds(352, 183, 267, 16);
+		LabelInterval.setBounds(264, 112, 267, 16);
 		contentPane.add(LabelInterval);
 
 		TFRestrictions = new JTextField();
 		TFRestrictions.setEnabled(false);
 		TFRestrictions.setFont(new Font("Avenir Next", Font.PLAIN, 9));
 		TFRestrictions.setColumns(10);
-		TFRestrictions.setBounds(349, 198, 318, 35);
+		TFRestrictions.setBounds(262, 132, 298, 35);
 		contentPane.add(TFRestrictions);
-
-		checkBox = new JCheckBox("Set as objective");
-		checkBox.setForeground(new Color(47, 79, 79));
-		checkBox.setFont(new Font("Avenir Next", Font.PLAIN, 15));
-		checkBox.setBounds(349, 244, 210, 23);
-
-		contentPane.add(checkBox);
 
 		Border border = BorderFactory.createLineBorder(new Color(0, 128, 128));
 		model = new DefaultListModel<>();
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(34, 55, 214, 322);
+		contentPane.add(scrollPane);
 		list = new JList<>(model);
+		scrollPane.setViewportView(list);
 		list.setForeground(new Color(47, 79, 79));
-		list.setBounds(36, 101, 285, 276);
 		list.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				validateCheckBox();
 				TFName.setText(list.getSelectedValue());
 				convertIntervalToString(list.getSelectedValue());
 			}
 		});
 		list.setBorder(border);
-		contentPane.add(list);
 
 		JButton ButtonSet = new JButton("Set restriction");
 		ButtonSet.setForeground(new Color(0, 128, 128));
-		ButtonSet.setBounds(349, 289, 130, 29);
+		ButtonSet.setBounds(562, 132, 112, 35);
 		ButtonSet.addActionListener(new ActionListener() {
 
 			@Override
@@ -148,8 +156,45 @@ public class GUIRestrictions extends JFrame {
 		JLabel LabelRestrictions = new JLabel("Apply your restrictions");
 		LabelRestrictions.setForeground(Color.WHITE);
 		LabelRestrictions.setFont(new Font("Avenir Next", Font.BOLD, 29));
-		LabelRestrictions.setBounds(34, 24, 445, 49);
+		LabelRestrictions.setBounds(34, 6, 445, 49);
 		contentPane.add(LabelRestrictions);
+		
+		separator = new JSeparator();
+		separator.setForeground(new Color(0, 128, 128));
+		separator.setBounds(257, 176, 429, 12);
+		contentPane.add(separator);
+		
+		LabelObjective = new JLabel("Objective name:");
+		LabelObjective.setForeground(new Color(255, 255, 255));
+		LabelObjective.setFont(new Font("Avenir Next", Font.BOLD, 16));
+		LabelObjective.setBounds(264, 188, 133, 26);
+		contentPane.add(LabelObjective);
+		
+		TFObjective = new JTextField();
+		TFObjective.setBounds(262, 214, 178, 29);
+		contentPane.add(TFObjective);
+		TFObjective.setColumns(10);
+		
+		ButtonAddObj = new JButton("Add Objective");
+		ButtonAddObj.setForeground(new Color(0, 128, 128));
+		ButtonAddObj.setBounds(437, 213, 112, 32);
+		ButtonAddObj.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				validateObjectName();
+				
+			}
+		});
+		contentPane.add(ButtonAddObj);
+		
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(263, 255, 423, 122);
+		contentPane.add(scrollPane_1);
+		
+		TAObjectives = new JTextArea();
+		TAObjectives.setText(TAObjectivesText);
+		scrollPane_1.setViewportView(TAObjectives);
 		JLabel LabelLogo = new JLabel();
 		LabelLogo.setBounds(0, 0, 700, 478);
 		LabelLogo.setIcon(imageIcon);
@@ -191,22 +236,17 @@ public class GUIRestrictions extends JFrame {
 	}
 
 	public void validateChanges() {
-		String name = TFName.getText();
-		if (checkBox.isSelected()) {
-			for (int i = 0; i < shared.getProblem().getVariablesArray().size(); i++) {
-				if (shared.getProblem().getVariablesArray().get(i).getName().equals(name)) {
-					shared.getProblem().getVariablesArray().get(i).setObjective(true);
-				}
-			}
-		}
-	}
 
-	public void validateCheckBox() {
-		String name = TFName.getText();
-		for (int i = 0; i < shared.getProblem().getVariablesArray().size(); i++) {
-			if (shared.getProblem().getVariablesArray().get(i).getName().equals(name)) {
-				checkBox.setSelected(shared.getProblem().getVariablesArray().get(i).isObjective());
-			}
+	}
+	
+	public void validateObjectName(){
+		if(!TFObjective.getText().equals("")){
+			shared.getProblem().getObjectivesArray().add(TFObjective.getText());
+			TAObjectivesText += "\n" + TFObjective.getText();
+			TAObjectives.setText(TAObjectivesText);
+		}
+		else{
+			JOptionPane.showMessageDialog(null, "Please give your objective a name.");
 		}
 	}
 
@@ -216,6 +256,14 @@ public class GUIRestrictions extends JFrame {
 		LabelInterval.setVisible(false);
 		TFRestrictions.setVisible(false);
 
+	}
+	
+	public JTextArea getTAObjectives(){
+		return TAObjectives;
+	}
+	
+	public void setTAObjectivesText(String toAdd){
+		TAObjectives.setText(toAdd);
 	}
 
 	public DefaultListModel<String> getModel() {

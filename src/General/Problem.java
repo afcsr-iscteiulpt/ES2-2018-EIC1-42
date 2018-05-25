@@ -16,13 +16,14 @@ public class Problem {
 	private int numberOfDays;
 	private String type;
 	private String path;
+	private ArrayList<String> objectivesArray;
 
 
 	public Problem() {
 
 	}
 
-	public Problem(String name, String description, String email, ArrayList<Variable> variablesArray, ArrayList<String> algorithms, int numberOfDays, String path) {
+	public Problem(String name, String description, String email, ArrayList<Variable> variablesArray, ArrayList<String> algorithms, int numberOfDays, String path, ArrayList<String> objectivesArray) {
 		this.name = name;
 		this.description = description;
 		this.email = email;
@@ -30,6 +31,7 @@ public class Problem {
 		this.algorithms = algorithms;
 		this.numberOfDays = numberOfDays;
 		this.path = path;
+		this.objectivesArray = objectivesArray;
 //		this.type = variablesArray.get(0).getType() ;
 	}
 	
@@ -107,13 +109,19 @@ public class Problem {
 		return path;
 	}
 	
+	@XmlElement
+	public ArrayList<String> getObjectivesArray(){
+		return objectivesArray;
+	}
+	
+	@XmlElement
+	public void setObjectivesArray(ArrayList<String> newarray){
+		this.objectivesArray = newarray;
+	}
+	
+	
 	public int getObjNumber() {
-		int num=0;
-		for (Variable var : variablesArray) {
-			if(var.isObjective())
-				num++;
-		}
-		return num;
+		return objectivesArray.size();
 	}
 	
 	

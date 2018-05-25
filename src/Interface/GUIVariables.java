@@ -269,7 +269,7 @@ public class GUIVariables extends JFrame {
 						
 								JLabel LabelLogo = new JLabel();
 								LabelLogo.setIcon(imageIcon);
-								LabelLogo.setBounds(0, -30, 700, 478);
+								LabelLogo.setBounds(0, 0, 700, 478);
 								contentPane.add(LabelLogo);
 
 	}
@@ -307,7 +307,7 @@ public class GUIVariables extends JFrame {
 					b = true;
 					Variable v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(),
 							Integer.parseInt(TFMin.getText()), Integer.parseInt(TFMax.getText()),
-							new ArrayList<Integer>(), false);
+							new ArrayList<Integer>());
 					shared.getProblem().getVariablesArray().add(v);
 					shared.getProblem().setType((String) comboBox.getSelectedItem());
 					variablesArray.add(v);
@@ -331,7 +331,7 @@ public class GUIVariables extends JFrame {
 					b = true;
 					Variable v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(),
 							Double.parseDouble(TFMin.getText()), Double.parseDouble(TFMax.getText()),
-							new ArrayList<Double>(), false);
+							new ArrayList<Double>());
 					textAreaStringIntDouble += "\n" + v.toStringVariable();
 					variablesArray.add(v);
 					shared.getProblem().setType((String) comboBox.getSelectedItem());
@@ -359,16 +359,14 @@ public class GUIVariables extends JFrame {
 				if (variablesArray.size() == 0) {
 					shared.setBinaryVariableSize((TFValue.getText().length()));
 					b = true;
-					Variable v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(), TFValue.getText(),
-							false);
+					Variable v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(), TFValue.getText());
 					textAreaStringBinary += "\n" + v.toStringVariable();
 					variablesArray.add(v);
 					shared.getProblem().setType((String) comboBox.getSelectedItem());
 					textArea.setText(textAreaStringBinary);
 				} else if (variablesArray.size() > 0 && TFValue.getText().length() == shared.getBinaryVariableSize()) {
 					b = true;
-					Variable v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(), TFValue.getText(),
-							false);
+					Variable v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(), TFValue.getText());
 					textAreaStringBinary += "\n" + v.toStringVariable();
 					variablesArray.add(v);
 					shared.getProblem().setType((String) comboBox.getSelectedItem());

@@ -20,7 +20,7 @@ public class Variable {
 	private ArrayList<Double> restrictionsDouble;
 	private boolean objective;
 	
-	public Variable(String name, String type, int min, int max, ArrayList<Integer> restrictionsInt, boolean objective){
+	public Variable(String name, String type, int min, int max, ArrayList<Integer> restrictionsInt){
 		this.name=name;
 		this.type=type;
 		this.minInt=min;
@@ -28,9 +28,8 @@ public class Variable {
 		this.MIN = min;
 		this.MAX = max;
 		this.restrictionsInt = restrictionsInt;
-		this.objective = objective;
 	}
-	public Variable(String name, String type, double min, double max, ArrayList<Double> restrictionsDouble, boolean objective){
+	public Variable(String name, String type, double min, double max, ArrayList<Double> restrictionsDouble){
 		this.name=name;
 		this.type=type;
 		this.minDoub=min;
@@ -38,13 +37,11 @@ public class Variable {
 		this.MIN = min;
 		this.MAX = max;
 		this.restrictionsDouble = restrictionsDouble;
-		this.objective = objective;
 	}
-	public Variable(String name, String type, String value, boolean objective){
+	public Variable(String name, String type, String value){
 		this.name=name;
 		this.type=type;
 		this.value=value;
-		this.objective = objective;
 	}
 	
 

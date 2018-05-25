@@ -191,6 +191,7 @@ public class GUIVariables extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					validateDetails();
+					
 				} catch (SAXException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -250,7 +251,7 @@ public class GUIVariables extends JFrame {
 		TFValue.setVisible(false);
 		contentPane.add(TFValue);
 		
-		TFQuantity = new JTextField();
+		TFQuantity = new JTextField("1");
 		TFQuantity.setBounds(229, 50, 39, 26);
 		contentPane.add(TFQuantity);
 		TFQuantity.setColumns(10);
@@ -303,19 +304,20 @@ public class GUIVariables extends JFrame {
 				// is an integer!
 				int num1 = Integer.parseInt(tfmin.getText());
 				int num2 = Integer.parseInt(tfmax.getText());
+				int quant = Integer.parseInt(TFQuantity.getText());
 				if (num1 < num2 && validateName(TFName.getText())) {
 					b = true;
 					Variable v;
-					if(/*getQuantaty */30>1) {
-						for(int q=1;q<=/*getQuantaty*/30;q++) {
-						v = new Variable(TFName.getText()+"_"+q, (String) comboBox.getSelectedItem(),
-								Integer.parseInt(TFMin.getText()), Integer.parseInt(TFMax.getText()),
-								new ArrayList<Integer>(), false);
-						shared.getProblem().getVariablesArray().add(v);
-						shared.getProblem().setType((String) comboBox.getSelectedItem());
-						variablesArray.add(v);
-						textAreaStringIntDouble += "\n" + v.toStringVariable();
-						textArea.setText(textAreaStringIntDouble);
+					if(quant>1) {
+						for(int q=1;q<=quant;q++) {
+							v = new Variable(TFName.getText()+"_"+q, (String) comboBox.getSelectedItem(),
+									Integer.parseInt(TFMin.getText()), Integer.parseInt(TFMax.getText()),
+									new ArrayList<Integer>(), false);
+							shared.getProblem().getVariablesArray().add(v);
+							shared.getProblem().setType((String) comboBox.getSelectedItem());
+							variablesArray.add(v);
+							textAreaStringIntDouble += "\n" + v.toStringVariable();
+							textArea.setText(textAreaStringIntDouble);
 						}
 					}else {
 						v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(),
@@ -341,15 +343,29 @@ public class GUIVariables extends JFrame {
 			try {
 				double num1 = Double.parseDouble(tfmin.getText());
 				double num2 = Double.parseDouble(tfmax.getText());
+				int quant = Integer.parseInt(TFQuantity.getText());
 				if (num1 < num2 && validateName(TFName.getText())) {
 					b = true;
-					Variable v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(),
-							Double.parseDouble(TFMin.getText()), Double.parseDouble(TFMax.getText()),
-							new ArrayList<Double>(), false);
-					textAreaStringIntDouble += "\n" + v.toStringVariable();
-					variablesArray.add(v);
-					shared.getProblem().setType((String) comboBox.getSelectedItem());
-					textArea.setText(textAreaStringIntDouble);
+					Variable v;
+					if(quant>1) {
+						for(int q=1;q<=quant;q++) {
+							v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(),
+									Double.parseDouble(TFMin.getText()), Double.parseDouble(TFMax.getText()),
+									new ArrayList<Double>(), false);
+							textAreaStringIntDouble += "\n" + v.toStringVariable();
+							variablesArray.add(v);
+							shared.getProblem().setType((String) comboBox.getSelectedItem());
+							textArea.setText(textAreaStringIntDouble);
+						}
+					}else {
+						v = new Variable(TFName.getText(), (String) comboBox.getSelectedItem(),
+								Double.parseDouble(TFMin.getText()), Double.parseDouble(TFMax.getText()),
+								new ArrayList<Double>(), false);
+						textAreaStringIntDouble += "\n" + v.toStringVariable();
+						variablesArray.add(v);
+						shared.getProblem().setType((String) comboBox.getSelectedItem());
+						textArea.setText(textAreaStringIntDouble);
+					}
 				} else if (num1 > num2) {
 					JOptionPane.showMessageDialog(null, "The Minimum value must be lower than the Maximum value.");
 				}

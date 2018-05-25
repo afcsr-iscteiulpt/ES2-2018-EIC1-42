@@ -248,7 +248,7 @@ public class GUIRestrictions extends JFrame {
 		else{
 			JOptionPane.showMessageDialog(null, "Please give your objective a name.");
 		}
-	}
+	}//
 
 	public void it_is_a_Binary() {
 		LabelName.setVisible(false);

@@ -539,7 +539,7 @@ public class SharedClass {
 			guiDefinicaoVariaveis.setTextAreaStringBinary(s1);
 
 		}
-
+		//
 		String s2 = "Algorithms chosen: " + "\n";
 		for (int i = 0; i < algorithms.size(); i++) {
 			s2 += algorithms.get(i) + "\n";

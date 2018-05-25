@@ -124,7 +124,7 @@ public class Variable {
 	public String getValue(){
 		return value;
 	}
-    //---------------------
+    //----------------------
 
 	public String convertAllToString(Object obj){
 		return String.valueOf(obj);

@@ -1,13 +1,12 @@
 package junit;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
 import javax.mail.MessagingException;
 
-import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import General.Administrador;
 import General.Problem;
@@ -16,9 +15,8 @@ import email.EmailFAQ;
 import email.EmailSender;
 import validationMethods.IntrevalExclusion;
 
-class JUnitTest {
-
-	Administrador admin	= new Administrador("config.xml");
+public class JUnitTest {
+Administrador admin	= new Administrador("config.xml");
 	
 	@Test
 	public void testEmailFAQ() {
@@ -130,5 +128,4 @@ class JUnitTest {
 		assertFalse(exclutor.isValid("{0.0, 1.0, 2.0"));
 		assertFalse(exclutor.isValid("{0.0, 1.0 2.0}"));
 	}
-
 }

@@ -279,7 +279,7 @@ public class SharedClass {
 				Element algorithm = doc.createElement(algorithmName);
 				algorithms.appendChild(algorithm);
 			}
-			Element daysToWait = doc.createElement("Days");
+			Element daysToWait = doc.createElement("Hours");
 			root.appendChild(daysToWait);
 			daysToWait.appendChild(doc.createTextNode(String.valueOf(p.getNumberOfDays())));
 
@@ -434,7 +434,7 @@ public class SharedClass {
 						}
 					}
 
-					NodeList days = firstPersonElement.getElementsByTagName("Days");
+					NodeList days = firstPersonElement.getElementsByTagName("Hours");
 					Element daysElement = (Element) days.item(0);
 					NodeList daysContent = daysElement.getChildNodes();
 					System.out.println("Days : " + ((Node) daysContent.item(0)).getNodeValue().trim());

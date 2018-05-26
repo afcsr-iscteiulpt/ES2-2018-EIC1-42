@@ -87,8 +87,12 @@ public class GUIRestrictions extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				shared.setExistingPanel(shared.getNPArray(), 3);
-
+				if(objectivesArray.size()<3){
+					new JOptionPane().showMessageDialog(null, "Please add more objectives");
+				}
+				else{
+					shared.setExistingPanel(shared.getNPArray(), 3);
+				}
 			}
 		});
 		contentPane.add(BotaoNext);
@@ -193,6 +197,8 @@ public class GUIRestrictions extends JFrame {
 		contentPane.add(scrollPane_1);
 		
 		TAObjectives = new JTextArea();
+		TAObjectives.setEnabled(false);
+		TAObjectives.setForeground(new Color(47, 79, 79));
 		TAObjectives.setText(TAObjectivesText);
 		scrollPane_1.setViewportView(TAObjectives);
 		JLabel LabelLogo = new JLabel();
@@ -240,10 +246,13 @@ public class GUIRestrictions extends JFrame {
 	}
 	
 	public void validateObjectName(){
-		if(!TFObjective.getText().equals("")){
+		if(!TFObjective.getText().equals("") && !TAObjectives.getText().contains(TFObjective.getText())){
+			objectivesArray.add(TFObjective.getText());
 			shared.getProblem().getObjectivesArray().add(TFObjective.getText());
 			TAObjectivesText += "\n" + TFObjective.getText();
 			TAObjectives.setText(TAObjectivesText);
+		}else if(!TFObjective.getText().equals("") && TAObjectives.getText().contains(TFObjective.getText())){
+			JOptionPane.showMessageDialog(null, "Objective already added.");
 		}
 		else{
 			JOptionPane.showMessageDialog(null, "Please give your objective a name.");

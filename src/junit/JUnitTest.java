@@ -2,22 +2,35 @@ package junit;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.mail.MessagingException;
+import javax.swing.JTextField;
 
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
 import General.Administrador;
+import General.ConfigurationBinaryP;
 import General.Problem;
+import General.SharedClass;
 import General.Variable;
+import Interface.GUI;
+import Interface.GUIAlgorithms;
+import Interface.GUIFAQ;
+import Interface.GUIFinal;
+import Interface.GUIGraphs;
+import Interface.GUIProblem;
+import Interface.GUIRestrictions;
+import Interface.GUIVariables;
 import email.EmailFAQ;
 import email.EmailSender;
 import validationMethods.IntrevalExclusion;
 
 public class JUnitTest {
-Administrador admin	= new Administrador("config.xml");
-	
+	Administrador admin	= new Administrador("config.xml");
+
 	@Test
 	public void testEmailFAQ() {
 		EmailFAQ faq = new EmailFAQ(admin.getEmail(), admin.getPassword(),
@@ -81,8 +94,8 @@ Administrador admin	= new Administrador("config.xml");
 		assertNotNull(varInt.getType());
 		assertNotNull(varInt.getMinI());
 		assertNotNull(varInt.getMaxI());
-		assertEquals(varInt.getMinD(), 0.0);
-		assertEquals(varInt.getMaxD(), 0.0);
+		assertEquals(varInt.getMinD(), 0.0, 0.0);
+		assertEquals(varInt.getMaxD(), 0.0, 0.0);
 		assertNull(varInt.getValue());
 		assertNotNull(varInt.getMIN());
 		assertNotNull(varInt.getMAX());
@@ -104,19 +117,20 @@ Administrador admin	= new Administrador("config.xml");
 		assertNotNull(varDouble.getRestrictionsDouble());
 
 		Variable varBinary = new Variable("varBinaryy", "Binary", "1010");
+		varBinary.toString();
 		assertNotNull(varBinary.getName());
 		assertNotNull(varBinary.getType());
 		assertEquals(varBinary.getMinI(), 0);
 		assertEquals(varBinary.getMaxI(), 0);
-		assertEquals(varBinary.getMinD(), 0.0);
-		assertEquals(varBinary.getMaxD(), 0.0);
+		assertEquals(varBinary.getMinD(), 0.0, 0.0);
+		assertEquals(varBinary.getMaxD(), 0.0, 0.0);
 		assertNotNull(varBinary.getValue());
 		assertNull(varBinary.getMIN());
 		assertNull(varBinary.getMAX());
 		assertNull(varBinary.getRestrictionsInt());
 		assertNull(varBinary.getRestrictionsDouble());
 	}
-	
+
 	@Test
 	public void testIntervalExclusion() {
 		IntrevalExclusion exclutor = new IntrevalExclusion();
@@ -127,4 +141,76 @@ Administrador admin	= new Administrador("config.xml");
 		assertFalse(exclutor.isValid("{0.0, 1.0, 2.0"));
 		assertFalse(exclutor.isValid("{0.0, 1.0 2.0}"));
 	}
+
+	@Test
+	public void testShared() {
+		SharedClass shared = new SharedClass();
+
+		shared.acessStoredProblems();
+		shared.createFAQArray();
+		shared.createNPArray();
+
+		GUI gui = new GUI(shared);
+		
+		GUIProblem guidescricaoproblema = new GUIProblem(shared);
+		
+		GUIVariables guiDefinicaoVariaveis = new GUIVariables(shared);
+		guiDefinicaoVariaveis.setDefaultTAText();
+		
+		guiDefinicaoVariaveis.checkSelectedComboBox();
+		
+		guiDefinicaoVariaveis.getTFName().setText("test");
+		guiDefinicaoVariaveis.getTFMin().setText("-1");
+		guiDefinicaoVariaveis.getTFMax().setText("5");
+		guiDefinicaoVariaveis.getComboBox().setEditable(true);
+		guiDefinicaoVariaveis.getComboBox().setSelectedItem("Integer");
+		guiDefinicaoVariaveis.validateVariableIntDouble(new JTextField("-1"), new JTextField("5"));
+		
+		guiDefinicaoVariaveis.getTFName().setText("test1");
+		guiDefinicaoVariaveis.getTFMin().setText("-1");
+		guiDefinicaoVariaveis.getTFMax().setText("5");
+		guiDefinicaoVariaveis.getComboBox().setEditable(true);
+		guiDefinicaoVariaveis.getComboBox().setSelectedItem("Double");
+		guiDefinicaoVariaveis.validateVariableIntDouble(new JTextField("-1"), new JTextField("5"));
+		
+		guiDefinicaoVariaveis.getTFName().setText("test12");
+		guiDefinicaoVariaveis.getTFMin().setText("-1");
+		guiDefinicaoVariaveis.getTFMax().setText("5");
+		guiDefinicaoVariaveis.getTFQuantity().setText("10");
+		guiDefinicaoVariaveis.getComboBox().setEditable(true);
+		guiDefinicaoVariaveis.getComboBox().setSelectedItem("Integer");
+		guiDefinicaoVariaveis.validateVariableIntDouble(new JTextField("-1"), new JTextField("5"));
+		
+		guiDefinicaoVariaveis.getTFName().setText("test123");
+		guiDefinicaoVariaveis.getTFMin().setText("-1");
+		guiDefinicaoVariaveis.getTFMax().setText("5");
+		guiDefinicaoVariaveis.getTFQuantity().setText("10");
+		guiDefinicaoVariaveis.getComboBox().setEditable(true);
+		guiDefinicaoVariaveis.getComboBox().setSelectedItem("Double");
+		guiDefinicaoVariaveis.validateVariableIntDouble(new JTextField("-1"), new JTextField("5"));
+		
+		guiDefinicaoVariaveis.getTFName().setText("test2");
+		guiDefinicaoVariaveis.getTFValue().setText("1010");
+		guiDefinicaoVariaveis.getComboBox().setEditable(true);
+		guiDefinicaoVariaveis.getTFQuantity().setText("10");
+		guiDefinicaoVariaveis.getComboBox().setSelectedItem("Binary");
+		guiDefinicaoVariaveis.validateVariableBinary(new JTextField("1010"));
+		
+		try {
+			guiDefinicaoVariaveis.validateDetails();
+		} catch (SAXException | IOException e) {
+		}
+		
+		GUIFAQ guifaq = new GUIFAQ(shared);
+		
+		GUIAlgorithms guiAlgo = new GUIAlgorithms(shared);
+		
+		GUIFinal guiFinal = new GUIFinal(shared);
+		
+		GUIGraphs guiGraphs = new GUIGraphs(shared);
+		
+		GUIRestrictions guiRestrictions = new GUIRestrictions(shared);
+		
+	}
+
 }

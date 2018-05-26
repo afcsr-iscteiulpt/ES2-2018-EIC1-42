@@ -13,6 +13,8 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.zip.ZipFile;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,6 +31,7 @@ import General.ConfigurationDoubleP;
 import General.ConfigurationIntegerP;
 import General.SharedClass;
 import General.Variable;
+import email.EmailSender;
 
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -160,7 +163,17 @@ public class GUIFinal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				shared.getProblem().setPath(TFBrowse.getText());
 				shared.writeXmlFile(shared.getProblem()); 
-
+				EmailSender esender;
+				try {
+					 esender = new EmailSender(shared.getAdministrador().getEmail(), shared.getAdministrador().getPassword(), shared.getProblem().getEmail(),
+							shared.getProblem().getName(), shared.getAdministrador().getEmail(), shared.getAdministrador().getProblemsDir());
+				} catch (AddressException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				} catch (MessagingException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
 				Configuration conf = null;
 				switch (shared.getProblem().getVariablesArray().get(0).getType()) {
 				case "Double":

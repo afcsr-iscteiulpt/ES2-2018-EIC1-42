@@ -200,17 +200,11 @@ public class JUnitTest {
 			guiDefinicaoVariaveis.validateDetails();
 		} catch (SAXException | IOException e) {
 		}
-		
 		GUIFAQ guifaq = new GUIFAQ(shared);
-		
 		GUIAlgorithms guiAlgo = new GUIAlgorithms(shared);
-		
 		GUIFinal guiFinal = new GUIFinal(shared);
-		
 		GUIGraphs guiGraphs = new GUIGraphs(shared);
-		
 		GUIRestrictions guiRestrictions = new GUIRestrictions(shared);
-		
 	}
 
 }

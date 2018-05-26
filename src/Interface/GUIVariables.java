@@ -563,4 +563,50 @@ public class GUIVariables extends JFrame {
 	public void setTextAreaStringIntDouble(String toadd) {
 		textAreaStringIntDouble = toadd;
 	}
+//JUNIT
+	public JTextField getTFName() {
+		return TFName;
+	}
+
+	public JTextField getTFMin() {
+		return TFMin;
+	}
+
+	public JTextField getTFMax() {
+		return TFMax;
+	}
+
+	public SharedClass getShared() {
+		return shared;
+	}
+
+	public JButton getButtonAddVariable() {
+		return ButtonAddVariable;
+	}
+
+	public JTextField getTFValue() {
+		return TFValue;
+	}
+
+	public JLabel getLabelValue() {
+		return LabelValue;
+	}
+
+	public JLabel getLabelInterval() {
+		return LabelInterval;
+	}
+
+	public JTextField getTFQuantity() {
+		return TFQuantity;
+	}
+
+	public JLabel getLabelMultiply() {
+		return LabelMultiply;
+	}
+
+	public JLabel getLabelQuantity() {
+		return LabelQuantity;
+	}
+	
+	
 }

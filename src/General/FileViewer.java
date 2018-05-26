@@ -86,19 +86,17 @@ public class FileViewer {
 		}
 		
 		createLateXPDF(path, filename);
-		createR(path, filename);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {}
+
 		viewLateXPDF(path, filename);
-		viewR(path, filename);
+		createR(path, filename);
 	}
 
 
-	public static void main(String[] args) throws IOException {
-//		createLateXPDF("C:/Users/bruno/Desktop/ExperimentsDouble/latex","ExperimentsDouble");
-//		createR("C:/Users/bruno/Desktop/ExperimentsDouble/latex","ExperimentsDouble");
-	}
+
+//	public static void main(String[] args) throws IOException {
+////		createLateXPDF("C:/Users/bruno/Desktop/ExperimentsDouble/latex","ExperimentsDouble");
+//		viewR("C:/Users/bruno/Desktop/ExperimentsDouble/latex","ExperimentsDouble");
+//	}
 
 
 }

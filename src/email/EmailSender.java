@@ -1,4 +1,5 @@
 package email;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.Properties;
 
@@ -10,6 +11,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import General.Administrador;
+import General.SharedClass;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -30,8 +32,9 @@ public class EmailSender extends Thread {
     private String ProblemName;
     private String Adminmail;
     private String XMLPath;
+    private SharedClass shared;
     
-    private int estimado = 170000;
+    private int estimado = 70000;
     
     @Override
     public void run() {
@@ -39,22 +42,29 @@ public class EmailSender extends Thread {
     		for (int i = 25; i < 100; i += 25) {
     			try {
 					sleep(estimado/4);
+					shared.getGUIFinal().getProgressBar().setValue(i);
+					shared.getGUIFinal().revalidate();
+					shared.getGUIFinal().repaint();
 					emailCheck(i);
 				} catch (InterruptedException e) {
 				}
 			}
     		try {
 				sleep(estimado/4);
-				emailFinish("config.xml");
+				shared.getGUIFinal().getProgressBar().setValue(100);
+				shared.getGUIFinal().revalidate();
+				shared.getGUIFinal().repaint();
+				emailFinish();
 				interrupt();
 			} catch (InterruptedException e) {
 			}
     	}
     }
 	
-	public EmailSender(String ood1mail, String password, String usermail, String problemName, String adminmail, String XMLpath) throws AddressException, MessagingException {
+	public EmailSender(SharedClass shared, String ood1mail, String password, String usermail, String problemName, String adminmail, String XMLpath) throws AddressException, MessagingException {
 		this.ood1mail = ood1mail;
 		this.password = password;
+		this.shared=shared;
 		
 		props.put("mail.smtp.host", "smtp.gmail.com");
 	    props.put("mail.smtp.starttls.enable", "true");
@@ -94,12 +104,12 @@ public class EmailSender extends Thread {
             for(int i= 0; i<CClist.length;i++)
             	message.addRecipient(Message.RecipientType.CC,CClist[i]);
             LocalDateTime now = LocalDateTime.now();
-            message.setSubject("Otimiza��o em curso: " + problemName +" "+now.getYear()+"-"+now.getMonth()+"-"+now.getDayOfMonth()
+            message.setSubject("Otimização em curso: " + shared.getProblem().getName() +" "+now.getYear()+"-"+now.getMonth()+"-"+now.getDayOfMonth()
             					+" "+ now.getHour()+":"+now.getMinute());
             
-            String Message= "Muito obrigado por usar esta plataforma de otimiza��o. Ser� informado por email sobre o progresso de otimiza��o,"
-            		+ " quando o processo de otimiza��o tiver atingido 25%, 50%, 75% do total do tempo estimado, e tamb�m quando o processo tiver"
-            		+ " terminado, com sucesso ou devido � ocorr�ncia de erros.";
+            String Message= "Muito obrigado por usar esta plataforma de otimização. Será informado por email sobre o progresso de otimização,"
+            		+ " quando o processo de otimização tiver atingido 25%, 50%, 75% do total do tempo estimado, e também quando o processo tiver"
+            		+ " terminado, com sucesso ou devido à ocorrência de erros.";
             
             Multipart multipart = new MimeMultipart();
 			MimeBodyPart messageBodyPart = new MimeBodyPart();
@@ -110,21 +120,21 @@ public class EmailSender extends Thread {
         	 * Associa��o do ficheiro XML (do progresso feito) ao email a ser enviado para o utilizador
         	 */
 			messageBodyPart = new MimeBodyPart();
-			DataSource source = new FileDataSource(XMLpath);
+			DataSource source = new FileDataSource(XMLpath + problemName);
 			messageBodyPart.setDataHandler(new DataHandler(source));
-			messageBodyPart.setFileName(problemName + "-XML");
+			messageBodyPart.setFileName(shared.getProblem().getName() + "-XML");
+
 			multipart.addBodyPart(messageBodyPart);
 
 			message.setContent(multipart);
             
             
-
             Transport.send(message);
 
             System.out.println("Message Sent .");
 
         } catch (MessagingException e) {
-            throw new RuntimeException(e);
+
         }
 	}
 	
@@ -155,12 +165,12 @@ public class EmailSender extends Thread {
             for(int i= 0; i<CClist.length;i++)
             	message.addRecipient(Message.RecipientType.CC,CClist[i]);
             LocalDateTime now = LocalDateTime.now();
-            message.setSubject("Actualiza��o Estado Otimiza��o " + percentage +"% : " + ProblemName +" "+now.getYear()+"-"+now.getMonth()+"-"+now.getDayOfMonth()
-            					+" "+ now.getHour()+":"+now.getMinute());
+            message.setSubject("Actualização Estado Otimização " + percentage +"% : " + shared.getProblem().getName() +" "+now.getYear()+"-"+now.getMonth()+"-"+now.getDayOfMonth()
+			+" "+ now.getHour()+":"+now.getMinute());
             
-            String Message= "Muito obrigado por usar esta plataforma de otimiza��o. Informamos-lhe que o seu "
-            		+ "problema est� ainda em fase de processamento. Neste momento complet�mos cerca de " + percentage +"% "
-            		+ "do processo de otimiza��o. Ser� informado futuramente das pr�ximas fases.";
+            String Message= "Muito obrigado por usar esta plataforma de otimização. Informamos-lhe que o seu "
+            		+ "problema está ainda em fase de processamento. Neste momento completámos cerca de " + percentage +"% "
+            		+ "do processo de otimização. Será informado futuramente das próximas fases.";
             
             Multipart multipart = new MimeMultipart();
 			MimeBodyPart messageBodyPart = new MimeBodyPart();
@@ -170,7 +180,7 @@ public class EmailSender extends Thread {
 			message.setContent(multipart);
             
             Transport.send(message);
-
+            
             System.out.println("Message Sent.");
 
         } catch (MessagingException e) {
@@ -178,7 +188,7 @@ public class EmailSender extends Thread {
         }
 	}
 	
-	public void emailFinish(String finishXML) {
+	public void emailFinish() {
 		
 		/*
 		 *  Cria��o da sess�o e respetiva autentica��o
@@ -205,13 +215,12 @@ public class EmailSender extends Thread {
             for(int i= 0; i<CClist.length;i++)
             	message.addRecipient(Message.RecipientType.CC,CClist[i]);
             LocalDateTime now = LocalDateTime.now();
-            message.setSubject("Processo de Otimiza��o finalizado: " + ProblemName +" "+now.getYear()+"-"+now.getMonth()+"-"+now.getDayOfMonth()
-            					+" "+ now.getHour()+":"+now.getMinute());
-            
-            String Message= "Muito obrigado por usar esta plataforma de otimiza��o. "
-            		+"Informamos que o processo de otimiza��o acabou. Poder� ver uma detalhada an�lise "
-            		+"do processo de otimiza��o do problema assim como a sua configura��o inicial. "
-            		+"Agradecemos muito por depositar a sua confian�a na nossa plataforma.";
+            message.setSubject("Processo de Otimização finalizado: " + shared.getProblem().getName()  +" "+now.getYear()+"-"+now.getMonth()+"-"+now.getDayOfMonth()
+			+" "+ now.getHour()+":"+now.getMinute());
+            String Message= "Muito obrigado por usar esta plataforma de otimização. "
+            		+"Informamos que o processo de otimização acabou. Poderá ver uma detalhada análise "
+            		+"do processo de otimização do problema assim como a sua configuração inicial. "
+            		+"Agradecemos muito por depositar a sua confiança na nossa plataforma.";
             
             Multipart multipart = new MimeMultipart();
 			MimeBodyPart messageBodyPart = new MimeBodyPart();
@@ -222,19 +231,14 @@ public class EmailSender extends Thread {
         	 * Associa��o do ficheiro XML (do progresso feito)  ao email a ser enviado para o utilizador
         	 */
 			messageBodyPart = new MimeBodyPart();
-			DataSource configFile = new FileDataSource(XMLPath);
+			DataSource configFile = new FileDataSource(shared.getXMLFinalName());
 			messageBodyPart.setDataHandler(new DataHandler(configFile));
-			messageBodyPart.setFileName(ProblemName + "-XML");
+			messageBodyPart.setFileName(shared.getProblem().getName() + "-XML");
 			multipart.addBodyPart(messageBodyPart);
 			
         	/*
         	 * Associa��o do ficheiro FinishStats ao email a ser enviado para o utilizador
         	 */
-			messageBodyPart = new MimeBodyPart();
-			DataSource finishFile = new FileDataSource(XMLPath);
-			messageBodyPart.setDataHandler(new DataHandler(finishFile));
-			messageBodyPart.setFileName(ProblemName + "-FinishStats");
-			multipart.addBodyPart(messageBodyPart);
 
 			message.setContent(multipart);
             
@@ -247,6 +251,8 @@ public class EmailSender extends Thread {
         }
 		
 	}
+	
+
 	
 	public String getOod1mail() {
 		return ood1mail;
@@ -272,20 +278,5 @@ public class EmailSender extends Thread {
 		return XMLPath;
 	}
 
-	public static void main(String[] args) throws AddressException, MessagingException {
-		/*
-		 * Testing function
-		 */
-		
-//		System.out.println("1");
-		Administrador administrador = new Administrador("config.xml");
-		EmailSender A = new EmailSender(administrador .getEmail(), administrador.getPassword() ,"ood1.0chief@gmail.com", "EmailTesting","ood1.0chief@gmail.com" , "config.xml");
-		A.start();
-		
-//		System.out.println("2");
-//		A.emailCheck(50);
-//		System.out.println("3");
-//		A.emailFinish("File.xml");
-    }
 
 }

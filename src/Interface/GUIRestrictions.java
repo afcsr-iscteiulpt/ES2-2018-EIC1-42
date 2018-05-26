@@ -87,7 +87,8 @@ public class GUIRestrictions extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(objectivesArray.size()<3){
+//				if(objectivesArray.size()<2){
+				if(shared.getProblem().getObjectivesArray().size()<2){
 					new JOptionPane().showMessageDialog(null, "Please add more objectives");
 				}
 				else{
@@ -281,5 +282,9 @@ public class GUIRestrictions extends JFrame {
 
 	public JPanel getContentPane() {
 		return contentPane;
+	}
+	
+	public ArrayList<String> getObjectivesArray(){
+		return objectivesArray;
 	}
 }

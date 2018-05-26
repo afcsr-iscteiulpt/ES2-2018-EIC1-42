@@ -36,6 +36,9 @@ public class ConfigurationBinaryP extends Configuration{
 	private static String problemType;
 	private static ArrayList<String> alg;
 	private static String path;
+	private static final int INDEPENDENT_RUNS_NUMBER = 5;
+	private static final int MAX_EVALUATIONS = 3000;
+
 	
 	public ConfigurationBinaryP(String path, Problem ToRun) {
 		super(path, ToRun);
@@ -57,7 +60,7 @@ public class ConfigurationBinaryP extends Configuration{
 	    					problemList.get(i).getProblem(),
 	    					new SinglePointCrossover(1.0),
 	    					new BitFlipMutation(1.0 / ((BinaryProblem) problemList.get(i).getProblem()).getNumberOfBits(0)))
-	    			.setMaxEvaluations(500)
+	    			.setMaxEvaluations(MAX_EVALUATIONS)
 	    			.setPopulationSize(100)
 	    			.build();
 	    			algorithms.add(new ExperimentAlgorithm<>(algorithmnsgaii, "NSGAII", problemList.get(i).getTag()));
@@ -68,7 +71,7 @@ public class ConfigurationBinaryP extends Configuration{
 	    					problemList.get(i).getProblem(),
 	    					new SinglePointCrossover(1.0),
 	    					new BitFlipMutation(1.0 / ((BinaryProblem) problemList.get(i).getProblem()).getNumberOfBits(0)))
-	    			.setMaxEvaluations(500)
+	    			.setMaxEvaluations(MAX_EVALUATIONS)
 	    			.build();      
 	    			algorithms.add(new ExperimentAlgorithm<>(algorithmsmsemoa, "SMSEMOA", problemList.get(i).getTag()));
 	    			break;
@@ -77,7 +80,7 @@ public class ConfigurationBinaryP extends Configuration{
 	    			Algorithm<List<BinarySolution>> algorithmmocell = new MOCellBuilder<>(
 	    					problemList.get(i).getProblem(),
 	    					new SinglePointCrossover(1.0), new BitFlipMutation(1.0 / ((BinaryProblem) problemList.get(i).getProblem()).getNumberOfBits(0)))
-	    			.setMaxEvaluations(500)
+	    			.setMaxEvaluations(MAX_EVALUATIONS)
 	    			.build();
 	    			algorithms.add(new ExperimentAlgorithm<>(algorithmmocell, "MOCell", problemList.get(i).getTag()));
 	    			break;
@@ -85,7 +88,7 @@ public class ConfigurationBinaryP extends Configuration{
 	    		case "MOCH":
 	    			Algorithm<List<BinarySolution>> algorithmmochc = new MOCHCBuilder(
 	    					(BinaryProblem) problemList.get(i).getProblem())
-	    			.setMaxEvaluations(500)
+	    			.setMaxEvaluations(MAX_EVALUATIONS)
 	    			.setCrossover(new HUXCrossover(1.0))
 	    			.setNewGenerationSelection(new RankingAndCrowdingSelection<BinarySolution>(100))
 	    			.setCataclysmicMutation(new BitFlipMutation(0.35))
@@ -98,7 +101,7 @@ public class ConfigurationBinaryP extends Configuration{
 	    		case "PAES":
 	    			Algorithm<List<BinarySolution>> algorithmpaes = new PAESBuilder<>(
 	    					problemList.get(i).getProblem())
-	    			.setMaxEvaluations(500)
+	    			.setMaxEvaluations(MAX_EVALUATIONS)
 	    			.setArchiveSize(100)
 	    			.setBiSections(2)
 	    			.setMutationOperator(new BitFlipMutation(1.0 / ((BinaryProblem) problemList.get(i).getProblem()).getNumberOfBits(0)))
@@ -109,7 +112,7 @@ public class ConfigurationBinaryP extends Configuration{
 	    		case "RandomSearch":
 	    			Algorithm<List<BinarySolution>> algorithmrandomsearch = new RandomSearchBuilder<>(
 	    					problemList.get(i).getProblem())
-	    			.setMaxEvaluations(500)
+	    			.setMaxEvaluations(MAX_EVALUATIONS)
 	    			.build();
 	    			algorithms.add(new ExperimentAlgorithm<>(algorithmrandomsearch, "RandomSearch", problemList.get(i).getTag()));
 	    			break;
@@ -119,7 +122,7 @@ public class ConfigurationBinaryP extends Configuration{
 	    					problemList.get(i).getProblem(),
 	    					new SinglePointCrossover(1.0),
 	    					new BitFlipMutation(1.0 / ((BinaryProblem) problemList.get(i).getProblem()).getNumberOfBits(0)))
-	    			.setMaxIterations(500)
+	    			.setMaxIterations(MAX_EVALUATIONS)
 	    			.build();
 	    			algorithms.add(new ExperimentAlgorithm<>(algorithmspea2, "SPEA2", problemList.get(i).getTag()));
 
@@ -152,8 +155,8 @@ public class ConfigurationBinaryP extends Configuration{
 	            .setOutputParetoSetFileName("VAR")
 	            .setReferenceFrontDirectory(experimentBaseDirectory+"/referenceFronts")
 	            .setIndicatorList(Arrays.asList(new PISAHypervolume<BinarySolution>()))
-	            .setIndependentRuns(5)
-	            .setNumberOfCores(8)
+	            .setIndependentRuns(INDEPENDENT_RUNS_NUMBER)
+	            .setNumberOfCores(4)
 	            .build();
 
 	    new ExecuteAlgorithms<>(experiment).run();

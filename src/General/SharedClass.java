@@ -14,6 +14,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -38,6 +40,7 @@ import org.xml.sax.SAXParseException;
 import Interface.GUI;
 import Interface.GUIAlgorithms;
 import Interface.GUIVariables;
+import email.EmailSender;
 import Interface.GUIProblem;
 import Interface.GUIRestrictions;
 import Interface.GUIStoredProblems;
@@ -61,8 +64,10 @@ public class SharedClass {
 	private GUIGraphs guiGraphs;
 	private GUIRestrictions guiRestrictions;
 	private Boolean verifyLoad = false;
+	private EmailSender esender;
 	private int binaryVariableSize = 0;
 	private boolean isSolved = false;
+	private String xmlFinalName;
 
 	private Problem problem = new Problem("", "", "",  new ArrayList<Variable>() , new ArrayList<String>(), 0, "", new ArrayList<String>()); // name
 																			// ;
@@ -212,7 +217,14 @@ public class SharedClass {
 	 * 
 	 * @param Problem p
 	 */
-	public void writeXmlFile(Problem p) {
+	public String writeXmlFile(Problem p) {
+		String date = new SimpleDateFormat("dd-MM-yyyy  HH-mm-ss").format(new Date());
+		
+		System.out.println(date);
+		
+		String problemNameAndDate = p.getName() + " - " + date;
+		
+		String outputfile = administrador.getProblemsDir();
 		try {
 			DocumentBuilderFactory dFact = DocumentBuilderFactory.newInstance();
 			DocumentBuilder build = dFact.newDocumentBuilder();
@@ -306,15 +318,9 @@ public class SharedClass {
 			aTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 			aTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			DOMSource source = new DOMSource(doc);
+		
 			try {
 
-				String date = new SimpleDateFormat("dd-MM-yyyy  HH:mm:ss").format(new Date());
-
-				System.out.println(date);
-
-				String problemNameAndDate = p.getName() + " - " + date;
-
-				String outputfile = administrador.getProblemsDir();
 
 				for (int i = 0; i < getAllFileName(outputfile).length; i++) {
 					if (getAllFileName(outputfile)[i].getName().contains(p.getName() + " - ")) {
@@ -322,7 +328,7 @@ public class SharedClass {
 					}
 				}
 
-				FileWriter fos = new FileWriter(outputfile + p.getName() + ".xml");
+				FileWriter fos = new FileWriter(outputfile + problemNameAndDate + ".xml");
 				StreamResult result = new StreamResult(fos);
 				aTransformer.transform(source, result);
 			} catch (IOException e) {
@@ -333,6 +339,9 @@ public class SharedClass {
 		} catch (ParserConfigurationException ex) {
 			System.out.println("Error building document");
 		}
+		
+		this.xmlFinalName =outputfile + problemNameAndDate + ".xml";
+		return outputfile + problemNameAndDate + ".xml";
 	}
 
 	/*
@@ -442,7 +451,7 @@ public class SharedClass {
 					NodeList problemPath = firstPersonElement.getElementsByTagName("Path");
 					Element problemPathElement = (Element) problemPath.item(0);
 					NodeList problemPathContent = problemPathElement.getChildNodes();
-					System.out.println("Path : " + ((Node) problemPathContent.item(0)).getNodeValue().trim());
+					//System.out.println("Path : " + ((Node) problemPathContent.item(0)).getNodeValue().trim());
 					
 
 					NodeList algorithms = firstPersonElement.getElementsByTagName("Algorithms");
@@ -556,6 +565,7 @@ public class SharedClass {
 		String objToAdd = "Objective name:";
 		for(int i = 0; i<objectives.size();i++){
 			objToAdd += "\n" + objectives.get(i);	
+			guiRestrictions.getObjectivesArray().add(objectives.get(i));
 		}
 		guiRestrictions.setTAObjectivesText(objToAdd);
 
@@ -631,7 +641,14 @@ public class SharedClass {
 		setExistingPanel(getNPArray(), 5);
 	}
 	
+	public void createEmailSender() throws AddressException, MessagingException{
+		this.esender = new EmailSender(this, getAdministrador().getEmail(), getAdministrador().getPassword(), getProblem().getEmail(),
+				writeXmlFile(problem), getAdministrador().getEmail(), getAdministrador().getProblemsDir());
+	}
 
+	public EmailSender getEmailSender(){
+		return esender;
+	}
 
 	public File[] getAllFileName(String path) {
 		File folder = new File(path);
@@ -648,8 +665,11 @@ public class SharedClass {
 		binaryVariableSize = size;
 	}
 	
+	public GUIFinal getGUIFinal(){
+		return guiFinal;
+	}
 
-
+	
 	public int getBinaryVariableSize() {
 		return binaryVariableSize;
 	}
@@ -674,6 +694,9 @@ public class SharedClass {
 		verifyLoad = b;
 	}
 
+	public String getXMLFinalName(){
+		return xmlFinalName;
+	}
 	// Modo Admin
 	public Administrador getAdministrador() {
 		return administrador;

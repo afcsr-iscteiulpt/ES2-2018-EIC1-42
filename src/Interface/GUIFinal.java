@@ -54,6 +54,7 @@ public class GUIFinal extends JFrame {
 	private JTextArea TAAlgorit;
 	private JTextField TFBrowse;
 	private JButton ButtonBrowse;
+	private JProgressBar ProgressBarFinal;
 
 	public GUIFinal(SharedClass shared) {
 		this.shared = shared;
@@ -147,7 +148,7 @@ public class GUIFinal extends JFrame {
 		LabelNeedsToBeSolved.setFont(new Font("Avenir Next", Font.BOLD, 17));
 		contentPane.add(LabelNeedsToBeSolved);
 
-		JLabel LabelDays = new JLabel("days");
+		JLabel LabelDays = new JLabel("Minutes");
 		LabelDays.setBounds(343, 58, 58, 20);
 		LabelDays.setForeground(new Color(255, 255, 255));
 		LabelDays.setFont(new Font("Avenir Next", Font.BOLD, 14));
@@ -162,12 +163,11 @@ public class GUIFinal extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				shared.getProblem().setPath(TFBrowse.getText());
-				shared.writeXmlFile(shared.getProblem()); 
-				EmailSender esender;
+//				String pnamedate = shared.writeXmlFile(shared.getProblem()); 
 				try {
-					//
-					 esender = new EmailSender(shared.getAdministrador().getEmail(), shared.getAdministrador().getPassword(), shared.getProblem().getEmail(),
-							shared.getProblem().getName(), shared.getAdministrador().getEmail(), shared.getAdministrador().getProblemsDir());
+					shared.createEmailSender();
+					EmailSender esender = shared.getEmailSender();
+					 esender.start();
 				} catch (AddressException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
@@ -206,7 +206,7 @@ public class GUIFinal extends JFrame {
 					System.out.println((float)timeElapsed.toMinutes()+"  minutos");
 
 					shared.makeMeGraphs();
-					shared.getFileViewer().create_view_LateX();
+//					shared.getFileViewer().create_view_LateX();
 					Thread.sleep(300);
 				} catch (InterruptedException | IOException e1) {
 					// TODO Auto-generated catch block
@@ -260,11 +260,16 @@ public class GUIFinal extends JFrame {
 			TFBrowse.setText(shared.getProblem().getPath());
 		}
 		contentPane.add(TFBrowse);
-
-		JLabel LabelLogo = new JLabel();
-		LabelLogo.setBounds(0, 0, 700, 478);
-		LabelLogo.setIcon(imageIcon);
-		contentPane.add(LabelLogo);
+		
+		ProgressBarFinal = new JProgressBar();
+		ProgressBarFinal.setStringPainted(true);
+		ProgressBarFinal.setBounds(120, 396, 370, 37);
+		contentPane.add(ProgressBarFinal);
+		
+				JLabel LabelLogo = new JLabel();
+				LabelLogo.setBounds(0, 0, 700, 478);
+				LabelLogo.setIcon(imageIcon);
+				contentPane.add(LabelLogo);
 	}
 
 	public void search() {
@@ -362,5 +367,8 @@ public class GUIFinal extends JFrame {
 
 	public JPanel getContentPane() {
 		return contentPane;
+	}
+	public JProgressBar getProgressBar(){
+		return ProgressBarFinal;
 	}
 }

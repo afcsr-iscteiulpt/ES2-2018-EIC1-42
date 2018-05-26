@@ -17,7 +17,7 @@ public class FileViewer {
 	
 	public static void createLateXPDF(String latexpath, String filename) throws IOException {
 	
-        ProcessBuilder builder = new ProcessBuilder("cmd.exe","/c", "cd " + latexpath + " && pdflatex " + filename + ".tex");
+        ProcessBuilder builder = new ProcessBuilder("cmd.exe","/c", "cd " + latexpath  + "latex" + " && pdflatex " + filename + ".tex");
             builder.redirectErrorStream(true);
             Process p = builder.start();
 //            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -31,7 +31,7 @@ public class FileViewer {
 	
 	public static void viewLateXPDF(String latexpath, String filename) throws IOException {
 		
-		ProcessBuilder builder = new ProcessBuilder("cmd.exe","/c", "cd " + latexpath + " && start " + filename + ".pdf");
+		ProcessBuilder builder = new ProcessBuilder("cmd.exe","/c", "cd " + latexpath + "latex" + " && start " + filename + ".pdf");
             builder.redirectErrorStream(true);
             Process p = builder.start();
 //            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -43,10 +43,10 @@ public class FileViewer {
 //            }
 	}
 	 
-	public static void viewR(String latexpath, String filename) {
+	public static void createR(String Rpath, String filename) {
 		try {
 		Process process = new ProcessBuilder("C:/Program Files/R/R-3.4.3/bin/RScript.exe", "HV.Boxplot.R")
-				.directory(new File("C:/Users/bruno/Desktop/ExperimentsDouble/R")).start();
+				.directory(new File(Rpath + "R")).start();
 		
 //		Process process2 = new ProcessBuilder("C:/Program Files/MiKTeX 2.9/miktex/bin/x64/miktex-pdflatex.exe", filename + ".tex")
 //							.directory(new File("C:/Users/bruno/Desktop/ExperimentsDouble/latex")).start();
@@ -55,39 +55,55 @@ public class FileViewer {
 		} catch (IOException e) {}
 	}
 	
+	public static void viewR(String Rpath, String filename) throws IOException {
+
+		ProcessBuilder builder = new ProcessBuilder("cmd.exe","/c", "cd " + Rpath + "R" + " && start " + "HV.Boxplot.eps");
+        builder.redirectErrorStream(true);
+        Process p = builder.start();
+		
+	}
+	
+	
 	public void create_view_LateX() throws IOException {
 		
-		String latexpath =  sharedClass.getAdministrador().getProblemsDir();
-		String latexfilename = null;
+		String path =  sharedClass.getAdministrador().getProblemsDir();
+		String filename = null;
 		
 		switch(sharedClass.getProblem().getType()) {
 		case "Double":
-			latexpath = latexpath + "ExperimentsDouble/latex";
-			latexfilename = "ExperimentsDouble";
+			path = path + "ExperimentsDouble/";
+			filename = "ExperimentsDouble";
 			break;
 		case "Integer":
-			latexpath = latexpath + "ExperimentsInteger/latex";
-			latexfilename = "ExperimentsInteger";
+			path = path + "ExperimentsInteger/";
+			filename = "ExperimentsInteger";
 			break;
 		case "Binary":
-			latexpath = latexpath + "ExperimentsBinary/latex";
-			latexfilename = "ExperimentsBinary";
+			path = path + "ExperimentsBinary/";
+			filename = "ExperimentsBinary";
 			break;
 		default:
 			System.out.println("Latex case not found");
 			break;
 		}
 		
-//		createLateXPDF(latexpath, latexfilename);
-//		viewLateXPDF(latexpath, latexfilename);
-		viewR(latexpath, latexfilename);
+		createLateXPDF(path, filename);
+		createR(path, filename);
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		viewLateXPDF(path, filename);
+		viewR(path,filename);
 	}
 
 
-	public static void main(String[] args) throws IOException {
-//		createLateXPDF("C:/Users/bruno/Desktop/ExperimentsDouble/latex","ExperimentsDouble");
-		viewR("C:/Users/bruno/Desktop/ExperimentsDouble/latex","ExperimentsDouble");
-	}
+//	public static void main(String[] args) throws IOException {
+////		createLateXPDF("C:/Users/bruno/Desktop/ExperimentsDouble/latex","ExperimentsDouble");
+//		viewR("C:/Users/bruno/Desktop/ExperimentsDouble/latex","ExperimentsDouble");
+//	}
 
 
 }

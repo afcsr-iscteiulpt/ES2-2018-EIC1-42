@@ -1,0 +1,16 @@
+Sprint Retrospective
+
+1º Sprint
+De um modo geral, o 1º Sprint correu como esperado.
+O grupo teve algumas dificuldades na leitura de listas de ficheiros .xml. No entanto, o código já foi moldado para adotar essa funcionalidade no 2º Sprint.
+No próximo Sprint tencionamos resolver o problema acima referido, completar a interface gráfica e as respetivas funcionalidades iniciadas nesta primeiro Sprint.
+Prevemos também que o projeto será finalizado no próximo Sprint.
+
+2º Sprint
+Este segundo e último Sprint foi bastante trabalhoso. No entanto, estamos satisfeitos com o resultado final.
+Completámos as funcionalidades da interface gráfica iniciadas no Sprint passado e adicionámos muitas outras que melhoraram o desempenho geral do projeto.
+Enfrentámos algumas dificuldades na implementação dos gráficos mas o resultado final foi satisfatório.
+A compilação automática dos outputs gerados pela framework jMetal (scripts R, latex) e visualização em documentos .eps e .pdf foram também desenvolvidos neste Sprint.
+Implementámos também o envio de emails a 25%, 50%, 75% e 100% da otimização do problema. 
+Por fim, efetuámos o video final que mostra todas as funcionalidades do Software.
+

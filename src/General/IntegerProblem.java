@@ -41,7 +41,7 @@ public class IntegerProblem extends AbstractIntegerProblem{
 	@Override
 	public void evaluate(IntegerSolution solution) {
 		
-		if (problema.getPath() == "") { //mudar para a parte do jar
+		if (problema.getPath() != "") { //mudar para a parte do jar
 			evaluateJar(solution);
 		}else { 
 			double[] fx = new double[getNumberOfObjectives()];

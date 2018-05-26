@@ -334,7 +334,7 @@ public class SharedClass {
 		} catch (ParserConfigurationException ex) {
 			System.out.println("Error building document");
 		}
-		return outputfile + problemNameAndDate + ".xml";
+		return problemNameAndDate + ".xml";
 	}
 
 	/*
@@ -444,7 +444,7 @@ public class SharedClass {
 					NodeList problemPath = firstPersonElement.getElementsByTagName("Path");
 					Element problemPathElement = (Element) problemPath.item(0);
 					NodeList problemPathContent = problemPathElement.getChildNodes();
-					System.out.println("Path : " + ((Node) problemPathContent.item(0)).getNodeValue().trim());
+					//System.out.println("Path : " + ((Node) problemPathContent.item(0)).getNodeValue().trim());
 					
 
 					NodeList algorithms = firstPersonElement.getElementsByTagName("Algorithms");

@@ -110,9 +110,9 @@ public class EmailSender extends Thread {
         	 * Associa��o do ficheiro XML (do progresso feito) ao email a ser enviado para o utilizador
         	 */
 			messageBodyPart = new MimeBodyPart();
-			DataSource source = new FileDataSource(XMLpath + problemName + ".xml");
+			DataSource source = new FileDataSource(XMLpath + problemName);
 			messageBodyPart.setDataHandler(new DataHandler(source));
-			messageBodyPart.setFileName(problemName + ".xml");
+			messageBodyPart.setFileName(problemName);
 			multipart.addBodyPart(messageBodyPart);
 
 			message.setContent(multipart);
@@ -222,19 +222,25 @@ public class EmailSender extends Thread {
         	 * Associa��o do ficheiro XML (do progresso feito)  ao email a ser enviado para o utilizador
         	 */
 			messageBodyPart = new MimeBodyPart();
-			DataSource configFile = new FileDataSource(XMLPath);
+			DataSource configFile = new FileDataSource(XMLPath  + ProblemName);
 			messageBodyPart.setDataHandler(new DataHandler(configFile));
-			messageBodyPart.setFileName(ProblemName + "-XML");
+			messageBodyPart.setFileName(ProblemName);
 			multipart.addBodyPart(messageBodyPart);
 			
         	/*
         	 * Associa��o do ficheiro FinishStats ao email a ser enviado para o utilizador
         	 */
-			messageBodyPart = new MimeBodyPart();
-			DataSource finishFile = new FileDataSource(XMLPath);
-			messageBodyPart.setDataHandler(new DataHandler(finishFile));
-			messageBodyPart.setFileName(ProblemName + "-FinishStats");
-			multipart.addBodyPart(messageBodyPart);
+//			messageBodyPart = new MimeBodyPart();
+//			DataSource finishFilelatex = new FileDataSource(XMLPath  + ProblemName);
+//			messageBodyPart.setDataHandler(new DataHandler(finishFilelatex));
+//			messageBodyPart.setFileName(ProblemName + "-Latex");
+//			multipart.addBodyPart(messageBodyPart);
+//			
+//			messageBodyPart = new MimeBodyPart();
+//			DataSource finishFileR = new FileDataSource(XMLPath  + ProblemName);
+//			messageBodyPart.setDataHandler(new DataHandler(finishFileR));
+//			messageBodyPart.setFileName(ProblemName + "-R");
+//			multipart.addBodyPart(messageBodyPart);
 
 			message.setContent(multipart);
             

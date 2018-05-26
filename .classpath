@@ -6,24 +6,19 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
-		<attributes>
+ 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+ 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="src/email/javax.mail.jar"/>
-	<classpathentry kind="lib" path="jmetal-algorithm-5.5.jar"/>
-	<classpathentry kind="lib" path="jmetal-problem-5.5.jar"/>
-	<classpathentry kind="lib" path="jmetal-core-5.5.jar"/>
-	<classpathentry kind="lib" path="jmetal-exec-5.5.jar"/>
-	<classpathentry kind="lib" path="commons-io-2.6.jar"/>
-	<classpathentry kind="lib" path="commons-lang3-3.1.jar"/>
-	<classpathentry kind="lib" path="commons-math3-3.6.1.jar"/>
+ 		</attributes>
+ 	</classpathentry>
+ 	<classpathentry kind="lib" path="src/email/javax.mail.jar"/>
+ 	<classpathentry kind="lib" path="commons-io-2.6.jar"/>
+ 	<classpathentry kind="lib" path="commons-lang3-3.1.jar"/>
+ 	<classpathentry kind="lib" path="commons-math3-3.6.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

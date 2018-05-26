@@ -160,7 +160,6 @@ public class GUIFinal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				shared.getProblem().setPath(TFBrowse.getText());
 				shared.writeXmlFile(shared.getProblem()); 
-
 				Configuration conf = null;
 				switch (shared.getProblem().getVariablesArray().get(0).getType()) {
 				case "Double":

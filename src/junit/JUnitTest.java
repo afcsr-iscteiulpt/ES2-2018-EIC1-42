@@ -41,21 +41,22 @@ public class JUnitTest {
 		assertNotNull(faq.getFAQSubject());
 		assertNotNull(faq.getMessageFAQ());
 	}
-//
-//	@Test
-//	public void testEmailSender() {
-//		try {
-//			EmailSender faq = new EmailSender(admin.getEmail(), admin.getPassword(), "asdo@aisdha.com", "Problem", admin.getEmail(), "config.xml");
-//			assertNotNull(faq.getOod1mail());
-//			assertNotNull(faq.getPassword());
-//			assertNotNull(faq.getUserMail());
-//			assertNotNull(faq.getProblemName());
-//			assertNotNull(faq.getAdminmail());
-//			assertNotNull(faq.getXMLPath());
-//			faq.start();
-//		} catch (MessagingException e) {
-//		}
-//	}
+
+	@Test
+	public void testEmailSender() {
+		try {
+			SharedClass shared  = new SharedClass();
+			EmailSender faq = new EmailSender(shared, admin.getEmail(), admin.getPassword(), "asdo@aisdha.com", "Problem", admin.getEmail(), "config.xml");
+			assertNotNull(faq.getOod1mail());
+			assertNotNull(faq.getPassword());
+			assertNotNull(faq.getUserMail());
+			assertNotNull(faq.getProblemName());
+			assertNotNull(faq.getAdminmail());
+			assertNotNull(faq.getXMLPath());
+			faq.start();
+		} catch (MessagingException e) {
+		}
+	}
 
 	@Test
 	public void testAdmin() {

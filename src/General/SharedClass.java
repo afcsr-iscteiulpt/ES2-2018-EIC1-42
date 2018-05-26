@@ -212,7 +212,14 @@ public class SharedClass {
 	 * 
 	 * @param Problem p
 	 */
-	public void writeXmlFile(Problem p) {
+	public String writeXmlFile(Problem p) {
+		String date = new SimpleDateFormat("dd-MM-yyyy  HH-mm-ss").format(new Date());
+		
+		System.out.println(date);
+		
+		String problemNameAndDate = p.getName() + " - " + date;
+		
+		String outputfile = administrador.getProblemsDir();
 		try {
 			DocumentBuilderFactory dFact = DocumentBuilderFactory.newInstance();
 			DocumentBuilder build = dFact.newDocumentBuilder();
@@ -306,15 +313,9 @@ public class SharedClass {
 			aTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 			aTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			DOMSource source = new DOMSource(doc);
+		
 			try {
 
-				String date = new SimpleDateFormat("dd-MM-yyyy  HH-mm-ss").format(new Date());
-
-				System.out.println(date);
-
-				String problemNameAndDate = p.getName() + " - " + date;
-
-				String outputfile = administrador.getProblemsDir();
 
 				for (int i = 0; i < getAllFileName(outputfile).length; i++) {
 					if (getAllFileName(outputfile)[i].getName().contains(p.getName() + " - ")) {
@@ -333,6 +334,7 @@ public class SharedClass {
 		} catch (ParserConfigurationException ex) {
 			System.out.println("Error building document");
 		}
+		return outputfile + problemNameAndDate + ".xml";
 	}
 
 	/*

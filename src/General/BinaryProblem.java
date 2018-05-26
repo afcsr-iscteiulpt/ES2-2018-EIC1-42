@@ -67,7 +67,7 @@ public class BinaryProblem  extends AbstractBinaryProblem {
 	public void evaluate(BinarySolution solution) {
 
 
-		if (problema.getPath() != "") { //mudar para a parte do jar
+		if (!problema.getPath().equals("")) { //mudar para a parte do jar
 			evaluateJar(solution);
 		}else {
 			int counterOnes=0;

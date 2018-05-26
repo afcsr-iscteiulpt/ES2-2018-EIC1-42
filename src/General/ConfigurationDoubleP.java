@@ -37,6 +37,7 @@ public class ConfigurationDoubleP extends Configuration{
 	private static String problemType;
 	private static ArrayList<String> alg;
 	private static String path;
+	private static int RUNS; //Usar pra calcular tempo
 
 	public ConfigurationDoubleP(String path, Problem ToRun) {
 		super(path, ToRun);
@@ -44,6 +45,7 @@ public class ConfigurationDoubleP extends Configuration{
 		problemToRun=ToRun;
 		problemType=ToRun.getType();
 		alg=ToRun.getAlgorithms();
+		RUNS = /*problemToRun.getNumberOfDays()*24*60*100 */ 500;
 	}
 
 
@@ -162,7 +164,7 @@ public class ConfigurationDoubleP extends Configuration{
 				.setOutputParetoSetFileName("VAR")
 				.setReferenceFrontDirectory(experimentBaseDirectory+"/referenceFronts")
 				.setIndicatorList(Arrays.asList(new PISAHypervolume<DoubleSolution>()))
-				.setIndependentRuns(5) //default for project
+				.setIndependentRuns(RUNS)
 				.setNumberOfCores(8)
 				.build();
 

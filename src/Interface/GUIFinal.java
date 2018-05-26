@@ -8,6 +8,8 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.zip.ZipFile;
 
@@ -21,6 +23,10 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
 
+import General.Configuration;
+import General.ConfigurationBinaryP;
+import General.ConfigurationDoubleP;
+import General.ConfigurationIntegerP;
 import General.SharedClass;
 import General.Variable;
 
@@ -154,7 +160,36 @@ public class GUIFinal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				shared.getProblem().setPath(TFBrowse.getText());
 				shared.writeXmlFile(shared.getProblem()); 
+
+				Configuration conf = null;
+				switch (shared.getProblem().getVariablesArray().get(0).getType()) {
+				case "Double":
+					conf = new ConfigurationDoubleP(shared.getAdministrador().getExperimentDir(), shared.getProblem());
+					break;
+				case "Integer":
+					conf = new ConfigurationIntegerP(shared.getAdministrador().getExperimentDir(), shared.getProblem());
+					break;
+				case "Binary":
+					conf = new ConfigurationBinaryP(shared.getAdministrador().getExperimentDir(), shared.getProblem());
+					break;
+				default:
+					conf = new Configuration(shared.getAdministrador().getExperimentDir(), shared.getProblem());
+					System.out.println("GUIAlgorithm:: ProblemType Not found");
+					break;
+				}
 				try {
+					Instant time1 = Instant.now();
+					//float time1 = (float)System.currentTimeMillis()/1000;
+					
+					conf.Run();
+					
+					Instant time2 = Instant.now();
+					//float time2 = (float)System.currentTimeMillis()/1000;
+					
+					Duration timeElapsed = Duration.between(time1, time2);
+					System.out.println((float)timeElapsed.toMillis()/1000 +"  segundos");
+					System.out.println((float)timeElapsed.toMinutes()+"  minutos");
+
 					shared.makeMeGraphs();
 					shared.getFileViewer().create_view_LateX();
 					Thread.sleep(300);
@@ -162,7 +197,7 @@ public class GUIFinal extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+
 				shared.setExistingPanel(shared.getNPArray(), 5);
 			}
 		});

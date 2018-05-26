@@ -9,10 +9,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import General.Problem;
 import General.SharedClass;
+import General.Variable;
 
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class GUI {
@@ -64,6 +67,8 @@ public class GUI {
 		ButtonNewProblem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				shared.createNPArray();
+				shared.setProblem(new Problem("", "", "", new ArrayList<Variable>(), new ArrayList<String>(), 0, "",
+			new ArrayList<String>()));
 				shared.setExistingPanel(shared.getNPArray(), 0);
 			}
 		});

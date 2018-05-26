@@ -54,7 +54,6 @@ public class GUIFinal extends JFrame {
 	private JTextArea TAAlgorit;
 	private JTextField TFBrowse;
 	private JButton ButtonBrowse;
-	private JProgressBar ProgressBarFinal;
 
 	public GUIFinal(SharedClass shared) {
 		this.shared = shared;
@@ -261,11 +260,6 @@ public class GUIFinal extends JFrame {
 		}
 		contentPane.add(TFBrowse);
 		
-		ProgressBarFinal = new JProgressBar();
-		ProgressBarFinal.setStringPainted(true);
-		ProgressBarFinal.setBounds(120, 396, 370, 37);
-		contentPane.add(ProgressBarFinal);
-		
 				JLabel LabelLogo = new JLabel();
 				LabelLogo.setBounds(0, 0, 700, 478);
 				LabelLogo.setIcon(imageIcon);
@@ -368,7 +362,5 @@ public class GUIFinal extends JFrame {
 	public JPanel getContentPane() {
 		return contentPane;
 	}
-	public JProgressBar getProgressBar(){
-		return ProgressBarFinal;
-	}
+
 }

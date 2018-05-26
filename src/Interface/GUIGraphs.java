@@ -57,6 +57,7 @@ public class GUIGraphs extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				shared.setExistingPanel(shared.getArrayOfPanels(), 0);
 
 			}

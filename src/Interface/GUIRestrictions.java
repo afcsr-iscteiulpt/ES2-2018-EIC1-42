@@ -33,7 +33,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class GUIRestrictions extends JFrame {
-//	
+//
 	private SharedClass shared;
 	private JPanel contentPane;
 	private JTextField TFName;

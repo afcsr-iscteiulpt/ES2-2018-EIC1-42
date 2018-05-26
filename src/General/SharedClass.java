@@ -68,7 +68,7 @@ public class SharedClass {
 																			// ;
 																			// description
 																			// varArray
-																			//  AlgorithmArray
+																			// AlgorithmArray
 																			// DaysToWait
 										 									// Path
 																			// Objectives Array

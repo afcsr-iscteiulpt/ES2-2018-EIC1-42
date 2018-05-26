@@ -39,31 +39,7 @@ public class IntegerProblem extends AbstractIntegerProblem{
 	}
 
 	@Override
-	public void evaluate(IntegerSolution solution) {
-		
-		if (!problema.getPath().equals("")) { //mudar para a parte do jar
-			evaluateJar(solution);
-		}else { 
-			double[] fx = new double[getNumberOfObjectives()];
-			int[] x = new int[getNumberOfVariables()];
-			for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-				x[i] = solution.getVariableValue(i) ;
-			}
-
-			for(int i = 0 ; i < solution.getNumberOfObjectives();i++) {
-				fx[i] = 0;
-				for (int var = 0; var < solution.getNumberOfVariables(); var++) {
-					fx[i] += Math.abs(x[i]); // Example for testing
-				}
-				solution.setObjective(i, fx[i]);
-			}
-		}
-		// TODO Auto-generated method stub
-		// Ir buscar e correr o jar com uma função de evaluate aqui ...
-		//sol.setObjective(arg0, arg1);
-	}
-
-	public void evaluateJar(IntegerSolution solution){
+	public void evaluate(IntegerSolution solution){
 		String solutionString ="";
 		String evaluationResultString ="";
 		for (int i = 0; i < solution.getNumberOfVariables(); i++) {
@@ -71,7 +47,7 @@ public class IntegerProblem extends AbstractIntegerProblem{
 		}
 		try {
 			String line;
-			Process p = Runtime.getRuntime().exec("java -jar " + problema.getPath() + " " + solutionString);
+			Process p = Runtime.getRuntime().exec("java -jar \"" + problema.getPath()  + "\" " + solutionString);
 			BufferedReader brinput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			while ((line = brinput.readLine()) != null) {
 				evaluationResultString+=line;

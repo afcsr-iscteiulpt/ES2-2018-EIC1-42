@@ -63,41 +63,16 @@ public class BinaryProblem  extends AbstractBinaryProblem {
 		return s.length - i;
 	} 
 	//--------<changed>------------
+
 	@Override
-	public void evaluate(BinarySolution solution) {
-
-
-		if (!problema.getPath().equals("")) { //mudar para a parte do jar
-			evaluateJar(solution);
-		}else {
-			int counterOnes=0;
-			int counterZeroes=0;
-			
-			BitSet bitset = solution.getVariableValue(0) ;
-			for (int i = 0; i < bitset.length(); i++) {
-				if (bitset.get(i)) {
-					counterOnes++;
-				} else {
-					counterZeroes++;
-				}
-			}
-			// OneZeroMax is a maximization problem: multiply by -1 to minimize
-			solution.setObjective(0, -1.0 * counterOnes);
-			solution.setObjective(1, -1.0 * counterZeroes);		  
-		}
-		// TODO Auto-generated method stub
-		// Ir buscar e correr o jar com uma fun��o de evaluate aqui ...
-		//sol.setObjective(arg0, arg1);
-	}
-
-	public void evaluateJar(BinarySolution solution){
+	public void evaluate(BinarySolution solution){
 		String solutionString ="";
 		String evaluationResultString ="";
 		BitSet bitset = solution.getVariableValue(0) ;
 		solutionString = bitset.toString();
 		try {
 			String line;
-			Process p = Runtime.getRuntime().exec("java -jar " + problema.getPath() + " " + solutionString);
+			Process p = Runtime.getRuntime().exec("java -jar \"" + problema.getPath()  + "\" " + solutionString);
 			BufferedReader brinput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			while ((line = brinput.readLine()) != null) {
 				evaluationResultString+=line;

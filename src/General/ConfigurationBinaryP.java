@@ -37,7 +37,7 @@ public class ConfigurationBinaryP extends Configuration{
 	private static ArrayList<String> alg;
 	private static String path;
 	private static final int INDEPENDENT_RUNS_NUMBER = 5;
-	private static final int MAX_EVALUATIONS = 3000;
+	private static final int MAX_EVALUATIONS = 5;
 
 	
 	public ConfigurationBinaryP(String path, Problem ToRun) {

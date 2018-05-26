@@ -283,29 +283,6 @@ public class GUIAlgorithms extends JFrame {
 				}
 				shared.setReviewProblem();
 				shared.setExistingPanel(shared.getNPArray(), 4);
-
-				Configuration conf = null;
-				switch (shared.getProblem().getVariablesArray().get(0).getType()) {
-				case "Double":
-					conf = new ConfigurationDoubleP(shared.getAdministrador().getExperimentDir(), shared.getProblem());
-					break;
-				case "Integer":
-					conf = new ConfigurationIntegerP(shared.getAdministrador().getExperimentDir(), shared.getProblem());
-					break;
-				case "Binary":
-					conf = new ConfigurationBinaryP(shared.getAdministrador().getExperimentDir(), shared.getProblem());
-					break;
-				default:
-					conf = new Configuration(shared.getAdministrador().getExperimentDir(), shared.getProblem());
-					System.out.println("GUIAlgorithm:: ProblemType Not found");
-					break;
-				}
-				try {
-					conf.Run();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 			}
 		});
 		contentPane.add(BotaoNext);

@@ -19,13 +19,13 @@ public class FileViewer {
         ProcessBuilder builder = new ProcessBuilder("cmd.exe","/c", "cd " + latexpath + " && pdflatex " + filename + ".tex");
             builder.redirectErrorStream(true);
             Process p = builder.start();
-            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line;
-            while (true) {
-                line = r.readLine();
-                if (line == null) { break; }
-                System.out.println(line);
-            }	
+//            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+//            String line;
+//            while (true) {
+//                line = r.readLine();
+//                if (line == null) { break; }
+//                System.out.println(line);
+//            }	
 	}
 	
 	public static void viewLateXPDF(String latexpath, String filename) throws IOException {
@@ -33,13 +33,13 @@ public class FileViewer {
 		ProcessBuilder builder = new ProcessBuilder("cmd.exe","/c", "cd " + latexpath + " && start " + filename + ".pdf");
             builder.redirectErrorStream(true);
             Process p = builder.start();
-            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line;
-            while (true) {
-                line = r.readLine();
-                if (line == null) { break; }
-                System.out.println(line);
-            }
+//            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+//            String line;
+//            while (true) {
+//                line = r.readLine();
+//                if (line == null) { break; }
+//                System.out.println(line);
+//            }
 	}
 	 
 	public void create_view_LateX() throws IOException {

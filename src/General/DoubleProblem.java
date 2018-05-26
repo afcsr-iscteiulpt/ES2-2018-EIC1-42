@@ -37,31 +37,32 @@ public class DoubleProblem extends AbstractDoubleProblem{
 		setUpperLimit(upperLimit);
 	}
 
-	@Override
-	public void evaluate(DoubleSolution solution) {
-		// TODO Auto-generated method stub
-		// Ir buscar e correr o jar com uma fun��o de evaluate aqui ...
-		//sol.setObjective(arg0, arg1);
-		if (!problema.getPath().equals("")) { //mudar para a parte do jar
-			evaluateJar(solution);
-		}else { 
-			double[] fx = new double[getNumberOfObjectives()];
-			double[] x = new double[getNumberOfVariables()];
-			for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-				x[i] = solution.getVariableValue(i) ;
-			}
-			
-			for(int i = 0 ; i < solution.getNumberOfObjectives();i++) {
-				fx[i] = 0;
-				for (int var = 0; var < solution.getNumberOfObjectives(); var++) {
-					fx[i] += Math.abs(x[i]+Math.random()*10); // Example for testing
-				}
-				solution.setObjective(i, fx[i]);
-			}	
-		}
-	}
+//	@Override
+//	public void evaluate(DoubleSolution solution) {
+//		// TODO Auto-generated method stub
+//		// Ir buscar e correr o jar com uma fun��o de evaluate aqui ...
+//		//sol.setObjective(arg0, arg1);
+//		if (!problema.getPath().equals("")) { //mudar para a parte do jar
+//			evaluateJar(solution);
+//		}else { 
+//			double[] fx = new double[getNumberOfObjectives()];
+//			double[] x = new double[getNumberOfVariables()];
+//			for (int i = 0; i < solution.getNumberOfVariables(); i++) {
+//				x[i] = solution.getVariableValue(i) ;
+//			}
+//			
+//			for(int i = 0 ; i < solution.getNumberOfObjectives();i++) {
+//				fx[i] = 0;
+//				for (int var = 0; var < solution.getNumberOfObjectives(); var++) {
+//					fx[i] += Math.abs(x[i]+Math.random()*10); // Example for testing
+//				}
+//				solution.setObjective(i, fx[i]);
+//			}	
+//		}
+//	}
 	
-	public void evaluateJar(DoubleSolution solution){
+	@Override
+	public void evaluate(DoubleSolution solution){
 		String solutionString ="";
 		String evaluationResultString ="";
 		for (int i = 0; i < solution.getNumberOfVariables(); i++) {
@@ -80,9 +81,13 @@ public class DoubleProblem extends AbstractDoubleProblem{
 		catch (Exception err) {
 			err.printStackTrace();
 		}
+//		System.out.println(evaluationResultString);
 		String[] individualEvaluationCriteria = evaluationResultString.split("\\s+");
+//		System.out.println(individualEvaluationCriteria[0].toString());
+//		System.out.println(individualEvaluationCriteria[1].toString());
 		// It is assumed that all evaluated criteria are returned in the same result string
 		for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
+//			solution.setObjective(i, Double.parseDouble(individualEvaluationCriteria[i]));
 			solution.setObjective(i, Double.parseDouble(individualEvaluationCriteria[i]));
 		}	    
 	}

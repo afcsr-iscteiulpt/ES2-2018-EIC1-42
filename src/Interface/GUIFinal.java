@@ -165,6 +165,7 @@ public class GUIFinal extends JFrame {
 				shared.writeXmlFile(shared.getProblem()); 
 				EmailSender esender;
 				try {
+					//
 					 esender = new EmailSender(shared.getAdministrador().getEmail(), shared.getAdministrador().getPassword(), shared.getProblem().getEmail(),
 							shared.getProblem().getName(), shared.getAdministrador().getEmail(), shared.getAdministrador().getProblemsDir());
 				} catch (AddressException e2) {

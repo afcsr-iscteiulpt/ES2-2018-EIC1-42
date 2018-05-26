@@ -1,6 +1,5 @@
 package General;
 
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.BitSet;
@@ -8,7 +7,7 @@ import java.util.BitSet;
 import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
 
-public class BinaryProblem  extends AbstractBinaryProblem {
+public class BinaryProblem extends AbstractBinaryProblem {
 
 	private Problem problema;
 	private int bits;
@@ -16,26 +15,49 @@ public class BinaryProblem  extends AbstractBinaryProblem {
 	private int upper;
 	private int lower;
 
-	public BinaryProblem(Problem problema,int num_var) {
+	/**
+	 * 
+	 * Construtor do BinaryProblem
+	 * 
+	 * @param problema
+	 * @param num_var
+	 */
+
+	public BinaryProblem(Problem problema, int num_var) {
 		this(problema.getVariablesArray().size());
 		this.bits = problema.getVariablesArray().get(0).getValue().length();
 		createBinaryProblem(problema);
 	}
+
+	/**
+	 * 
+	 * Construtor do BinaryProblem
+	 * 
+	 * @param num_Var
+	 */
 
 	public BinaryProblem(int num_Var) {
 		setNumberOfVariables(num_Var);
 
 	}
 
+	/**
+	 * 
+	 * Cria��o do BinaryProblem
+	 * 
+	 * @param problema
+	 */
+
 	public void createBinaryProblem(Problem problema) {
 		this.problema = problema;
 
-		setNumberOfObjectives(problema.getObjNumber());//ver objetivos (perguntar ao utilizador) !!conferir com a fun��o evaluate!! default:2
+		setNumberOfObjectives(problema.getObjNumber());// ver objetivos (perguntar ao utilizador) !!conferir com a
+														// fun��o evaluate!! default:2
 
 		setName(problema.getName());
 	}
 
-	//--------<changed>------------
+	// --------<changed>------------
 	private boolean withinBounds(String value) {
 		int testValue = binaryToInt(value);
 		if (testValue < upper && testValue > lower)
@@ -47,7 +69,7 @@ public class BinaryProblem  extends AbstractBinaryProblem {
 		char[] s = value.toCharArray();
 		int intValue = 0;
 		for (int i = 0; i < s.length; i++) {
-			intValue += Integer.parseInt("s[i]")*(s.length - 1 - i);
+			intValue += Integer.parseInt("s[i]") * (s.length - 1 - i);
 		}
 		return intValue;
 	}
@@ -61,31 +83,32 @@ public class BinaryProblem  extends AbstractBinaryProblem {
 			i++;
 		}
 		return s.length - i;
-	} 
-	//--------<changed>------------
+	}
+	// --------<changed>------------
 
 	@Override
-	public void evaluate(BinarySolution solution){
-		String solutionString ="";
-		String evaluationResultString ="";
-		BitSet bitset = solution.getVariableValue(0) ;
+	public void evaluate(BinarySolution solution) {
+		String solutionString = "";
+		String evaluationResultString = "";
+		BitSet bitset = solution.getVariableValue(0);
 		solutionString = bitset.toString();
 		try {
 			String line;
-			Process p = Runtime.getRuntime().exec("java -jar " + problema.getPath()  + "  " + solutionString);
+
+			Process p = Runtime.getRuntime().exec("java -jar " + problema.getPath() + " " + solutionString);
 			BufferedReader brinput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			while ((line = brinput.readLine()) != null) {
-				evaluationResultString+=line;
+				evaluationResultString += line;
 			}
 			brinput.close();
 			p.waitFor();
-		}
-		catch (Exception err) {
+		} catch (Exception err) {
 			err.printStackTrace();
 		}
 
 		String[] individualEvaluationCriteria = evaluationResultString.split("\\s+");
-		// It is assumed that all evaluated criteria are returned in the same result string
+		// It is assumed that all evaluated criteria are returned in the same result
+		// string
 		for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
 			solution.setObjective(i, Double.parseDouble(individualEvaluationCriteria[i]));
 		}

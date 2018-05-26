@@ -42,7 +42,8 @@ public class DoubleProblem extends AbstractDoubleProblem{
 //		// TODO Auto-generated method stub
 //		// Ir buscar e correr o jar com uma fun��o de evaluate aqui ...
 //		//sol.setObjective(arg0, arg1);
-//		if (!problema.getPath().equals("/Users/albertoramos/git/ES2-2018-EIC1-42/jars/Kursawe.jar")) { //mudar para a parte do jar
+
+//		if (!problema.getPath().equals("")) { //mudar para a parte do jar
 //			evaluateJar(solution);
 //		}else { 
 //			double[] fx = new double[getNumberOfObjectives()];
@@ -60,7 +61,7 @@ public class DoubleProblem extends AbstractDoubleProblem{
 //			}	
 //		}
 //	}
-//	
+	
 	@Override
 	public void evaluate(DoubleSolution solution){
 		String solutionString ="";
@@ -81,10 +82,15 @@ public class DoubleProblem extends AbstractDoubleProblem{
 		catch (Exception err) {
 			err.printStackTrace();
 		}
+//		System.out.println(evaluationResultString);
 		String[] individualEvaluationCriteria = evaluationResultString.split("\\s+");
+//		System.out.println(individualEvaluationCriteria[0].toString());
+//		System.out.println(individualEvaluationCriteria[1].toString());
 		// It is assumed that all evaluated criteria are returned in the same result string
 		for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
-			solution.setObjective(i, 2.0);
+
+//			solution.setObjective(i, Double.parseDouble(individualEvaluationCriteria[i]));
+			solution.setObjective(i, Double.parseDouble(individualEvaluationCriteria[i]));
 		}	    
 	}
 }

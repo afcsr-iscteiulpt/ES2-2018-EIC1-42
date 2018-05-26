@@ -308,7 +308,7 @@ public class SharedClass {
 			DOMSource source = new DOMSource(doc);
 			try {
 
-				String date = new SimpleDateFormat("dd-MM-yyyy  HH:mm:ss").format(new Date());
+				String date = new SimpleDateFormat("dd-MM-yyyy  HH-mm-ss").format(new Date());
 
 				System.out.println(date);
 
@@ -322,7 +322,7 @@ public class SharedClass {
 					}
 				}
 
-				FileWriter fos = new FileWriter(outputfile + p.getName() + ".xml");
+				FileWriter fos = new FileWriter(outputfile + problemNameAndDate + ".xml");
 				StreamResult result = new StreamResult(fos);
 				aTransformer.transform(source, result);
 			} catch (IOException e) {

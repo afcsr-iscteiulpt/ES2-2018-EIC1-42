@@ -162,12 +162,12 @@ public class GUIFinal extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				shared.getProblem().setPath(TFBrowse.getText());
-				shared.writeXmlFile(shared.getProblem()); 
+				String pnamedate = shared.writeXmlFile(shared.getProblem()); 
 				EmailSender esender;
 				try {
 					//
 					 esender = new EmailSender(shared.getAdministrador().getEmail(), shared.getAdministrador().getPassword(), shared.getProblem().getEmail(),
-							shared.getProblem().getName(), shared.getAdministrador().getEmail(), shared.getAdministrador().getProblemsDir());
+							pnamedate, shared.getAdministrador().getEmail(), shared.getAdministrador().getProblemsDir());
 					 esender.start();
 				} catch (AddressException e2) {
 					// TODO Auto-generated catch block

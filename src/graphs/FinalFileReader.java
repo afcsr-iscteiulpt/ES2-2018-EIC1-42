@@ -9,11 +9,26 @@ public class FinalFileReader {
 
 	ArrayList<ArrayList<Double>> values = new ArrayList<ArrayList<Double>>();
 
+	/**
+	 * 
+	 * Construtor da classe FinalFileReader
+	 * 
+	 * @param totalValues
+	 */
+
 	public FinalFileReader(ArrayList<ArrayList<Double>> totalValues) {
 		this.values = totalValues;
 	}
 
-	public void values(File file) throws FileNotFoundException{
+	/**
+	 * 
+	 * Esta função lê o ficheir File e retira os valores otimizados do mesmo
+	 * 
+	 * @param file
+	 * @throws FileNotFoundException
+	 */
+
+	public void values(File file) throws FileNotFoundException {
 		Scanner s = new Scanner(file);
 		while (s.hasNextLine()) {
 			ArrayList<Double> graph = new ArrayList<Double>();

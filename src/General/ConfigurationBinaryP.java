@@ -31,7 +31,7 @@ import org.uma.jmetal.util.experiment.component.GenerateReferenceParetoFront;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
-public class ConfigurationBinaryP extends Configuration{
+public class ConfigurationBinaryP extends Configuration {
 	private static Problem problemToRun;
 	private static String problemType;
 	private static ArrayList<String> alg;
@@ -39,130 +39,123 @@ public class ConfigurationBinaryP extends Configuration{
 	private static final int INDEPENDENT_RUNS_NUMBER = 5;
 	private static final int MAX_EVALUATIONS = 5;
 
-	
+	/**
+	 * 
+	 * Construtor da classe ConfigurationBinaryP
+	 * 
+	 * @param path
+	 * @param ToRun
+	 */
+
 	public ConfigurationBinaryP(String path, Problem ToRun) {
 		super(path, ToRun);
-		this.path=path;
-		problemToRun=ToRun;
-		problemType=ToRun.getType();
-		alg=ToRun.getAlgorithms();
+		this.path = path;
+		problemToRun = ToRun;
+		problemType = ToRun.getType();
+		alg = ToRun.getAlgorithms();
 	}
-	
+
 	static List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> configureAlgorithmList(
-	          List<ExperimentProblem<BinarySolution>> problemList) {
-	    List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> algorithms = new ArrayList<>();
+			List<ExperimentProblem<BinarySolution>> problemList) {
+		List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> algorithms = new ArrayList<>();
 
-	    for (int i = 0; i < problemList.size(); i++) {
-	    	for ( int j = 0 ; j < alg.size(); j++) {
-	    		switch(alg.get(j)) {
-	    		case "NSGAII":
-	    			Algorithm<List<BinarySolution>> algorithmnsgaii = new NSGAIIBuilder<>(
-	    					problemList.get(i).getProblem(),
-	    					new SinglePointCrossover(1.0),
-	    					new BitFlipMutation(1.0 / ((BinaryProblem) problemList.get(i).getProblem()).getNumberOfBits(0)))
-	    			.setMaxEvaluations(MAX_EVALUATIONS)
-	    			.setPopulationSize(100)
-	    			.build();
-	    			algorithms.add(new ExperimentAlgorithm<>(algorithmnsgaii, "NSGAII", problemList.get(i).getTag()));
-	    			break;
+		for (int i = 0; i < problemList.size(); i++) {
+			for (int j = 0; j < alg.size(); j++) {
+				switch (alg.get(j)) {
+				case "NSGAII":
+					Algorithm<List<BinarySolution>> algorithmnsgaii = new NSGAIIBuilder<>(
+							problemList.get(i).getProblem(), new SinglePointCrossover(1.0),
+							new BitFlipMutation(
+									1.0 / ((BinaryProblem) problemList.get(i).getProblem()).getNumberOfBits(0)))
+											.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(100).build();
+					algorithms.add(new ExperimentAlgorithm<>(algorithmnsgaii, "NSGAII", problemList.get(i).getTag()));
+					break;
 
-	    		case "SMSEMOA":
-	    			Algorithm<List<BinarySolution>> algorithmsmsemoa = new SMSEMOABuilder<>(
-	    					problemList.get(i).getProblem(),
-	    					new SinglePointCrossover(1.0),
-	    					new BitFlipMutation(1.0 / ((BinaryProblem) problemList.get(i).getProblem()).getNumberOfBits(0)))
-	    			.setMaxEvaluations(MAX_EVALUATIONS)
-	    			.build();      
-	    			algorithms.add(new ExperimentAlgorithm<>(algorithmsmsemoa, "SMSEMOA", problemList.get(i).getTag()));
-	    			break;
+				case "SMSEMOA":
+					Algorithm<List<BinarySolution>> algorithmsmsemoa = new SMSEMOABuilder<>(
+							problemList.get(i).getProblem(), new SinglePointCrossover(1.0),
+							new BitFlipMutation(
+									1.0 / ((BinaryProblem) problemList.get(i).getProblem()).getNumberOfBits(0)))
+											.setMaxEvaluations(MAX_EVALUATIONS).build();
+					algorithms.add(new ExperimentAlgorithm<>(algorithmsmsemoa, "SMSEMOA", problemList.get(i).getTag()));
+					break;
 
-	    		case "MOCell":
-	    			Algorithm<List<BinarySolution>> algorithmmocell = new MOCellBuilder<>(
-	    					problemList.get(i).getProblem(),
-	    					new SinglePointCrossover(1.0), new BitFlipMutation(1.0 / ((BinaryProblem) problemList.get(i).getProblem()).getNumberOfBits(0)))
-	    			.setMaxEvaluations(MAX_EVALUATIONS)
-	    			.build();
-	    			algorithms.add(new ExperimentAlgorithm<>(algorithmmocell, "MOCell", problemList.get(i).getTag()));
-	    			break;
+				case "MOCell":
+					Algorithm<List<BinarySolution>> algorithmmocell = new MOCellBuilder<>(
+							problemList.get(i).getProblem(), new SinglePointCrossover(1.0),
+							new BitFlipMutation(
+									1.0 / ((BinaryProblem) problemList.get(i).getProblem()).getNumberOfBits(0)))
+											.setMaxEvaluations(MAX_EVALUATIONS).build();
+					algorithms.add(new ExperimentAlgorithm<>(algorithmmocell, "MOCell", problemList.get(i).getTag()));
+					break;
 
-	    		case "MOCH":
-	    			Algorithm<List<BinarySolution>> algorithmmochc = new MOCHCBuilder(
-	    					(BinaryProblem) problemList.get(i).getProblem())
-	    			.setMaxEvaluations(MAX_EVALUATIONS)
-	    			.setCrossover(new HUXCrossover(1.0))
-	    			.setNewGenerationSelection(new RankingAndCrowdingSelection<BinarySolution>(100))
-	    			.setCataclysmicMutation(new BitFlipMutation(0.35))
-	    			.setParentSelection(new RandomSelection<BinarySolution>())
-	    			.setEvaluator(new SequentialSolutionListEvaluator<BinarySolution>())
-	    			.build();
-	    			algorithms.add(new ExperimentAlgorithm<>(algorithmmochc, "MOCH", problemList.get(i).getTag()));
-	    			break;
+				case "MOCH":
+					Algorithm<List<BinarySolution>> algorithmmochc = new MOCHCBuilder(
+							(BinaryProblem) problemList.get(i).getProblem()).setMaxEvaluations(MAX_EVALUATIONS)
+									.setCrossover(new HUXCrossover(1.0))
+									.setNewGenerationSelection(new RankingAndCrowdingSelection<BinarySolution>(100))
+									.setCataclysmicMutation(new BitFlipMutation(0.35))
+									.setParentSelection(new RandomSelection<BinarySolution>())
+									.setEvaluator(new SequentialSolutionListEvaluator<BinarySolution>()).build();
+					algorithms.add(new ExperimentAlgorithm<>(algorithmmochc, "MOCH", problemList.get(i).getTag()));
+					break;
 
-	    		case "PAES":
-	    			Algorithm<List<BinarySolution>> algorithmpaes = new PAESBuilder<>(
-	    					problemList.get(i).getProblem())
-	    			.setMaxEvaluations(MAX_EVALUATIONS)
-	    			.setArchiveSize(100)
-	    			.setBiSections(2)
-	    			.setMutationOperator(new BitFlipMutation(1.0 / ((BinaryProblem) problemList.get(i).getProblem()).getNumberOfBits(0)))
-	    			.build();
-	    			algorithms.add(new ExperimentAlgorithm<>(algorithmpaes, "PAES", problemList.get(i).getTag()));
-	    			break;
+				case "PAES":
+					Algorithm<List<BinarySolution>> algorithmpaes = new PAESBuilder<>(problemList.get(i).getProblem())
+							.setMaxEvaluations(MAX_EVALUATIONS).setArchiveSize(100).setBiSections(2)
+							.setMutationOperator(new BitFlipMutation(
+									1.0 / ((BinaryProblem) problemList.get(i).getProblem()).getNumberOfBits(0)))
+							.build();
+					algorithms.add(new ExperimentAlgorithm<>(algorithmpaes, "PAES", problemList.get(i).getTag()));
+					break;
 
-	    		case "RandomSearch":
-	    			Algorithm<List<BinarySolution>> algorithmrandomsearch = new RandomSearchBuilder<>(
-	    					problemList.get(i).getProblem())
-	    			.setMaxEvaluations(MAX_EVALUATIONS)
-	    			.build();
-	    			algorithms.add(new ExperimentAlgorithm<>(algorithmrandomsearch, "RandomSearch", problemList.get(i).getTag()));
-	    			break;
+				case "RandomSearch":
+					Algorithm<List<BinarySolution>> algorithmrandomsearch = new RandomSearchBuilder<>(
+							problemList.get(i).getProblem()).setMaxEvaluations(MAX_EVALUATIONS).build();
+					algorithms.add(new ExperimentAlgorithm<>(algorithmrandomsearch, "RandomSearch",
+							problemList.get(i).getTag()));
+					break;
 
-	    		case "SPEA2":
-	    			Algorithm<List<BinarySolution>> algorithmspea2 = new SPEA2Builder<>(
-	    					problemList.get(i).getProblem(),
-	    					new SinglePointCrossover(1.0),
-	    					new BitFlipMutation(1.0 / ((BinaryProblem) problemList.get(i).getProblem()).getNumberOfBits(0)))
-	    			.setMaxIterations(MAX_EVALUATIONS)
-	    			.build();
-	    			algorithms.add(new ExperimentAlgorithm<>(algorithmspea2, "SPEA2", problemList.get(i).getTag()));
+				case "SPEA2":
+					Algorithm<List<BinarySolution>> algorithmspea2 = new SPEA2Builder<>(problemList.get(i).getProblem(),
+							new SinglePointCrossover(1.0),
+							new BitFlipMutation(
+									1.0 / ((BinaryProblem) problemList.get(i).getProblem()).getNumberOfBits(0)))
+											.setMaxIterations(MAX_EVALUATIONS).build();
+					algorithms.add(new ExperimentAlgorithm<>(algorithmspea2, "SPEA2", problemList.get(i).getTag()));
 
-	    		default:
-	    			System.out.println("Algorithm not found/adjusted to problem type");
-	    			break;
-	    		}
-	    	}
-	    }
-	    return algorithms;
+				default:
+					System.out.println("Algorithm not found/adjusted to problem type");
+					break;
+				}
+			}
+		}
+		return algorithms;
 	}
 
 	@Override
 	public void Run() throws IOException {
-//		String experimentBaseDirectory = "experimentBaseDirectory";
 		String experimentBaseDirectory = path;
-		
-	    List<ExperimentProblem<BinarySolution>> problemList = new ArrayList<>();
-	    problemList.add(new ExperimentProblem<>(new BinaryProblem(problemToRun,problemToRun.getVariablesArray().size()/*Confirm pls*/)));
 
-	    List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> algorithmList =
-	            configureAlgorithmList(problemList);
+		List<ExperimentProblem<BinarySolution>> problemList = new ArrayList<>();
+		problemList.add(new ExperimentProblem<>(
+				new BinaryProblem(problemToRun, problemToRun.getVariablesArray().size()/* Confirm pls */)));
 
-	    Experiment<BinarySolution, List<BinarySolution>> experiment =
-	        new ExperimentBuilder<BinarySolution, List<BinarySolution>>("ExperimentsBinary")
-	            .setAlgorithmList(algorithmList)
-	            .setProblemList(problemList)
-	            .setExperimentBaseDirectory(experimentBaseDirectory)
-	            .setOutputParetoFrontFileName("FUN")
-	            .setOutputParetoSetFileName("VAR")
-	            .setReferenceFrontDirectory(experimentBaseDirectory+"/referenceFronts")
-	            .setIndicatorList(Arrays.asList(new PISAHypervolume<BinarySolution>()))
-	            .setIndependentRuns(INDEPENDENT_RUNS_NUMBER)
-	            .setNumberOfCores(4)
-	            .build();
+		List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> algorithmList = configureAlgorithmList(
+				problemList);
 
-	    new ExecuteAlgorithms<>(experiment).run();
-	    new GenerateReferenceParetoFront(experiment).run();
-	    new ComputeQualityIndicators<>(experiment).run() ;
-	    new GenerateLatexTablesWithStatistics(experiment).run() ;
-	    new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(1).run() ;
+		Experiment<BinarySolution, List<BinarySolution>> experiment = new ExperimentBuilder<BinarySolution, List<BinarySolution>>(
+				"ExperimentsBinary").setAlgorithmList(algorithmList).setProblemList(problemList)
+						.setExperimentBaseDirectory(experimentBaseDirectory).setOutputParetoFrontFileName("FUN")
+						.setOutputParetoSetFileName("VAR")
+						.setReferenceFrontDirectory(experimentBaseDirectory + "/referenceFronts")
+						.setIndicatorList(Arrays.asList(new PISAHypervolume<BinarySolution>()))
+						.setIndependentRuns(INDEPENDENT_RUNS_NUMBER).setNumberOfCores(4).build();
+
+		new ExecuteAlgorithms<>(experiment).run();
+		new GenerateReferenceParetoFront(experiment).run();
+		new ComputeQualityIndicators<>(experiment).run();
+		new GenerateLatexTablesWithStatistics(experiment).run();
+		new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(1).run();
 	};
 }

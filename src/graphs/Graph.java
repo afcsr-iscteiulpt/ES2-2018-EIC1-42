@@ -9,16 +9,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class Graph extends JPanel{
-	
+public class Graph extends JPanel {
+
 	private ArrayList<ArrayList<Double>> values = new ArrayList<ArrayList<Double>>();
 	private String problemTag;
-	
+
 	private Color bottomColor;
 
-
 	/**
-	 *Dado um array de arrays em que cada um destes ï¿½ um resultado da optimizaï¿½ï¿½o este faz a representaï¿½ï¿½o do mesmo
+	 * Dado um array de arrays em que cada um destes é um resultado da optimização
+	 * este faz a representação do mesmo
 	 * 
 	 * @param values
 	 */
@@ -26,7 +26,7 @@ public class Graph extends JPanel{
 		this.values = values;
 		construct();
 	}
-	
+
 	public Graph(ArrayList<ArrayList<Double>> values, String problem) {
 		this.values = values;
 		this.problemTag = problem;
@@ -42,19 +42,19 @@ public class Graph extends JPanel{
 
 		JPanel fillW = new JPanel();
 		objective.add(fillW, BorderLayout.WEST);
-		
+
 		PanelGraph graph = new PanelGraph(values);
 		objective.add(graph, BorderLayout.CENTER);
-		
+
 		JPanel fillE = new JPanel();
 		objective.add(fillE, BorderLayout.EAST);
 
 		JPanel southpanel = new JPanel();
 		southpanel.setLayout(new BorderLayout());
-		
+
 		JLabel problem = new JLabel("Problem");
-		
-		if(problem == null)
+
+		if (problem == null)
 			problem.setText("Problem");
 		else
 			problem.setText(problemTag);
@@ -65,8 +65,8 @@ public class Graph extends JPanel{
 
 		JPanel collumHolder = new JPanel();
 		if (bottomColor == null) {
-			collumHolder.setBackground(new Color(220,220,220));
-		}else {
+			collumHolder.setBackground(new Color(220, 220, 220));
+		} else {
 			collumHolder.setBackground(bottomColor);
 		}
 
@@ -75,5 +75,5 @@ public class Graph extends JPanel{
 		objective.add(southpanel, BorderLayout.SOUTH);
 		this.add(objective);
 	}
-	
+
 }

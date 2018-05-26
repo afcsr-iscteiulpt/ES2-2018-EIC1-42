@@ -26,22 +26,34 @@ public class Configuration {
 	private static Problem problemToRun;
 	private static String problemType;
 	private static String alg;
- 
+
+	/**
+	 * 
+	 * Construtor de uma configuração (classe mãe das restantes configurações
+	 * 
+	 * @param path
+	 * @param ToRun
+	 */
+
 	public Configuration(String path, Problem ToRun) {
-		problemToRun=ToRun;
-		problemType=ToRun.getType();
+		problemToRun = ToRun;
+		problemType = ToRun.getType();
 		alg = ToRun.getAlgorithms().toString();
 	}
 
+	/**
+	 * Função executada em caso de erro
+	 * 
+	 * @throws IOException
+	 */
 	public void Run() throws IOException {
 		System.out.println("Configuration:: use a Override especific configuration**.run");
 	}
-	
+
 	public String getConfString() {
-		return ("" + problemToRun.stringConvert() + " algorithm: " + alg + " ... type : "+problemType);
+		return ("" + problemToRun.stringConvert() + " algorithm: " + alg + " ... type : " + problemType);
 	}
 
 }
 
-	//TODO built a configuration for integer/double/binary problems
-	
+// TODO built a configuration for integer/double/binary problems

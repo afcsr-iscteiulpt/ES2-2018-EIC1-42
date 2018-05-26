@@ -67,9 +67,9 @@ public class BinaryProblem  extends AbstractBinaryProblem {
 	public void evaluate(BinarySolution solution) {
 
 
-//		if (this.problema.getAlgorithms()!= null) { //mudar para a parte do jar
-//			evaluateJar(solution);
-//		}else {
+		if (problema.getPath() != null) { //mudar para a parte do jar
+			evaluateJar(solution);
+		}else {
 			int counterOnes=0;
 			int counterZeroes=0;
 			
@@ -84,7 +84,7 @@ public class BinaryProblem  extends AbstractBinaryProblem {
 			// OneZeroMax is a maximization problem: multiply by -1 to minimize
 			solution.setObjective(0, -1.0 * counterOnes);
 			solution.setObjective(1, -1.0 * counterZeroes);		  
-//		}
+		}
 		// TODO Auto-generated method stub
 		// Ir buscar e correr o jar com uma fun��o de evaluate aqui ...
 		//sol.setObjective(arg0, arg1);
@@ -97,7 +97,7 @@ public class BinaryProblem  extends AbstractBinaryProblem {
 		solutionString = bitset.toString();
 		try {
 			String line;
-			Process p = Runtime.getRuntime().exec("java -jar c:\\OneZeroMax.jar" + " " + solutionString);
+			Process p = Runtime.getRuntime().exec("java -jar " + problema.getPath() + " " + solutionString);
 			BufferedReader brinput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			while ((line = brinput.readLine()) != null) {
 				evaluationResultString+=line;

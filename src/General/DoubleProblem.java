@@ -42,9 +42,9 @@ public class DoubleProblem extends AbstractDoubleProblem{
 		// TODO Auto-generated method stub
 		// Ir buscar e correr o jar com uma fun��o de evaluate aqui ...
 		//sol.setObjective(arg0, arg1);
-//		if (this.problema.getPath().equals("1")) { //mudar para a parte do jar
-//			evaluateJar(solution);
-//		}else { 
+		if (problema.getPath() != null) { //mudar para a parte do jar
+			evaluateJar(solution);
+		}else { 
 			double[] fx = new double[getNumberOfObjectives()];
 			double[] x = new double[getNumberOfVariables()];
 			for (int i = 0; i < solution.getNumberOfVariables(); i++) {
@@ -57,9 +57,8 @@ public class DoubleProblem extends AbstractDoubleProblem{
 					fx[i] += Math.abs(x[i]+Math.random()*10); // Example for testing
 				}
 				solution.setObjective(i, fx[i]);
-			}
-			
-//		}
+			}	
+		}
 	}
 	
 	public void evaluateJar(DoubleSolution solution){
@@ -70,7 +69,7 @@ public class DoubleProblem extends AbstractDoubleProblem{
 		}
 		try {
 			String line;
-			Process p = Runtime.getRuntime().exec("java -jar c:\\Kursawe.jar" + " " + solutionString);
+			Process p = Runtime.getRuntime().exec("java -jar " + problema.getPath()  + " " + solutionString);
 			BufferedReader brinput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			while ((line = brinput.readLine()) != null) {
 				evaluationResultString+=line;

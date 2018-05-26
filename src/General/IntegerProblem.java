@@ -41,9 +41,9 @@ public class IntegerProblem extends AbstractIntegerProblem{
 	@Override
 	public void evaluate(IntegerSolution solution) {
 
-//		if (this.problema.getAlgorithms()!= null) { //mudar para a parte do jar
-//			evaluateJar(solution);
-//		}else { 
+		if (problema.getPath() != null) { //mudar para a parte do jar
+			evaluateJar(solution);
+		}else { 
 			double[] fx = new double[getNumberOfObjectives()];
 			int[] x = new int[getNumberOfVariables()];
 			for (int i = 0; i < solution.getNumberOfVariables(); i++) {
@@ -58,7 +58,7 @@ public class IntegerProblem extends AbstractIntegerProblem{
 				solution.setObjective(i, fx[i]);
 			}
 			
-		//}
+		}
 		// TODO Auto-generated method stub
 		// Ir buscar e correr o jar com uma função de evaluate aqui ...
 		//sol.setObjective(arg0, arg1);
@@ -72,7 +72,7 @@ public class IntegerProblem extends AbstractIntegerProblem{
 		}
 		try {
 			String line;
-			Process p = Runtime.getRuntime().exec("java -jar c:\\NMMin.jar" + " " + solutionString);
+			Process p = Runtime.getRuntime().exec("java -jar " + problema.getPath() + " " + solutionString);
 			BufferedReader brinput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			while ((line = brinput.readLine()) != null) {
 				evaluationResultString+=line;

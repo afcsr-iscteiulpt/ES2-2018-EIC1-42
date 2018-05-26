@@ -14,6 +14,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -38,6 +40,7 @@ import org.xml.sax.SAXParseException;
 import Interface.GUI;
 import Interface.GUIAlgorithms;
 import Interface.GUIVariables;
+import email.EmailSender;
 import Interface.GUIProblem;
 import Interface.GUIRestrictions;
 import Interface.GUIStoredProblems;
@@ -61,8 +64,10 @@ public class SharedClass {
 	private GUIGraphs guiGraphs;
 	private GUIRestrictions guiRestrictions;
 	private Boolean verifyLoad = false;
+	private EmailSender esender;
 	private int binaryVariableSize = 0;
 	private boolean isSolved = false;
+	private String xmlFinalName;
 
 	private Problem problem = new Problem("", "", "",  new ArrayList<Variable>() , new ArrayList<String>(), 0, "", new ArrayList<String>()); // name
 																			// ;
@@ -334,7 +339,9 @@ public class SharedClass {
 		} catch (ParserConfigurationException ex) {
 			System.out.println("Error building document");
 		}
-		return problemNameAndDate + ".xml";
+		
+		this.xmlFinalName =outputfile + problemNameAndDate + ".xml";
+		return outputfile + problemNameAndDate + ".xml";
 	}
 
 	/*
@@ -634,7 +641,14 @@ public class SharedClass {
 		setExistingPanel(getNPArray(), 5);
 	}
 	
+	public void createEmailSender() throws AddressException, MessagingException{
+		this.esender = new EmailSender(this, getAdministrador().getEmail(), getAdministrador().getPassword(), getProblem().getEmail(),
+				writeXmlFile(problem), getAdministrador().getEmail(), getAdministrador().getProblemsDir());
+	}
 
+	public EmailSender getEmailSender(){
+		return esender;
+	}
 
 	public File[] getAllFileName(String path) {
 		File folder = new File(path);
@@ -651,8 +665,11 @@ public class SharedClass {
 		binaryVariableSize = size;
 	}
 	
+	public GUIFinal getGUIFinal(){
+		return guiFinal;
+	}
 
-
+	
 	public int getBinaryVariableSize() {
 		return binaryVariableSize;
 	}
@@ -677,6 +694,9 @@ public class SharedClass {
 		verifyLoad = b;
 	}
 
+	public String getXMLFinalName(){
+		return xmlFinalName;
+	}
 	// Modo Admin
 	public Administrador getAdministrador() {
 		return administrador;

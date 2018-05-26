@@ -134,7 +134,7 @@ public class GUIAlgorithms extends JFrame {
 		contentPane.add(LabelTime);
 
 		JLabel LabelTime2 = new JLabel(
-				"Type bellow the amount of days you are willing to wait for an optimal solution to your problem.");
+				"Type bellow the amount of minutes you are willing to wait for an optimal solution to your problem.");
 		LabelTime2.setForeground(new Color(47, 79, 79));
 		LabelTime2.setFont(new Font("Avenir Next", Font.PLAIN, 14));
 		LabelTime2.setBounds(20, 34, 630, 16);
@@ -145,7 +145,7 @@ public class GUIAlgorithms extends JFrame {
 		contentPane.add(Time);
 		Time.setColumns(10);
 
-		JLabel LabelTime3 = new JLabel("Days");
+		JLabel LabelTime3 = new JLabel("Min");
 		LabelTime3.setForeground(new Color(47, 79, 79));
 		LabelTime3.setBounds(99, 56, 61, 16);
 		contentPane.add(LabelTime3);

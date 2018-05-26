@@ -147,7 +147,7 @@ public class GUIFinal extends JFrame {
 		LabelNeedsToBeSolved.setFont(new Font("Avenir Next", Font.BOLD, 17));
 		contentPane.add(LabelNeedsToBeSolved);
 
-		JLabel LabelDays = new JLabel("days");
+		JLabel LabelDays = new JLabel("Minutes");
 		LabelDays.setBounds(343, 58, 58, 20);
 		LabelDays.setForeground(new Color(255, 255, 255));
 		LabelDays.setFont(new Font("Avenir Next", Font.BOLD, 14));
@@ -165,7 +165,7 @@ public class GUIFinal extends JFrame {
 				shared.writeXmlFile(shared.getProblem()); 
 				EmailSender esender;
 				try {
-					//
+					
 					 esender = new EmailSender(shared.getAdministrador().getEmail(), shared.getAdministrador().getPassword(), shared.getProblem().getEmail(),
 							shared.getProblem().getName(), shared.getAdministrador().getEmail(), shared.getAdministrador().getProblemsDir());
 				} catch (AddressException e2) {

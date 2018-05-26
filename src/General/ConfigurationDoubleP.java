@@ -47,7 +47,7 @@ public class ConfigurationDoubleP extends Configuration{
 		problemType=ToRun.getType();
 		alg=ToRun.getAlgorithms();
 		RUNS = /*problemToRun.getNumberOfDays()*24*60*100 */ 5;
-		MaxEvaluations = 10;
+		MaxEvaluations = 5;
 	}
 
 

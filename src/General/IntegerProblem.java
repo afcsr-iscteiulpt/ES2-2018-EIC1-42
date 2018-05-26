@@ -47,7 +47,7 @@ public class IntegerProblem extends AbstractIntegerProblem{
 		}
 		try {
 			String line;
-			Process p = Runtime.getRuntime().exec("java -jar \"" + problema.getPath()  + "\" " + solutionString);
+			Process p = Runtime.getRuntime().exec("java -jar " + problema.getPath()  + "  " + solutionString);
 			BufferedReader brinput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			while ((line = brinput.readLine()) != null) {
 				evaluationResultString+=line;

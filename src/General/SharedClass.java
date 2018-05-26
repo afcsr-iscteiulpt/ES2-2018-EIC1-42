@@ -69,30 +69,35 @@ public class SharedClass {
 	private boolean isSolved = false;
 	private String xmlFinalName;
 
-	private Problem problem = new Problem("", "", "",  new ArrayList<Variable>() , new ArrayList<String>(), 0, "", new ArrayList<String>()); // name
-																			// ;
-																			// description
-																			// varArray
-																			// AlgorithmArray
-																			// DaysToWait
-										 									// Path
-																			// Objectives Array
+	private Problem problem = new Problem("", "", "", new ArrayList<Variable>(), new ArrayList<String>(), 0, "",
+			new ArrayList<String>()); // name
+	// ;
+	// description
+	// varArray
+	// AlgorithmArray
+	// DaysToWait
+	// Path
+	// Objectives Array
 
 	private Administrador administrador = new Administrador("config.xml");
 	private FileViewer fileviewer = new FileViewer(this);
-	
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					new SharedClass();
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
 	}
+
+	/**
+	 * Construtor da classe SharedClass
+	 */
 
 	public SharedClass() {
 		frame = new JFrame();
@@ -104,14 +109,14 @@ public class SharedClass {
 
 	}
 
-	/*
-	 * Função que lança o primeiro GUI
+	/**
+	 * Fun��o que lan�a o primeiro GUI
 	 */
 	public void launch() {
 		gui = new GUI(this);
 		ArrayOfPanels.add(gui.getContentPane());
 		setExistingPanel(ArrayOfPanels, 0);
-		
+
 	}
 
 	public void setFrame(JFrame frameX) {
@@ -136,11 +141,9 @@ public class SharedClass {
 		frame.repaint();
 	}
 
-	// -------------------NP RELATED---------------------
-
-	/*
-	 * Função do but�o "New Problem" que inicializa o array dos GUI's
-	 * pertencentes às funcionalidade do "New Problem">
+	/**
+	 * Fun��o do but�o "New Problem" que inicializa o array dos GUI's pertencentes �
+	 * funcionalidade do "New Problem">
 	 */
 	public void createNPArray() {
 		// 0 in ArrayNewProblem
@@ -161,15 +164,13 @@ public class SharedClass {
 		ArrayNewProblem.add(guiFinal.getContentPane());
 		// 5 in ArrayNewProblem
 		guiGraphs = new GUIGraphs(this);
-		// ArrayNewProblem.add(guiGraphs.getContentPane());
 	}
 
 	public ArrayList<JPanel> getNPArray() {
 		return ArrayNewProblem;
 	}
 
-	// -------------------SP RELATED---------------------
-	/*
+	/**
 	 * Fun��o do but�o "Stored Problem" que inicializa o array dos GUI's
 	 * pertencentes � funcionalidade do "Stored Problem"
 	 */
@@ -178,8 +179,7 @@ public class SharedClass {
 		setExistingPanelX(storedProblem.getContentPane());
 	}
 
-	// -------------------FAQ RELATED---------------------
-	/*
+	/**
 	 * Fun��o do but�o "FAQ" que inicializa o array dos GUI's pertencentes �
 	 * funcionalidade do "FAQ"
 	 */
@@ -193,9 +193,8 @@ public class SharedClass {
 	public ArrayList<JPanel> getFAQArray() {
 		return ArrayFAQ;
 	}
-	// --------------------------------------------------
 
-	/*
+	/**
 	 * Fun��o respons�vel pela cria��o do problema com os dados fornecidos pelo
 	 * utilizador
 	 */
@@ -207,23 +206,22 @@ public class SharedClass {
 		problem.setEmail(guidescricaoproblema.getEmail());
 		problem.setVariablesArray(guiDefinicaoVariaveis.getVariablesArray());
 
-		// storedProblem.addProblem(problem);
-
 		writeXmlFile(problem);
 	}
 
-	/*
+	/**
 	 * Fun��o respons�vel pela cria��o/escrita do ficheiro XML
 	 * 
-	 * @param Problem p
+	 * @param Problem
+	 *            p
 	 */
 	public String writeXmlFile(Problem p) {
 		String date = new SimpleDateFormat("dd-MM-yyyy  HH-mm-ss").format(new Date());
-		
+
 		System.out.println(date);
-		
+
 		String problemNameAndDate = p.getName() + " - " + date;
-		
+
 		String outputfile = administrador.getProblemsDir();
 		try {
 			DocumentBuilderFactory dFact = DocumentBuilderFactory.newInstance();
@@ -279,8 +277,6 @@ public class SharedClass {
 					variable.appendChild(variableValue);
 				}
 			}
-			
-		
 
 			Element algorithms = doc.createElement("Algorithms");
 			root.appendChild(algorithms);
@@ -298,7 +294,7 @@ public class SharedClass {
 			Element problemPath = doc.createElement("Path");
 			root.appendChild(problemPath);
 			problemPath.appendChild(doc.createTextNode(String.valueOf(p.getPath())));
-			
+
 			Element objectives = doc.createElement("Objectives");
 			root.appendChild(objectives);
 			objectives.appendChild(doc.createTextNode(""));
@@ -318,9 +314,8 @@ public class SharedClass {
 			aTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 			aTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			DOMSource source = new DOMSource(doc);
-		
-			try {
 
+			try {
 
 				for (int i = 0; i < getAllFileName(outputfile).length; i++) {
 					if (getAllFileName(outputfile)[i].getName().contains(p.getName() + " - ")) {
@@ -339,12 +334,12 @@ public class SharedClass {
 		} catch (ParserConfigurationException ex) {
 			System.out.println("Error building document");
 		}
-		
-		this.xmlFinalName =outputfile + problemNameAndDate + ".xml";
+
+		this.xmlFinalName = outputfile + problemNameAndDate + ".xml";
 		return outputfile + problemNameAndDate + ".xml";
 	}
 
-	/*
+	/**
 	 * Fun��o respons�vel pela leitura do ficheiro XML
 	 */
 	public void readXMLFile() {
@@ -357,7 +352,7 @@ public class SharedClass {
 			;
 			ArrayList<Variable> variablesFromXML = new ArrayList<Variable>();
 			ArrayList<String> algorithmsFromXML = new ArrayList<String>();
-			ArrayList<String> objectivesFromXML = new ArrayList<String>(); 
+			ArrayList<String> objectivesFromXML = new ArrayList<String>();
 
 			if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 				file = fileChooser.getSelectedFile();
@@ -384,19 +379,16 @@ public class SharedClass {
 
 					Element firstPersonElement = (Element) firstProblemNode;
 
-					// -------
 					NodeList name = firstPersonElement.getElementsByTagName("Name");
 					Element NameElement = (Element) name.item(0);
 					NodeList textFNList = NameElement.getChildNodes();
 					System.out.println("Name : " + ((Node) textFNList.item(0)).getNodeValue().trim());
 
-					// -------
 					NodeList description = firstPersonElement.getElementsByTagName("Description");
 					Element DescriptionElement = (Element) description.item(0);
 					NodeList textLNList = DescriptionElement.getChildNodes();
 					System.out.println("Description : " + ((Node) textLNList.item(0)).getNodeValue().trim());
 
-					// -------
 					NodeList email = firstPersonElement.getElementsByTagName("Email");
 					Element EmailElement = (Element) email.item(0);
 
@@ -420,7 +412,7 @@ public class SharedClass {
 									if (varType.equals("Integer")) {
 										String varMin = varElement.getElementsByTagName("Min").item(0).getTextContent();
 										String varMax = varElement.getElementsByTagName("Max").item(0).getTextContent();
-										
+
 										Variable v = new Variable(varName, varType, Integer.parseInt(varMin),
 												Integer.parseInt(varMax), new ArrayList<Integer>());
 										variablesFromXML.add(v);
@@ -433,7 +425,8 @@ public class SharedClass {
 										variablesFromXML.add(v);
 										guiDefinicaoVariaveis.getVariablesArray().add(v);
 									} else if (varType.equals("Binary")) {
-										String value = varElement.getElementsByTagName("Value").item(0).getTextContent();
+										String value = varElement.getElementsByTagName("Value").item(0)
+												.getTextContent();
 										Variable v = new Variable(varName, varType, value);
 										variablesFromXML.add(v);
 										guiDefinicaoVariaveis.getVariablesArray().add(v);
@@ -451,8 +444,6 @@ public class SharedClass {
 					NodeList problemPath = firstPersonElement.getElementsByTagName("Path");
 					Element problemPathElement = (Element) problemPath.item(0);
 					NodeList problemPathContent = problemPathElement.getChildNodes();
-					//System.out.println("Path : " + ((Node) problemPathContent.item(0)).getNodeValue().trim());
-					
 
 					NodeList algorithms = firstPersonElement.getElementsByTagName("Algorithms");
 					Element AlgoriElement = (Element) algorithms.item(0);
@@ -467,7 +458,6 @@ public class SharedClass {
 							}
 						}
 					}
-					
 
 					NodeList objectives = firstPersonElement.getElementsByTagName("Objectives");
 					Element ObjectiElement = (Element) objectives.item(0);
@@ -482,21 +472,15 @@ public class SharedClass {
 							}
 						}
 					}
-					
-					
-					
 
 					LoadProblem(((Node) textFNList.item(0)).getNodeValue().trim(),
 							((Node) textLNList.item(0)).getNodeValue().trim(),
 							((Node) EmailList.item(0)).getNodeValue().trim(), variablesFromXML, algorithmsFromXML,
 							Integer.parseInt(((Node) daysContent.item(0)).getNodeValue().trim()),
 							((Node) problemPathContent.item(0)).getNodeValue().trim(), objectivesFromXML);
+				}
 
-					// -------
-
-				} // end of if clause
-
-			} // end of for loop with s var .
+			}
 
 		} catch (SAXParseException err) {
 			System.out.println("** Parsing error" + ", line " + err.getLineNumber() + ", uri " + err.getSystemId());
@@ -512,11 +496,26 @@ public class SharedClass {
 
 	}
 
+	/**
+	 * 
+	 * Carrega um problema apartir de um ficheiro .xml criado anteriormente
+	 * 
+	 * @param name
+	 * @param description
+	 * @param email
+	 * @param variables
+	 * @param algorithms
+	 * @param days
+	 * @param path
+	 * @param objectives
+	 */
+
 	public void LoadProblem(String name, String description, String email, ArrayList<Variable> variables,
 			ArrayList<String> algorithms, int days, String path, ArrayList<String> objectives) {
 
 		setVerifyLoad(true);
-		problem = new Problem("", "", "",  new ArrayList<Variable>() , new ArrayList<String>(), 0, "", new ArrayList<String>());
+		problem = new Problem("", "", "", new ArrayList<Variable>(), new ArrayList<String>(), 0, "",
+				new ArrayList<String>());
 		guidescricaoproblema.setName(name);
 		guidescricaoproblema.setDescription(description);
 		guidescricaoproblema.setEmail(email);
@@ -529,7 +528,7 @@ public class SharedClass {
 			guiAlgo.addAlgorithm(algorithms.get(i), "Manually");
 		}
 
-		if(variables.get(0).getType().equals("Integer") || variables.get(0).getType().equals("Double")){
+		if (variables.get(0).getType().equals("Integer") || variables.get(0).getType().equals("Double")) {
 			String s1 = guiDefinicaoVariaveis.getTextAreaStringIntDouble();
 			for (int i = 0; i < variables.size(); i++) {
 				s1 += "\n" + variables.get(i).toStringVariable();
@@ -537,8 +536,7 @@ public class SharedClass {
 				guiDefinicaoVariaveis.getTextArea().setText(s1);
 			}
 			guiDefinicaoVariaveis.setTextAreaStringIntDouble(s1);
-		}
-		else if(variables.get(0).getType().equals("Binary")){
+		} else if (variables.get(0).getType().equals("Binary")) {
 			String s1 = guiDefinicaoVariaveis.getTextAreaStringBinary();
 			for (int i = 0; i < variables.size(); i++) {
 				s1 += "\n" + variables.get(i).toStringVariable();
@@ -548,7 +546,6 @@ public class SharedClass {
 			guiDefinicaoVariaveis.setTextAreaStringBinary(s1);
 
 		}
-		//
 		String s2 = "Algorithms chosen: " + "\n";
 		for (int i = 0; i < algorithms.size(); i++) {
 			s2 += algorithms.get(i) + "\n";
@@ -561,11 +558,12 @@ public class SharedClass {
 		if (!problem.getAlgorithms().isEmpty()) {
 			problem.getAlgorithms().clear();
 		}
-		
+
 		String objToAdd = "Objective name:";
-		for(int i = 0; i<objectives.size();i++){
-			objToAdd += "\n" + objectives.get(i);	
+		for (int i = 0; i < objectives.size(); i++) {
+			objToAdd += "\n" + objectives.get(i);
 			guiRestrictions.getObjectivesArray().add(objectives.get(i));
+			guiRestrictions.getObjectivesArray().clear();
 		}
 		guiRestrictions.setTAObjectivesText(objToAdd);
 
@@ -578,7 +576,7 @@ public class SharedClass {
 		problem.setNumberOfDays(days);
 		problem.setPath(path);
 		problem.setObjectivesArray(objectives);
-		
+
 		guiDefinicaoVariaveis.setComboBoxValue(problem.getType());
 		guiDefinicaoVariaveis.getComboBox().setEnabled(false);
 
@@ -634,19 +632,19 @@ public class SharedClass {
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		setExistingPanel(getNPArray(), 5);
 	}
-	
-	public void createEmailSender() throws AddressException, MessagingException{
-		this.esender = new EmailSender(this, getAdministrador().getEmail(), getAdministrador().getPassword(), getProblem().getEmail(),
-				writeXmlFile(problem), getAdministrador().getEmail(), getAdministrador().getProblemsDir());
+
+	public void createEmailSender() throws AddressException, MessagingException {
+		this.esender = new EmailSender(this, getAdministrador().getEmail(), getAdministrador().getPassword(),
+				getProblem().getEmail(), writeXmlFile(problem), getAdministrador().getEmail(),
+				getAdministrador().getProblemsDir());
 	}
 
-	public EmailSender getEmailSender(){
+	public EmailSender getEmailSender() {
 		return esender;
 	}
 
@@ -664,12 +662,11 @@ public class SharedClass {
 	public void setBinaryVariableSize(int size) {
 		binaryVariableSize = size;
 	}
-	
-	public GUIFinal getGUIFinal(){
+
+	public GUIFinal getGUIFinal() {
 		return guiFinal;
 	}
 
-	
 	public int getBinaryVariableSize() {
 		return binaryVariableSize;
 	}
@@ -694,18 +691,20 @@ public class SharedClass {
 		verifyLoad = b;
 	}
 
-	public String getXMLFinalName(){
+	public String getXMLFinalName() {
 		return xmlFinalName;
 	}
-	// Modo Admin
+
 	public Administrador getAdministrador() {
 		return administrador;
 	}
-
 	
-	//Visualizar o LatexPDF
+	public void setProblem(Problem p){
+		this.problem = p;
+	}
+
 	public FileViewer getFileViewer() {
 		return fileviewer;
 	}
-	
+
 }

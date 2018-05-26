@@ -174,6 +174,7 @@ public class GUIFinal extends JFrame {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
 				}
+				
 				Configuration conf = null;
 				switch (shared.getProblem().getVariablesArray().get(0).getType()) {
 				case "Double":

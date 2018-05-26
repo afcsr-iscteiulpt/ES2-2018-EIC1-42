@@ -13,12 +13,11 @@ public class FileViewer {
 	
 	public FileViewer(SharedClass sharedClass) {
 		this.sharedClass=sharedClass;
-
 	}
 	
 	public static void createLateXPDF(String latexpath, String filename) throws IOException {
 	
-        ProcessBuilder builder = new ProcessBuilder("cmd.exe","/c", "cd " + latexpath + "latex" + " && pdflatex " + filename + ".tex");
+        ProcessBuilder builder = new ProcessBuilder("cmd.exe","/c", "cd " + latexpath  + "latex" + " && pdflatex " + filename + ".tex");
             builder.redirectErrorStream(true);
             Process p = builder.start();
 //            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -32,7 +31,7 @@ public class FileViewer {
 	
 	public static void viewLateXPDF(String latexpath, String filename) throws IOException {
 		
-		ProcessBuilder builder = new ProcessBuilder("cmd.exe","/c", "cd " + latexpath +"latex" + " && start " + filename + ".pdf");
+		ProcessBuilder builder = new ProcessBuilder("cmd.exe","/c", "cd " + latexpath + "latex" + " && start " + filename + ".pdf");
             builder.redirectErrorStream(true);
             Process p = builder.start();
 //            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -57,10 +56,13 @@ public class FileViewer {
 	}
 	
 	public static void viewR(String Rpath, String filename) throws IOException {
-		ProcessBuilder builder = new ProcessBuilder("cmd.exe","/c", "cd " + Rpath +"R" + " && start " + "HV.Boxplot.eps");
+
+		ProcessBuilder builder = new ProcessBuilder("cmd.exe","/c", "cd " + Rpath + "R" + " && start " + "HV.Boxplot.eps");
         builder.redirectErrorStream(true);
         Process p = builder.start();
+		
 	}
+	
 	
 	public void create_view_LateX() throws IOException {
 		
@@ -86,11 +88,16 @@ public class FileViewer {
 		}
 		
 		createLateXPDF(path, filename);
-
-		viewLateXPDF(path, filename);
 		createR(path, filename);
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		viewLateXPDF(path, filename);
+		viewR(path,filename);
 	}
-
 
 
 //	public static void main(String[] args) throws IOException {

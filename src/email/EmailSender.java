@@ -18,7 +18,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 
-public class EmailSender {
+public class EmailSender extends Thread {
 	
 	final String ood1mail;
     final String password;
@@ -30,7 +30,27 @@ public class EmailSender {
     private String ProblemName;
     private String Adminmail;
     private String XMLPath;
-//    private static Administrador administrador = new Administrador("config.xml");
+    
+    private int estimado = 170000;
+    
+    @Override
+    public void run() {
+    	while(!interrupted()) {
+    		for (int i = 25; i < 100; i += 25) {
+    			try {
+					sleep(estimado/4);
+					emailCheck(i);
+				} catch (InterruptedException e) {
+				}
+			}
+    		try {
+				sleep(estimado/4);
+				emailFinish("config.xml");
+				interrupt();
+			} catch (InterruptedException e) {
+			}
+    	}
+    }
 	
 	public EmailSender(String ood1mail, String password, String usermail, String problemName, String adminmail, String XMLpath) throws AddressException, MessagingException {
 		this.ood1mail = ood1mail;
@@ -108,7 +128,7 @@ public class EmailSender {
         }
 	}
 	
-	public void EmailCheck(int percentage) {
+	public void emailCheck(int percentage) {
 	   
 		/*
 		 * Cria��o da sess�o e respetiva autentica��o
@@ -158,7 +178,7 @@ public class EmailSender {
         }
 	}
 	
-	public void EmailFinish(String finishXML) {
+	public void emailFinish(String finishXML) {
 		
 		/*
 		 *  Cria��o da sess�o e respetiva autentica��o
@@ -252,17 +272,20 @@ public class EmailSender {
 		return XMLPath;
 	}
 
-//	public static void main(String[] args) throws AddressException, MessagingException {
-//		/*
-//		 * Testing function
-//		 */
-//		
+	public static void main(String[] args) throws AddressException, MessagingException {
+		/*
+		 * Testing function
+		 */
+		
 //		System.out.println("1");
-//		EmailSender A= new EmailSender(administrador.getEmail(), administrador.getPassword() ,"albertosilveiramos@gmail.com", "EmailTesting","bfcca@iscte-iul.pt" , "File.xml");
+		Administrador administrador = new Administrador("config.xml");
+		EmailSender A = new EmailSender(administrador .getEmail(), administrador.getPassword() ,"ood1.0chief@gmail.com", "EmailTesting","ood1.0chief@gmail.com" , "config.xml");
+		A.start();
+		
 //		System.out.println("2");
-//		A.EmailCheck(50);
+//		A.emailCheck(50);
 //		System.out.println("3");
-//		A.EmailFinish("File.xml");
-//    }
+//		A.emailFinish("File.xml");
+    }
 
 }

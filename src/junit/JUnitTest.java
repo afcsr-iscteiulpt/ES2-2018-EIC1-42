@@ -39,8 +39,7 @@ Administrador admin	= new Administrador("config.xml");
 			assertNotNull(faq.getProblemName());
 			assertNotNull(faq.getAdminmail());
 			assertNotNull(faq.getXMLPath());
-			faq.EmailCheck(10);
-			faq.EmailFinish("config.xml");
+			faq.start();
 		} catch (MessagingException e) {
 		}
 	}

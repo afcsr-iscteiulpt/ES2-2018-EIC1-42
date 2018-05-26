@@ -145,10 +145,10 @@ public class GUIAlgorithms extends JFrame {
 		contentPane.add(Time);
 		Time.setColumns(10);
 
-		JLabel LabelTime3 = new JLabel("Days");
-		LabelTime3.setForeground(new Color(47, 79, 79));
-		LabelTime3.setBounds(99, 56, 61, 16);
-		contentPane.add(LabelTime3);
+		JLabel LabelHours = new JLabel("Hours");
+		LabelHours.setForeground(new Color(47, 79, 79));
+		LabelHours.setBounds(99, 56, 61, 16);
+		contentPane.add(LabelHours);
 
 		JButton ButtonTime = new JButton("Set");
 		ButtonTime.setForeground(new Color(47, 79, 79));

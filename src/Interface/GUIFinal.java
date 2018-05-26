@@ -168,6 +168,7 @@ public class GUIFinal extends JFrame {
 					//
 					 esender = new EmailSender(shared.getAdministrador().getEmail(), shared.getAdministrador().getPassword(), shared.getProblem().getEmail(),
 							shared.getProblem().getName(), shared.getAdministrador().getEmail(), shared.getAdministrador().getProblemsDir());
+					 esender.start();
 				} catch (AddressException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();

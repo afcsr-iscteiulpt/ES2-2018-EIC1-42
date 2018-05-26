@@ -556,6 +556,7 @@ public class SharedClass {
 		String objToAdd = "Objective name:";
 		for(int i = 0; i<objectives.size();i++){
 			objToAdd += "\n" + objectives.get(i);	
+			guiRestrictions.getObjectivesArray().add(objectives.get(i));
 		}
 		guiRestrictions.setTAObjectivesText(objToAdd);
 

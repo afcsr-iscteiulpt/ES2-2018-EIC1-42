@@ -38,6 +38,8 @@ public class ConfigurationDoubleP extends Configuration{
 	private static ArrayList<String> alg;
 	private static String path;
 	private static int RUNS; //Usar pra calcular tempo
+	private static final int INDEPENDENT_RUNS = 5;
+	private static final int MAX_EVALUATIONS = 150000; 
 
 	public ConfigurationDoubleP(String path, Problem ToRun) {
 		super(path, ToRun);
@@ -63,7 +65,7 @@ public class ConfigurationDoubleP extends Configuration{
 							problemList.get(i).getProblem(),
 							new SBXCrossover(1.0, 5),
 							new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 10.0))
-					.setMaxEvaluations(500)
+					.setMaxEvaluations(MAX_EVALUATIONS)
 					.setPopulationSize(100)
 					.build();
 					algorithms.add(new ExperimentAlgorithm<>(algorithmnsgaii, "NSGAII" , problemList.get(i).getTag()));
@@ -74,7 +76,7 @@ public class ConfigurationDoubleP extends Configuration{
 							problemList.get(i).getProblem(),
 							new SBXCrossover(1.0, 5),
 							new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 10.0))
-					.setMaxEvaluations(500)
+					.setMaxEvaluations(MAX_EVALUATIONS)
 					.build();
 					algorithms.add(new ExperimentAlgorithm<>(algorithmsmsemoa, "SMSEMOA" , problemList.get(i).getTag()));
 					break;
@@ -82,7 +84,7 @@ public class ConfigurationDoubleP extends Configuration{
 				case "GDE3":
 					Algorithm<List<DoubleSolution>> algorithmgde3 = new GDE3Builder( 
 							(org.uma.jmetal.problem.DoubleProblem) problemList.get(i).getProblem())
-					.setMaxEvaluations(500)
+					.setMaxEvaluations(MAX_EVALUATIONS)
 					.build();
 					algorithms.add(new ExperimentAlgorithm<>(algorithmgde3, "GDE3" , problemList.get(i).getTag()));
 					break;
@@ -90,7 +92,7 @@ public class ConfigurationDoubleP extends Configuration{
 				case "IBEA":
 					Algorithm<List<DoubleSolution>> algorithmibea = new IBEABuilder(
 							problemList.get(i).getProblem())
-					.setMaxEvaluations(500)
+					.setMaxEvaluations(MAX_EVALUATIONS)
 					.build();
 					algorithms.add(new ExperimentAlgorithm<>(algorithmibea, "IBEA" , problemList.get(i).getTag()));
 					break;
@@ -100,7 +102,7 @@ public class ConfigurationDoubleP extends Configuration{
 							problemList.get(i).getProblem(),
 							new SBXCrossover(1.0, 5),
 							new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 10.0))
-					.setMaxEvaluations(500)
+					.setMaxEvaluations(MAX_EVALUATIONS)
 					.build();
 					algorithms.add(new ExperimentAlgorithm<>(algorithmmocell, "MOCell" , problemList.get(i).getTag()));
 					break;
@@ -108,7 +110,7 @@ public class ConfigurationDoubleP extends Configuration{
 				case "MOEAD":
 					Algorithm<List<DoubleSolution>> algorithmmoead = new MOEADBuilder(
 							problemList.get(i).getProblem(), Variant.MOEAD) 
-					.setMaxEvaluations(500)
+					.setMaxEvaluations(MAX_EVALUATIONS)
 					.build();
 					algorithms.add(new ExperimentAlgorithm<>(algorithmmoead, "MOEAD" , problemList.get(i).getTag()));
 					break;
@@ -117,7 +119,7 @@ public class ConfigurationDoubleP extends Configuration{
 				case "PAES":
 					Algorithm<List<DoubleSolution>> algorithmpaes = new PAESBuilder(
 							problemList.get(i).getProblem())
-					.setMaxEvaluations(500)
+					.setMaxEvaluations(MAX_EVALUATIONS)
 					.setArchiveSize(100)
 					.setBiSections(2)
 					.setMutationOperator(new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 10.0))
@@ -128,7 +130,7 @@ public class ConfigurationDoubleP extends Configuration{
 				case "RandomSearch":
 					Algorithm<List<DoubleSolution>> algorithmrandomsearch = new RandomSearchBuilder(
 							problemList.get(i).getProblem())
-					.setMaxEvaluations(500)
+					.setMaxEvaluations(MAX_EVALUATIONS)
 					.build();
 					algorithms.add(new ExperimentAlgorithm<>(algorithmrandomsearch, "RandomSearch" , problemList.get(i).getTag()));
 					break;
@@ -164,15 +166,19 @@ public class ConfigurationDoubleP extends Configuration{
 				.setOutputParetoSetFileName("VAR")
 				.setReferenceFrontDirectory(experimentBaseDirectory+"/referenceFronts")
 				.setIndicatorList(Arrays.asList(new PISAHypervolume<DoubleSolution>()))
-				.setIndependentRuns(RUNS)
+				.setIndependentRuns(INDEPENDENT_RUNS)
 				.setNumberOfCores(8)
 				.build();
-
+		
+		long inittime = System.currentTimeMillis();
+		System.out.println("Initial time: " +inittime);
 		new ExecuteAlgorithms<>(experiment).run();
 		new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
 		new ComputeQualityIndicators<>(experiment).run() ;
 		new GenerateLatexTablesWithStatistics(experiment).run() ;
 		new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(1).run() ;
+		long finaltime =  System.currentTimeMillis() - inittime ;
+		System.out.println("Final time: " + finaltime);
 
 	}
 }

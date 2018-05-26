@@ -110,9 +110,9 @@ public class EmailSender extends Thread {
         	 * Associa��o do ficheiro XML (do progresso feito) ao email a ser enviado para o utilizador
         	 */
 			messageBodyPart = new MimeBodyPart();
-			DataSource source = new FileDataSource(XMLpath);
+			DataSource source = new FileDataSource(XMLpath + problemName + ".xml");
 			messageBodyPart.setDataHandler(new DataHandler(source));
-			messageBodyPart.setFileName(problemName + "-XML");
+			messageBodyPart.setFileName(problemName + ".xml");
 			multipart.addBodyPart(messageBodyPart);
 
 			message.setContent(multipart);

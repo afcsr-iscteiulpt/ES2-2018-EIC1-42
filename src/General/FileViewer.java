@@ -1,6 +1,8 @@
 package General;
 
+import java.awt.EventQueue;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -12,7 +14,6 @@ public class FileViewer {
 	public FileViewer(SharedClass sharedClass) {
 		this.sharedClass=sharedClass;
 	}
-	
 	
 	public static void createLateXPDF(String latexpath, String filename) throws IOException {
 	
@@ -42,6 +43,18 @@ public class FileViewer {
 //            }
 	}
 	 
+	public static void viewR(String latexpath, String filename) {
+		try {
+		Process process = new ProcessBuilder("C:/Program Files/R/R-3.4.3/bin/RScript.exe", "HV.Boxplot.R")
+				.directory(new File("C:/Users/bruno/Desktop/ExperimentsDouble/R")).start();
+		
+//		Process process2 = new ProcessBuilder("C:/Program Files/MiKTeX 2.9/miktex/bin/x64/miktex-pdflatex.exe", filename + ".tex")
+//							.directory(new File("C:/Users/bruno/Desktop/ExperimentsDouble/latex")).start();
+		
+		
+		} catch (IOException e) {}
+	}
+	
 	public void create_view_LateX() throws IOException {
 		
 		String latexpath =  sharedClass.getAdministrador().getProblemsDir();
@@ -65,13 +78,16 @@ public class FileViewer {
 			break;
 		}
 		
-		createLateXPDF(latexpath, latexfilename);
-		viewLateXPDF(latexpath, latexfilename);
+//		createLateXPDF(latexpath, latexfilename);
+//		viewLateXPDF(latexpath, latexfilename);
+		viewR(latexpath, latexfilename);
 	}
+
+
+	public static void main(String[] args) throws IOException {
+//		createLateXPDF("C:/Users/bruno/Desktop/ExperimentsDouble/latex","ExperimentsDouble");
+		viewR("C:/Users/bruno/Desktop/ExperimentsDouble/latex","ExperimentsDouble");
+	}
+
+
 }
-//Process process = new ProcessBuilder("D:\\Programas\\R-3.4.3\\bin\\RScript.exe", "HV.Boxplot.R")
-//.directory(new File("experimentBaseDirectory\\AntiSpamStudy\\R")).start();
-//
-//Process process2 = new ProcessBuilder(
-//"D:\\Programas\\Nova pasta (2)\\miktex\\bin\\x64\\miktex-pdflatex.exe", "AntiSpamStudy.tex")
-//		.directory(new File("experimentBaseDirectory\\AntiSpamStudy\\latex")).start();

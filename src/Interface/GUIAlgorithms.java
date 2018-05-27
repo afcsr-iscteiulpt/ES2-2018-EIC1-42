@@ -118,6 +118,7 @@ public class GUIAlgorithms extends JFrame {
 	private static ArrayList<String> multiAlgorithmsArray = new ArrayList<>();
 
 	public GUIAlgorithms(SharedClass shared) {
+		this.shared=shared;
 
 		addMultiAlgorithmsToArray();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -222,6 +223,7 @@ public class GUIAlgorithms extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				shared.getProblem().getAlgorithms().clear();
 				disableOrEnable("Manually");
 			}
 		});
@@ -235,6 +237,7 @@ public class GUIAlgorithms extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				shared.getProblem().getAlgorithms().clear();
 				disableOrEnable("Automatically");
+				shared.getProblem().getAlgorithms().add("Automatic");
 			}
 		});
 		contentPane.add(ButtonAuto);
@@ -282,6 +285,12 @@ public class GUIAlgorithms extends JFrame {
 					shared.getProblem().setNumberOfDays(numberOfDays);
 					shared.getProblem().setAlgorithms(SELECTEDAlgorithmsArray);
 				}
+				if(shared.getProblem().getAlgorithms().get(0).equals("Automatic")) {
+					shared.getProblem().getAlgorithms().clear();
+					shared.getProblem().getAlgorithms().add("NSGAII");
+					shared.getProblem().getAlgorithms().add("SMSEMOA");
+				}
+					
 				shared.setReviewProblem();
 				shared.setExistingPanel(shared.getNPArray(), 4);
 			}
@@ -314,6 +323,7 @@ public class GUIAlgorithms extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				disableOrEnable("Mixed");
+				addMixed();
 				
 			}
 		});
@@ -420,11 +430,37 @@ public class GUIAlgorithms extends JFrame {
 		multiAlgorithmsArray.add("SPEA2");
 		multiAlgorithmsArray.add("WASFGA");
 		CBMulti.addItem(new String(""));
-		comboBoxMixed.addItem(new String(""));
-		for (int i = 0; i < multiAlgorithmsArray.size(); i++) {
+		for (int i = 0; i < multiAlgorithmsArray.size(); i++)
 			CBMulti.addItem(multiAlgorithmsArray.get(i));
-			comboBoxMixed.addItem(multiAlgorithmsArray.get(i));
+	}
+	
+	public void addMixed() {
+		comboBoxMixed.removeAllItems();
+		comboBoxMixed.addItem(new String(""));
+		comboBoxMixed.setSelectedItem("");
+		if(shared.getProblem().getVariablesArray().get(0).getType().equals("Double")) {
+			for (int i = 0; i < multiAlgorithmsArray.size(); i++) {
+				if(multiAlgorithmsArray.get(i).equals("NSGAII")     || multiAlgorithmsArray.get(i).equals("SMSEMOA") ||
+						multiAlgorithmsArray.get(i).equals("GDE3")  || multiAlgorithmsArray.get(i).equals("IBEA")    || multiAlgorithmsArray.get(i).equals("MOCell") ||
+						multiAlgorithmsArray.get(i).equals("MOEAD") || multiAlgorithmsArray.get(i).equals("PAES")    || multiAlgorithmsArray.get(i).equals("RandomSearch"))
+					comboBoxMixed.addItem(multiAlgorithmsArray.get(i));
+			}
+		}else if(shared.getProblem().getVariablesArray().get(0).getType().equals("Integer")) {
+			for (int i = 0; i < multiAlgorithmsArray.size(); i++) {
+				if(multiAlgorithmsArray.get(i).equals("NSGAII")     || multiAlgorithmsArray.get(i).equals("SMSEMOA") ||
+						multiAlgorithmsArray.get(i).equals("MOCell")|| multiAlgorithmsArray.get(i).equals("PAES")    || multiAlgorithmsArray.get(i).equals("RandomSearch"))
+					comboBoxMixed.addItem(multiAlgorithmsArray.get(i));
+			}
+		}else {
+			for (int i = 0; i < multiAlgorithmsArray.size(); i++) {
+				if(multiAlgorithmsArray.get(i).equals("NSGAII")		|| multiAlgorithmsArray.get(i).equals("SMSEMOA")     ||
+						multiAlgorithmsArray.get(i).equals("MOCell")|| multiAlgorithmsArray.get(i).equals("MOCH")        ||
+						multiAlgorithmsArray.get(i).equals("PAES")  || multiAlgorithmsArray.get(i).equals("RandomSearch")||
+						multiAlgorithmsArray.get(i).equals("SPEA2"))
+					comboBoxMixed.addItem(multiAlgorithmsArray.get(i));
+			}
 		}
+		
 	}
 
 	public void enableAutomatically() {

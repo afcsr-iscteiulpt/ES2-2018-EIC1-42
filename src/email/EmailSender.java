@@ -42,7 +42,7 @@ public class EmailSender extends Thread {
     		for (int i = 25; i < 100; i += 25) {
     			try {
 					sleep(estimado/4);
-					shared.getGUIFinal().getProgressBar().setValue(i);
+//					shared.getGUIFinal().getProgressBar().setValue(i);
 					shared.getGUIFinal().revalidate();
 					shared.getGUIFinal().repaint();
 					emailCheck(i);
@@ -51,7 +51,7 @@ public class EmailSender extends Thread {
 			}
     		try {
 				sleep(estimado/4);
-				shared.getGUIFinal().getProgressBar().setValue(100);
+//				shared.getGUIFinal().getProgressBar().setValue(100);
 				shared.getGUIFinal().revalidate();
 				shared.getGUIFinal().repaint();
 				emailFinish();

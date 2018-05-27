@@ -70,14 +70,7 @@ public class SharedClass {
 	private String xmlFinalName;
 
 	private Problem problem = new Problem("", "", "", new ArrayList<Variable>(), new ArrayList<String>(), 0, "",
-			new ArrayList<String>()); // name
-	// ;
-	// description
-	// varArray
-	// AlgorithmArray
-	// DaysToWait
-	// Path
-	// Objectives Array
+			new ArrayList<String>());
 
 	private Administrador administrador = new Administrador("config.xml");
 	private FileViewer fileviewer = new FileViewer(this);
@@ -96,7 +89,7 @@ public class SharedClass {
 	}
 
 	/**
-	 * Construtor da classe SharedClass
+	 * SharedClass Constructor
 	 */
 
 	public SharedClass() {
@@ -110,7 +103,7 @@ public class SharedClass {
 	}
 
 	/**
-	 * Fun��o que lan�a o primeiro GUI
+	 * GUI Launch function
 	 */
 	public void launch() {
 		gui = new GUI(this);
@@ -142,8 +135,8 @@ public class SharedClass {
 	}
 
 	/**
-	 * Fun��o do but�o "New Problem" que inicializa o array dos GUI's pertencentes �
-	 * funcionalidade do "New Problem">
+	 * "New Problem" Button initializes the array of GUI's belonging to the
+	 * functions of the "New Problem"
 	 */
 	public void createNPArray() {
 		// 0 in ArrayNewProblem
@@ -171,8 +164,8 @@ public class SharedClass {
 	}
 
 	/**
-	 * Fun��o do but�o "Stored Problem" que inicializa o array dos GUI's
-	 * pertencentes � funcionalidade do "Stored Problem"
+	 * "Stored Problem" Button initializes the array of GUI's belonging to the
+	 * functions of the "Stored Problem"
 	 */
 	public void acessStoredProblems() {
 		storedProblem.resolve();
@@ -180,8 +173,8 @@ public class SharedClass {
 	}
 
 	/**
-	 * Fun��o do but�o "FAQ" que inicializa o array dos GUI's pertencentes �
-	 * funcionalidade do "FAQ"
+	 * "FAQ" Button initializes the array of GUI's belonging to the functions of the
+	 * "FAQ"
 	 */
 	public void createFAQArray() {
 		// 0 in ArrayFAQ
@@ -195,8 +188,8 @@ public class SharedClass {
 	}
 
 	/**
-	 * Fun��o respons�vel pela cria��o do problema com os dados fornecidos pelo
-	 * utilizador
+	 * Function responsible for the criation of the problem with data given by the
+	 * user
 	 */
 	public void createProblem() {
 		System.out.println(guidescricaoproblema.getName() + "   " + guidescricaoproblema.getDescription() + "   "
@@ -210,10 +203,9 @@ public class SharedClass {
 	}
 
 	/**
-	 * Fun��o respons�vel pela cria��o/escrita do ficheiro XML
+	 * Function responsible for the creation/writing of the files to XML
 	 * 
 	 * @param Problem
-	 *            p
 	 */
 	public String writeXmlFile(Problem p) {
 		String date = new SimpleDateFormat("dd-MM-yyyy  HH-mm-ss").format(new Date());
@@ -308,7 +300,7 @@ public class SharedClass {
 			TransformerFactory tranFactory = TransformerFactory.newInstance();
 			Transformer aTransformer = tranFactory.newTransformer();
 			/*
-			 * Formata��o do ficheiro XML
+			 * XML file config
 			 */
 			aTransformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
 			aTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
@@ -340,7 +332,7 @@ public class SharedClass {
 	}
 
 	/**
-	 * Fun��o respons�vel pela leitura do ficheiro XML
+	 * function responsible to read the XML file
 	 */
 	public void readXMLFile() {
 
@@ -497,8 +489,7 @@ public class SharedClass {
 	}
 
 	/**
-	 * 
-	 * Carrega um problema apartir de um ficheiro .xml criado anteriormente
+	 * Loads a problem from a previously made xml file
 	 * 
 	 * @param name
 	 * @param description
@@ -509,7 +500,6 @@ public class SharedClass {
 	 * @param path
 	 * @param objectives
 	 */
-	//
 	public void LoadProblem(String name, String description, String email, ArrayList<Variable> variables,
 			ArrayList<String> algorithms, int days, String path, ArrayList<String> objectives) {
 
@@ -698,8 +688,8 @@ public class SharedClass {
 	public Administrador getAdministrador() {
 		return administrador;
 	}
-	
-	public void setProblem(Problem p){
+
+	public void setProblem(Problem p) {
 		this.problem = p;
 	}
 

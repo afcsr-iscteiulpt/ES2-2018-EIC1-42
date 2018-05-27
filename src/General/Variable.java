@@ -1,4 +1,5 @@
 package General;
+
 import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -19,131 +20,166 @@ public class Variable {
 	private ArrayList<Integer> restrictionsInt;
 	private ArrayList<Double> restrictionsDouble;
 	private boolean objective;
-	
-	public Variable(String name, String type, int min, int max, ArrayList<Integer> restrictionsInt){
-		this.name=name;
-		this.type=type;
-		this.minInt=min;
-		this.maxInt=max;
+
+	/**
+	 * 
+	 * Creates a Variable for a problem of type Int
+	 * 
+	 * @param name
+	 * @param type
+	 * @param min
+	 * @param max
+	 * @param restrictionsInt
+	 */
+	public Variable(String name, String type, int min, int max, ArrayList<Integer> restrictionsInt) {
+		this.name = name;
+		this.type = type;
+		this.minInt = min;
+		this.maxInt = max;
 		this.MIN = min;
 		this.MAX = max;
 		this.restrictionsInt = restrictionsInt;
 	}
-	public Variable(String name, String type, double min, double max, ArrayList<Double> restrictionsDouble){
-		this.name=name;
-		this.type=type;
-		this.minDoub=min;
-		this.maxDoub=max;
+
+	/**
+	 * 
+	 * Creates a Variable for a problem of type Double
+	 * 
+	 * @param name
+	 * @param type
+	 * @param min
+	 * @param max
+	 * @param restrictionsDouble
+	 */
+	public Variable(String name, String type, double min, double max, ArrayList<Double> restrictionsDouble) {
+		this.name = name;
+		this.type = type;
+		this.minDoub = min;
+		this.maxDoub = max;
 		this.MIN = min;
 		this.MAX = max;
 		this.restrictionsDouble = restrictionsDouble;
 	}
-	public Variable(String name, String type, String value){
-		this.name=name;
-		this.type=type;
-		this.value=value;
-	}
-	
 
-	public String toStringVariable(){
-		String s="";
-		if(type.equals("Integer") || type.equals("Double")){
-			s = name +"		"+type+"		"+MIN+" : "+MAX;
-		}
-		else if(type.equals("Binary")){
-			s = name +"		"+type+"		"+value;
+	/**
+	 * 
+	 * Creates a Variable for a problem of type Binary
+	 * 
+	 * @param name
+	 * @param type
+	 * @param value
+	 */
+	public Variable(String name, String type, String value) {
+		this.name = name;
+		this.type = type;
+		this.value = value;
+	}
+
+	public String toStringVariable() {
+		String s = "";
+		if (type.equals("Integer") || type.equals("Double")) {
+			s = name + "		" + type + "		" + MIN + " : " + MAX;
+		} else if (type.equals("Binary")) {
+			s = name + "		" + type + "		" + value;
 		}
 		return s;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
-    @XmlAttribute
+
+	@XmlAttribute
 	public void setName(String name) {
 		this.name = name;
 	}
-    
+
 	public String getType() {
 		return type;
 	}
-	
-    @XmlAttribute
+
+	@XmlAttribute
 	public void setType(String type) {
 		this.type = type;
 	}
-    
-	// SETTERS -----------
-    @XmlAttribute
+
+	@XmlAttribute
 	public void setMinI(int min) {
 		this.minInt = min;
 	}
-    @XmlAttribute
-   	public void setMax(int max) {
-   		this.maxInt = max;
-   	}
-  
-    
-    @XmlAttribute
-    public void setMinD(double min) {
+
+	@XmlAttribute
+	public void setMax(int max) {
+		this.maxInt = max;
+	}
+
+	@XmlAttribute
+	public void setMinD(double min) {
 		this.minDoub = min;
 	}
-    @XmlAttribute
-   	public void setMaxD(double max) {
-   		this.maxDoub = max;
-   	}
-  
-  
-    @XmlAttribute
-    public void setBinValue(String newvalue){
-    	value=newvalue;
-    }
-    //---------------------
-    
-    // GETTERS ------------
-	public Object getMIN(){
+
+	@XmlAttribute
+	public void setMaxD(double max) {
+		this.maxDoub = max;
+	}
+
+	@XmlAttribute
+	public void setBinValue(String newvalue) {
+		value = newvalue;
+	}
+
+	public Object getMIN() {
 		return MIN;
 	}
-    public int getMinI() {
-    	return minInt;
-    }
+
+	public int getMinI() {
+		return minInt;
+	}
+
 	public int getMaxI() {
 		return maxInt;
 	}
+
 	public double getMinD() {
 		return minDoub;
 	}
-	
-	public Object getMAX(){
+
+	public Object getMAX() {
 		return MAX;
 	}
+
 	public double getMaxD() {
 		return maxDoub;
 	}
-	public String getValue(){
+
+	public String getValue() {
 		return value;
 	}
-    //----------------------
 
-	public String convertAllToString(Object obj){
+	public String convertAllToString(Object obj) {
 		return String.valueOf(obj);
 	}
+
 	public ArrayList<Integer> getRestrictionsInt() {
 		return restrictionsInt;
 	}
+
 	public void setRestrictionsInt(ArrayList<Integer> restrictionsInt) {
 		this.restrictionsInt = restrictionsInt;
 	}
+
 	public ArrayList<Double> getRestrictionsDouble() {
 		return restrictionsDouble;
 	}
+
 	public void setRestrictionsDouble(ArrayList<Double> restrictionsDouble) {
 		this.restrictionsDouble = restrictionsDouble;
 	}
+
 	public boolean isObjective() {
 		return objective;
 	}
+
 	public void setObjective(boolean objective) {
 		this.objective = objective;
 	}

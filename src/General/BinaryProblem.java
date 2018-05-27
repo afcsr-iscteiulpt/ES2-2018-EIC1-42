@@ -17,7 +17,7 @@ public class BinaryProblem extends AbstractBinaryProblem {
 
 	/**
 	 * 
-	 * Construtor do BinaryProblem
+	 * BinaryProblem Constructor
 	 * 
 	 * @param problema
 	 * @param num_var
@@ -31,7 +31,7 @@ public class BinaryProblem extends AbstractBinaryProblem {
 
 	/**
 	 * 
-	 * Construtor do BinaryProblem
+	 * BinaryProblem Constructor
 	 * 
 	 * @param num_Var
 	 */
@@ -43,7 +43,7 @@ public class BinaryProblem extends AbstractBinaryProblem {
 
 	/**
 	 * 
-	 * Cria��o do BinaryProblem
+	 * BinaryProblem Constructor
 	 * 
 	 * @param problema
 	 */
@@ -51,13 +51,11 @@ public class BinaryProblem extends AbstractBinaryProblem {
 	public void createBinaryProblem(Problem problema) {
 		this.problema = problema;
 
-		setNumberOfObjectives(problema.getObjNumber());// ver objetivos (perguntar ao utilizador) !!conferir com a
-														// fun��o evaluate!! default:2
+		setNumberOfObjectives(problema.getObjNumber());
 
 		setName(problema.getName());
 	}
 
-	// --------<changed>------------
 	private boolean withinBounds(String value) {
 		int testValue = binaryToInt(value);
 		if (testValue < upper && testValue > lower)
@@ -84,7 +82,6 @@ public class BinaryProblem extends AbstractBinaryProblem {
 		}
 		return s.length - i;
 	}
-	// --------<changed>------------
 
 	@Override
 	public void evaluate(BinarySolution solution) {
@@ -107,8 +104,6 @@ public class BinaryProblem extends AbstractBinaryProblem {
 		}
 
 		String[] individualEvaluationCriteria = evaluationResultString.split("\\s+");
-		// It is assumed that all evaluated criteria are returned in the same result
-		// string
 		for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
 			solution.setObjective(i, Double.parseDouble(individualEvaluationCriteria[i]));
 		}
@@ -116,7 +111,6 @@ public class BinaryProblem extends AbstractBinaryProblem {
 
 	@Override
 	protected int getBitsPerVariable(int variable) {
-		// TODO Auto-generated method stub
 		return bits;
 	}
 

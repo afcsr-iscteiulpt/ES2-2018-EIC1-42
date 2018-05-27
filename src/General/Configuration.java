@@ -26,7 +26,17 @@ public class Configuration {
 	private static Problem problemToRun;
 	private static String problemType;
 	private static String alg;
- 
+	
+	
+	/**
+	 * 
+	 * DO NOT USE THIS CLASS Creates a configuration. The point of this class is to
+	 * aggregate the Configurations
+	 * 
+	 * @param path
+	 * @param ToRun
+	 */
+	
 	public Configuration(String path, Problem ToRun) {
 		problemToRun=ToRun;
 		problemType=ToRun.getType();
@@ -40,8 +50,4 @@ public class Configuration {
 	public String getConfString() {
 		return ("" + problemToRun.stringConvert() + " algorithm: " + alg + " ... type : "+problemType);
 	}
-
 }
-
-	//TODO built a configuration for integer/double/binary problems
-	

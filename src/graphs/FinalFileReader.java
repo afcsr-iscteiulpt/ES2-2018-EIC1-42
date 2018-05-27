@@ -9,11 +9,25 @@ public class FinalFileReader {
 
 	ArrayList<ArrayList<Double>> values = new ArrayList<ArrayList<Double>>();
 
+	/**
+	 * 
+	 * Creates the FinalFileReader
+	 * 
+	 * @param totalValues
+	 */
 	public FinalFileReader(ArrayList<ArrayList<Double>> totalValues) {
 		this.values = totalValues;
 	}
 
-	public void values(File file) throws FileNotFoundException{
+	/**
+	 * 
+	 * Reads a .rf file and returns the values int double
+	 * 
+	 * @param file
+	 * @throws FileNotFoundException
+	 */
+
+	public void values(File file) throws FileNotFoundException {
 		Scanner s = new Scanner(file);
 		while (s.hasNextLine()) {
 			ArrayList<Double> graph = new ArrayList<Double>();

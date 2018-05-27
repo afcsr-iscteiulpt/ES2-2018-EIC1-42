@@ -1,6 +1,15 @@
 Identificação da turma: EIC1
 Grupo: 42
 
+Link:
+      - https://youtu.be/ZQ6yaDBDyG8
+
+Funcionalidades "não incluidas"/incompletas: 
+      - Grupos de variáveis;
+      - tempo maximo de espera;
+      - restrições no intervalo das variaveis;
+      - email na ocorrencia de runtime errors.
+
 Membros:
 74232, Alberto Ramos, afcsr@iscte.pt, Scrum Master
 72948, André Carvalho, agpco@iscte.pt, Quality Manager

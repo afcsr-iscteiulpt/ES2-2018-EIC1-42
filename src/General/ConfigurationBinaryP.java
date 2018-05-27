@@ -39,7 +39,13 @@ public class ConfigurationBinaryP extends Configuration{
 	private static final int INDEPENDENT_RUNS_NUMBER = 5;
 	private static final int MAX_EVALUATIONS = 5;
 
-	
+	/**
+	 * 
+	 * Creates the configuration for a Binary Problem
+	 * 
+	 * @param path
+	 * @param ToRun
+	 */
 	public ConfigurationBinaryP(String path, Problem ToRun) {
 		super(path, ToRun);
 		this.path=path;

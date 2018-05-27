@@ -13,7 +13,7 @@ public class IntegerProblem extends AbstractIntegerProblem {
 
 	/**
 	 * 
-	 * Construtor da classe IntegerProblem
+	 * IntegerProblem constructor
 	 *
 	 * @param problema
 	 */

@@ -1,0 +1,3 @@
+Refactoring Type	Source Entity	Target Class	Source/Target accessed members	Rate it!
+Move Method	General.SharedClass::setReviewProblem():void	Interface.GUIFinal	2/6	
+Move Method	General.SharedClass::setGUIRestrictions():void	Interface.GUIRestrictions	2/3	

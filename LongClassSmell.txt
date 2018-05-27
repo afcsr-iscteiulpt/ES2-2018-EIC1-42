@@ -1,0 +1,31 @@
+Interface.GUIRestrictions	public void convertIntervalToString(java.lang.String) 	intervalString	B1	0/17
+Interface.GUIRestrictions	public void convertIntervalToString(java.lang.String) 	intervalString	B2	0/16
+Interface.GUIRestrictions	public void convertIntervalToString(java.lang.String) 	intervalString	B3	0/15
+Interface.GUIRestrictions	public void convertIntervalToString(java.lang.String) 	intervalString	B4	0/14
+General.SharedClass	public void LoadProblem(java.lang.String, java.lang.String, java.lang.String, ArrayList<General.Variable>, ArrayList<java.lang.String>, int, java.lang.String, ArrayList<java.lang.String>) 	guiAlgo	B1	0/4
+General.SharedClass	public void createProblem() 	problem	B1	0/4
+Interface.GUIFinal	public void search() 	file	B1	0/4
+General.BinaryProblem	public void evaluate(org.uma.jmetal.solution.BinarySolution) 	solutionString	B1	0/3
+General.DoubleProblem	public void evaluate(org.uma.jmetal.solution.DoubleSolution) 	solutionString	B1	0/3
+General.DoubleProblem	public void evaluate(org.uma.jmetal.solution.DoubleSolution) 	solutionString	B2	0/2
+General.IntegerProblem	public void evaluate(org.uma.jmetal.solution.IntegerSolution) 	solutionString	B1	0/3
+General.IntegerProblem	public void evaluate(org.uma.jmetal.solution.IntegerSolution) 	solutionString	B2	0/2
+General.SharedClass	public void readXMLFile() 	v	B15	0/3
+General.SharedClass	public void readXMLFile() 	v	B17	0/3
+General.BinaryProblem	public void evaluate(org.uma.jmetal.solution.BinarySolution) 	evaluationResultString	B2	0/2
+General.DoubleProblem	public void evaluate(org.uma.jmetal.solution.DoubleSolution) 	evaluationResultString	B5	0/2
+General.IntegerProblem	public void evaluate(org.uma.jmetal.solution.IntegerSolution) 	evaluationResultString	B5	0/2
+General.BinaryProblem	private int lengthOfBitString(java.lang.String) 	i	B1	1/6
+General.BinaryProblem	private int lengthOfBitString(java.lang.String) 	i	B2	0/4
+General.SharedClass	public void LoadProblem(java.lang.String, java.lang.String, java.lang.String, ArrayList<General.Variable>, ArrayList<java.lang.String>, int, java.lang.String, ArrayList<java.lang.String>) 	objToAdd	B21	1/3
+General.SharedClass	public void LoadProblem(java.lang.String, java.lang.String, java.lang.String, ArrayList<General.Variable>, ArrayList<java.lang.String>, int, java.lang.String, ArrayList<java.lang.String>) 	objToAdd	B22	1/2
+graphs.PanelGraph	protected void paintComponent(java.awt.Graphics) 	k	B1	2/4
+graphs.PanelGraph	protected void paintComponent(java.awt.Graphics) 	k	B2	1/2
+General.FileViewer	public void create_view_LateX() throws java.io.IOException	filename	B1	8/12
+General.FileViewer	public void create_view_LateX() throws java.io.IOException	path	B1	8/12
+General.SharedClass	public void readXMLFile() 	guiDefinicaoVariaveis	B3	20/24
+General.SharedClass	public void readXMLFile() 	guiDefinicaoVariaveis	B4	16/20
+General.SharedClass	public void readXMLFile() 	guiDefinicaoVariaveis	B5	15/19
+General.SharedClass	public void readXMLFile() 	guiDefinicaoVariaveis	B6	13/17
+General.SharedClass	public void readXMLFile() 	guiDefinicaoVariaveis	B20	3/7
+Interface.GUIVariables	public void validateVariableIntDouble(javax.swing.JTextField, javax.swing.JTextField) 	b	B1	10/13

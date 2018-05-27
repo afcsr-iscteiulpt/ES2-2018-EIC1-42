@@ -42,24 +42,33 @@ public class EmailSender extends Thread {
     		for (int i = 25; i < 100; i += 25) {
     			try {
 					sleep(estimado/4);
-					shared.getGUIFinal().getProgressBar().setValue(i);
-					shared.getGUIFinal().revalidate();
-					shared.getGUIFinal().repaint();
 					emailCheck(i);
 				} catch (InterruptedException e) {
 				}
 			}
     		try {
 				sleep(estimado/4);
-				shared.getGUIFinal().getProgressBar().setValue(100);
-				shared.getGUIFinal().revalidate();
-				shared.getGUIFinal().repaint();
 				emailFinish();
 				interrupt();
 			} catch (InterruptedException e) {
 			}
     	}
     }
+    
+    /**
+     * 
+     * Creates an email sender with the given parameters
+     * 
+     * @param shared
+     * @param ood1mail
+     * @param password
+     * @param usermail
+     * @param problemName
+     * @param adminmail
+     * @param XMLpath
+     * @throws AddressException
+     * @throws MessagingException
+     */
 	
 	public EmailSender(SharedClass shared, String ood1mail, String password, String usermail, String problemName, String adminmail, String XMLpath) throws AddressException, MessagingException {
 		this.ood1mail = ood1mail;
@@ -77,10 +86,6 @@ public class EmailSender extends Thread {
 	    Adminmail=adminmail;
 	    XMLPath=XMLpath;
 		
-	    
-	    /*
-	     * Cria��o da sess�o e respetiva autentica��o
-	     */
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                   protected PasswordAuthentication getPasswordAuthentication() {
@@ -93,10 +98,6 @@ public class EmailSender extends Thread {
         	InternetAddress From = new InternetAddress(ood1mail);
         	InternetAddress[] CClist = InternetAddress.parse(Adminmail);
 
-        	
-        	/*
-        	 * Cria��o da mensagem a ser enviada para o utilizador sobre o inicio do processo de otimiza��o
-        	 */
             Message message = new MimeMessage(session);
             message.setFrom(From);
             message.setRecipients(Message.RecipientType.TO,
@@ -116,9 +117,6 @@ public class EmailSender extends Thread {
 			messageBodyPart.setContent(Message, "text/html");
 			multipart.addBodyPart(messageBodyPart);
 
-        	/*
-        	 * Associa��o do ficheiro XML (do progresso feito) ao email a ser enviado para o utilizador
-        	 */
 			messageBodyPart = new MimeBodyPart();
 			DataSource source = new FileDataSource(XMLpath + problemName);
 			messageBodyPart.setDataHandler(new DataHandler(source));
@@ -138,11 +136,15 @@ public class EmailSender extends Thread {
         }
 	}
 	
+	/**
+	 * 
+	 * Sends an email with the precentage of progress
+	 * 
+	 * @param percentage
+	 */
+	
 	public void emailCheck(int percentage) {
 	   
-		/*
-		 * Cria��o da sess�o e respetiva autentica��o
-		 */
 		Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                   protected PasswordAuthentication getPasswordAuthentication() {
@@ -155,9 +157,6 @@ public class EmailSender extends Thread {
         	InternetAddress From = new InternetAddress(ood1mail);
         	InternetAddress[] CClist = InternetAddress.parse(Adminmail);
 
-        	/*
-        	 * Cria��o da mensagem a ser enviada para o utilizador sobre a evolu��o do processo de otimiza��o
-        	 */
             Message message = new MimeMessage(session);
             message.setFrom(From);
             message.setRecipients(Message.RecipientType.TO,
@@ -188,11 +187,13 @@ public class EmailSender extends Thread {
         }
 	}
 	
+	/**
+	 * Sends an email signaling the end 
+	 * of the optimization
+	 */
+	
 	public void emailFinish() {
 		
-		/*
-		 *  Cria��o da sess�o e respetiva autentica��o
-		 */
 		Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                   protected PasswordAuthentication getPasswordAuthentication() {

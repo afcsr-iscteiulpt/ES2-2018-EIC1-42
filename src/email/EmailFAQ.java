@@ -24,6 +24,17 @@ public class EmailFAQ {
     private String FAQSubject;
     private String MessageFAQ;
     
+    /**
+     * 
+     * Sends an email to the administrator with the content provided by the client
+     * 
+     * @param ood1mail
+     * @param password
+     * @param usermail
+     * @param faqSubj
+     * @param messagefaq
+     */
+    
     public EmailFAQ(String ood1mail, String password, String usermail, String faqSubj, String messagefaq) {
     	this.ood1mail = ood1mail;
     	this.password = password;

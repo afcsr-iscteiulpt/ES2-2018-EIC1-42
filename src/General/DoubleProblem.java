@@ -13,7 +13,7 @@ public class DoubleProblem extends AbstractDoubleProblem {
 
 	/**
 	 * 
-	 * Construtor da classe DoubleProblem
+	 * DoubleProblem constructor
 	 * 
 	 * @param problema
 	 */
@@ -25,7 +25,7 @@ public class DoubleProblem extends AbstractDoubleProblem {
 
 	/**
 	 * 
-	 * Construtor da classe DoubleProblem
+	 * DoubleProblem constructor
 	 * 
 	 * @param num_Var
 	 */
@@ -36,15 +36,15 @@ public class DoubleProblem extends AbstractDoubleProblem {
 
 	/**
 	 * 
-	 * Criador do problema Double
+	 * DoubleProblem constructor
 	 * 
 	 * @param problema
 	 */
 
 	public void createDoubleProblem(Problem problema) {
 		this.problema = problema;
-		this.setNumberOfObjectives(problema.getObjNumber());// ver objetivos (perguntar ao utilizador) !!conferir com a
-															// fun��o evaluate!! default:2
+		this.setNumberOfObjectives(problema.getObjNumber());
+
 		this.setName(problema.getName());
 
 		List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables());
@@ -80,8 +80,6 @@ public class DoubleProblem extends AbstractDoubleProblem {
 			err.printStackTrace();
 		}
 		String[] individualEvaluationCriteria = evaluationResultString.split("\\s+");
-		// It is assumed that all evaluated criteria are returned in the same result
-		// string
 		for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
 			solution.setObjective(i, Double.parseDouble(individualEvaluationCriteria[i]));
 		}

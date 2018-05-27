@@ -18,7 +18,8 @@ public class Graph extends JPanel{
 
 
 	/**
-	 *Dado um array de arrays em que cada um destes � um resultado da optimiza��o este faz a representa��o do mesmo
+	 * 
+	 * Given an array of arrays a graph is developed with the values inside each array
 	 * 
 	 * @param values
 	 */
@@ -27,6 +28,14 @@ public class Graph extends JPanel{
 		construct();
 	}
 	
+	/**
+	 * 
+	 * Given an array of arrays a graph is developed with the values inside each array
+	 * has the adition of representing the name of the problem given
+	 * 
+	 * @param values
+	 * @param problem
+	 */
 	public Graph(ArrayList<ArrayList<Double>> values, String problem) {
 		this.values = values;
 		this.problemTag = problem;

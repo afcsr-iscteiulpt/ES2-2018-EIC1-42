@@ -17,9 +17,22 @@ public class Problem {
 	private String type;
 	private String path;
 	private ArrayList<String> objectivesArray;
-	//
 
-	public Problem(String name, String description, String email, ArrayList<Variable> variablesArray, ArrayList<String> algorithms, int numberOfDays, String path, ArrayList<String> objectivesArray) {
+	/**
+	 * 
+	 * Creates a new problem with the given parameters
+	 * 
+	 * @param name
+	 * @param description
+	 * @param email
+	 * @param variablesArray
+	 * @param algorithms
+	 * @param numberOfDays
+	 * @param path
+	 * @param objectivesArray
+	 */
+	public Problem(String name, String description, String email, ArrayList<Variable> variablesArray,
+			ArrayList<String> algorithms, int numberOfDays, String path, ArrayList<String> objectivesArray) {
 		this.name = name;
 		this.description = description;
 		this.email = email;
@@ -28,17 +41,15 @@ public class Problem {
 		this.numberOfDays = numberOfDays;
 		this.path = path;
 		this.objectivesArray = objectivesArray;
-//		this.type = variablesArray.get(0).getType() ;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
-	
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 
 	public ArrayList<String> getAlgorithms() {
 		return algorithms;
@@ -60,11 +71,12 @@ public class Problem {
 	public String getName() {
 		return name;
 	}
-	
+
 	@XmlElement
 	public String getType() {
 		return type;
 	}
+
 	@XmlElement
 	public void setType(String type) {
 		this.type = type;
@@ -89,40 +101,38 @@ public class Problem {
 	public ArrayList<Variable> getVariablesArray() {
 		return variablesArray;
 	}
- 
+
 	@XmlElement
 	public void setVariablesArray(ArrayList<Variable> variablesArray) {
 		this.variablesArray = variablesArray;
 	}
-	
+
 	@XmlElement
-	public void setPath(String path){
-		this.path=path;
+	public void setPath(String path) {
+		this.path = path;
 	}
-	
+
 	@XmlElement
-	public String getPath(){
+	public String getPath() {
 		return path;
 	}
-	
+
 	@XmlElement
-	public ArrayList<String> getObjectivesArray(){
+	public ArrayList<String> getObjectivesArray() {
 		return objectivesArray;
 	}
-	
+
 	@XmlElement
-	public void setObjectivesArray(ArrayList<String> newarray){
+	public void setObjectivesArray(ArrayList<String> newarray) {
 		this.objectivesArray = newarray;
 	}
-	
-	
+
 	public int getObjNumber() {
 		return objectivesArray.size();
 	}
-	
-	
-	public String stringConvert(){
-		String s = name + " 			"+description;
+
+	public String stringConvert() {
+		String s = name + " 			" + description;
 		return s;
 	}
 

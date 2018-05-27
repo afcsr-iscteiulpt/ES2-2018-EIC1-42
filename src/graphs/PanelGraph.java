@@ -17,13 +17,19 @@ public class PanelGraph extends JPanel{
 	private static final int RADIUS = 10;
 	private static final int DIVISIONS = 7;
 	
+	/**
+	 * 
+	 * Creates a panel with values represented
+	 * 
+	 * @param values
+	 */
 	public PanelGraph(ArrayList<ArrayList<Double>> values) {
 		this.values = values;
 		calcMaxValue();
 		this.setBackground(Color.WHITE);
 	}
-
-	public void calcMaxValue() {
+	
+	private void calcMaxValue() {
 		for (int i = 0; i < values.size(); i++) {
 			for (int j = 0; j < values.get(i).size(); j++) {
 				if (max < values.get(i).get(j)) {
